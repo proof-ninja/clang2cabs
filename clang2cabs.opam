@@ -1,16 +1,16 @@
 opam-version: "2.0"
-maintainer: "YOUR EMAIL ADDRESS"
-authors: ["YOUR NAME"]
+maintainer: "y.imai@proof-ninja.co.jp"
+authors: ["Yoshihiro Imai"]
 
-homepage: "https://github.com/USERNAME/proj"
-bug-reports: "https://github.com/USERNAME/proj/issues"
-dev-repo: "git+https://github.com/USERNAME/proj.git"
+homepage: "https://github.com/proof-ninja.co.jp/clang2cabs"
+bug-reports: "https://github.com/proof-ninja.co.jp/clang2cabs/issues"
+dev-repo: "git+https://github.com/proof-ninja.co.jp/clang2cabs.git"
 version: "dev"
 
 # TODO Pick the relevant SPDX identifier <https://spdx.org/licenses/>
 license: "Unlicense"
 
-synopsis: "_Catchy headline_"
+synopsis: "Translate from C to cabs"
 
 description: """
 _Project description_

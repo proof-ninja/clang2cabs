@@ -1,0 +1,4 @@
+(library
+ (name test_lib)
+ (libraries alcotest clang2cabs.lib)
+ (synopsis "Tests for lib"))
