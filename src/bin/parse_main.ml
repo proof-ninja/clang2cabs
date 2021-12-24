@@ -1,16 +1,25 @@
-open Printf
+open Clang2cabs_lib.Util
 
-let run dir = printf "do parse c files in directory: '%s'\n" dir
+let get_clang_command_path () =
+  let envvar = "CLANG_TO_YOJSON" in
+  match Sys.getenv_opt envvar with
+  | None -> failwith (!%"The environment variable '%s' is unbound." envvar)
+  | Some command_path -> command_path
+
+let run dir =
+  let cmd = get_clang_command_path () in
+  Clang2yojson.convert_directory cmd dir
+    |> List.iter (fun f -> print_endline ("converted: "^f));
+  Printf.printf "do parse c files in directory: '%s'\n" dir
 
 let help () =
   let usage_msg =
-    sprintf
-      "Usage: %s <dir>\n\
+    !%"Usage: %s <dir>\n\
        parses each <name>.c and produces <name>.mas\n\
        in each subdirectory of the directory <dir>.\n"
       Sys.argv.(0)
   in
-  eprintf "%s%!" usage_msg
+  Printf.eprintf "%s%!" usage_msg
 
 let dispatch_command () =
   assert (Array.length Sys.argv > 1);
