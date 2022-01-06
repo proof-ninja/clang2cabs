@@ -2,31 +2,28 @@ exception Invalid_Yojson of string * Yojson.Safe.t
 
 module PointerMap = Map.Make(Int)
 
-let rec make_typemap map: Yojson.Safe.t list -> Ast.type_specifier PointerMap.t = function
+let make_typemap typedata = List.fold_left (fun map -> function
   | `Variant (
-    "BuiltinType", Some (`Tuple [
-      `Assoc [("pointer", `Int i)];
-      `Variant ("Int", None)
-    ])
-  ) :: rest ->
-    make_typemap
-      (PointerMap.add i Ast.Tint map)
-      rest
+    "BuiltinType", Some (`Tuple (
+      `Assoc [("pointer", `Int i)] ::
+      `Variant ("Int", None) ::
+      _
+    ))
+  ) ->
+    PointerMap.add i Ast.Tint map
   | `Variant (
-    "BuiltinType", Some (`Tuple [
-      `Assoc [("pointer", `Int i)];
-      `Variant ("Void", None)
-    ])
-  ) :: rest ->
-    make_typemap
-      (PointerMap.add i Ast.Tvoid map)
-      rest
-  | _ :: rest ->
-    make_typemap map rest
-  | [] ->
+    "BuiltinType", Some (`Tuple (
+      `Assoc [("pointer", `Int i)] ::
+      `Variant ("Void", None) ::
+      _
+    ))
+  ) ->
+    PointerMap.add i Ast.Tvoid map
+  | _ ->
     map
-
-let make_typemap typedata = make_typemap PointerMap.empty typedata
+  )
+  PointerMap.empty
+  typedata
 
 let show_typemap typemap =
   typemap |> PointerMap.iter (fun idx tpe ->
@@ -34,56 +31,60 @@ let show_typemap typemap =
   )
 
 type function_typeinfo = {
-  return_type : Ast.type_specifier;
+  return_type: Ast.type_specifier;
   param_types: Ast.type_specifier list
 }
 
-let rec make_fuction_typeinfo typemap map : Yojson.Safe.t list -> function_typeinfo PointerMap.t = function
+let parse_params_type typemap params_type yojson =
+  match List.assoc_opt "params_type" params_type with
+  | Some `List param_types ->
+    param_types
+    |> List.map (
+      function
+      | `Assoc[("type_ptr", `Int ptr)] ->
+        begin match PointerMap.find_opt ptr typemap with
+        | Some typ -> typ
+        | None -> raise (Invalid_Yojson ("Type not found", yojson))
+        end
+      | _ -> raise (Invalid_Yojson ("type_ptr not found", yojson))
+    )
+  | _ -> []
+
+let make_fuction_typeinfo typemap typedata = List.fold_left (fun map -> function
   | `Variant (
-    "FunctionNoProtoType", Some (`Tuple [
-      `Assoc [("pointer", `Int i)];
-      `Assoc [("return_type", `Assoc [("type_ptr", `Int type_ptr)])]
-    ])
-  ) as yojson :: rest ->
+    ("FunctionNoProtoType" | "FunctionProtoType"), Some (`Tuple (
+      `Assoc [("pointer", `Int i)] ::
+      `Assoc [("return_type", `Assoc [("type_ptr", `Int type_ptr)])] ::
+      `Assoc params_type ::
+      _
+    ))
+  ) as yojson ->
     let return_type =
       begin match PointerMap.find_opt type_ptr typemap with
       | Some typ -> typ
       | None -> raise (Invalid_Yojson ("Return type not found.", yojson))
       end
     in
-    make_fuction_typeinfo typemap (PointerMap.add i { return_type; param_types= [] } map) rest
+    let param_types = parse_params_type typemap params_type yojson in
+    PointerMap.add i { return_type; param_types } map
   | `Variant (
-    "FunctionProtoType", Some (`Tuple [
+    ("FunctionNoProtoType" | "FunctionProtoType"), Some (`Tuple [
       `Assoc [("pointer", `Int i)];
       `Assoc [("return_type", `Assoc [("type_ptr", `Int type_ptr)])];
-      `Assoc [("params_type", `List param_types)]
     ])
-  ) as yojson :: rest ->
+  ) as yojson ->
     let return_type =
       begin match PointerMap.find_opt type_ptr typemap with
       | Some typ -> typ
       | None -> raise (Invalid_Yojson ("Return type not found.", yojson))
       end
     in
-    let param_types =
-      param_types
-      |> List.map (
-        function
-        | `Assoc[("type_ptr", `Int ptr)] ->
-          begin match PointerMap.find_opt ptr typemap with
-          | Some typ -> typ
-          | None -> raise (Invalid_Yojson ("Type not found", yojson))
-          end
-        | _ -> raise (Invalid_Yojson ("type_ptr not found", yojson))
-      )
-    in
-    make_fuction_typeinfo typemap (PointerMap.add i { return_type; param_types } map) rest
-  | _ :: rest ->
-    make_fuction_typeinfo typemap map rest
-  | [] ->
+    PointerMap.add i { return_type; param_types= [] } map
+  | _ ->
     map
-
-let make_fuction_typeinfo typemap typedata = make_fuction_typeinfo typemap PointerMap.empty typedata
+  )
+  PointerMap.empty
+  typedata
 
 let show_fuction_typeinfo function_typeinfo =
   function_typeinfo |> PointerMap.iter (fun idx {return_type; param_types} ->
@@ -94,12 +95,12 @@ let show_fuction_typeinfo function_typeinfo =
 
 let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
   | `Variant (
-    "ParmVarDecl", Some (`Tuple [
-      _source_info;
-      `Assoc name_info;
-      `Assoc [("type_ptr", `Int type_ptr)];
-      _index_info
-    ])
+    "ParmVarDecl", Some (`Tuple (
+      _source_info ::
+      `Assoc name_info ::
+      `Assoc [("type_ptr", `Int type_ptr)] ::
+      _
+    ))
   ) as yojson ->
     let name =
       begin match List.assoc_opt "name" name_info with
@@ -118,86 +119,159 @@ let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
     raise (Invalid_Yojson ("Invalid paramater data.", yojson))
 
 let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
-| `Variant (
-  "BinaryOperator", Some (`Tuple [
-    _source_info;
-    `List [
-      left_expr;
-      right_expr;
-    ];
-    _qual_type;
-    `Assoc [("kind", `Variant (kind, None))]
-  ])
-) as yojson ->
-  let left = parse_expression typemap left_expr
-  and right = parse_expression typemap right_expr
-  in
-  begin match kind with
-  | "Add" -> Ast.BINARY (Ast.ADD, left, right)
-  | _ -> raise (Invalid_Yojson ("Invalid expression data.", yojson))
-  end
-| `Variant (
-  "ImplicitCastExpr", Some (`Tuple [
-    _source_info;
-    `List [expr];
-    _qual_type;
-    _cast_kind;
-    _flag (* ? *)
-  ])
-) ->
-  parse_expression typemap expr
-| `Variant (
-  "DeclRefExpr", Some (`Tuple [
-    _source_info;
-    _children;
-    _qual_type;
-    `Assoc [("decl_ref", `Assoc decl_data)]
-  ])
-) as yojson ->
-  let name =
-    begin match List.assoc_opt "name" decl_data with
-    | Some (`Assoc name) ->
-      begin match List.assoc_opt "name" name with
-      | Some (`String name) -> name
+  | `Variant (
+    "UnaryOperator", Some (`Tuple (
+      _source_info ::
+      `List [expr] ::
+      _qual_type ::
+      `Assoc [("kind", `Variant (kind, None))] ::
+      _
+    ))
+  ) as yojson ->
+    let expr = parse_expression typemap expr in
+    begin match kind with
+    | "LNot" -> Ast.UNARY (Ast.NOT, expr)
+    | _ -> raise (Invalid_Yojson ("Invalid unary operation.", yojson))
+    end
+  | `Variant (
+    "BinaryOperator", Some (`Tuple (
+      _source_info ::
+      `List [
+        left_expr;
+        right_expr;
+      ] ::
+      _qual_type ::
+      `Assoc [("kind", `Variant (kind, None))] ::
+      _
+    ))
+  ) as yojson ->
+    let left = parse_expression typemap left_expr
+    and right = parse_expression typemap right_expr
+    in
+    begin match kind with
+    | "Add" -> Ast.BINARY (Ast.ADD, left, right)
+    | "Sub" -> Ast.BINARY (Ast.SUB, left, right)
+    | "Mul" -> Ast.BINARY (Ast.MUL, left, right)
+    | "Div" -> Ast.BINARY (Ast.DIV, left, right)
+    | "Rem" -> Ast.BINARY (Ast.MOD, left, right)
+    | "EQ" -> Ast.BINARY (Ast.EQ, left, right)
+    | "NE" -> Ast.BINARY (Ast.NE, left, right)
+    | "LT" -> Ast.BINARY (Ast.LT, left, right)
+    | "LE" -> Ast.BINARY (Ast.LE, left, right)
+    | "GT" -> Ast.BINARY (Ast.GT, left, right)
+    | "GE" -> Ast.BINARY (Ast.GE, left, right)
+    | "Assign" -> Ast.BINARY (Ast.ASSIGN, left, right)
+    | _ -> raise (Invalid_Yojson ("Invalid binary operation.", yojson))
+    end
+  (* We should care function call if and only if it is called with constant name. *)
+  | `Variant (
+    "CallExpr", Some (`Tuple (
+      _source_info ::
+      `List (
+        `Variant (
+          "ImplicitCastExpr", Some (`Tuple (
+            _source_info2 ::
+            `List [
+              `Variant (
+                "DeclRefExpr", Some (`Tuple (
+                  _source_info3 ::
+                  _body ::
+                  _qual_type3 ::
+                  `Assoc [("decl_ref", `Assoc [
+                    ("kind", `Variant ("Function", None));
+                    _decl_pointer;
+                    ("name", `Assoc [
+                      ("name", `String name);
+                      _qual_name
+                    ]);
+                    _qual_type4;
+                  ])] ::
+                  _
+                ))
+              )
+            ] ::
+            _
+          ))
+        ) :: args
+      ) ::
+      _
+    ))
+  ) ->
+    let args = List.map (parse_expression typemap) args in
+    Ast.CALL (name, args)
+  | `Variant (
+    "ParenExpr", Some (`Tuple (
+      _source_info ::
+      `List [expr] ::
+      _
+    ))
+  ) ->
+    Ast.PAREN (parse_expression typemap expr)
+  | `Variant (
+    "ImplicitCastExpr", Some (`Tuple (
+      _source_info ::
+      `List [expr] ::
+      _
+    ))
+  ) ->
+    parse_expression typemap expr
+  | `Variant (
+    "DeclRefExpr", Some (`Tuple (
+      _source_info ::
+      _children ::
+      _qual_type ::
+      `Assoc [("decl_ref", `Assoc decl_data)] ::
+      _
+    ))
+  ) as yojson ->
+    let name =
+      begin match List.assoc_opt "name" decl_data with
+      | Some (`Assoc name) ->
+        begin match List.assoc_opt "name" name with
+        | Some (`String name) -> name
+        | _ -> raise (Invalid_Yojson ("Name data not found.", yojson))
+        end
       | _ -> raise (Invalid_Yojson ("Name data not found.", yojson))
       end
-    | _ -> raise (Invalid_Yojson ("Name data not found.", yojson))
-    end
-  in
-  Ast.VARIABLE name
-| `Variant (
-  "IntegerLiteral", Some (`Tuple [
-    _source_info;
-    _children;
-    _qual_type;
-    `Assoc data
-  ])
-) as yojson ->
-  let value =
-    begin match List.assoc_opt "value" data with
-    | Some (`String value) -> value
-    | _ -> raise (Invalid_Yojson ("Invalid expression data.", yojson))
-    end
-  in
-  Ast.CONSTANT (Ast.CONST_INT value)
-| yojson ->
-  raise (Invalid_Yojson ("Invalid expression data.", yojson))
+    in
+    Ast.VARIABLE name
+  | `Variant (
+    "IntegerLiteral", Some (`Tuple (
+      _source_info ::
+      _children ::
+      _qual_type ::
+      `Assoc data ::
+      _
+    ))
+  ) as yojson ->
+    let value =
+      begin match List.assoc_opt "value" data with
+      | Some (`String value) -> value
+      | _ -> raise (Invalid_Yojson ("Invalid expression data.", yojson))
+      end
+    in
+    Ast.CONSTANT (Ast.CONST_INT value)
+  | yojson ->
+    raise (Invalid_Yojson ("Invalid expression data.", yojson))
+
 and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
   | `Variant (
-    "DeclStmt", Some (`Tuple [
-      _source_info;
-      _left_expressions;
-      `List var_decls
-    ])
+    "DeclStmt", Some (`Tuple (
+      _source_info ::
+      _left_expressions ::
+      `List var_decls ::
+      _
+    ))
   ) ->
     Ast.BLOCK (var_decls |> List.map (parse_statement typemap))
   | `Variant (
-    "VarDecl", Some (`Tuple [
-      _source_info;
-      `Assoc varname_data;
-      `Assoc [("type_ptr", `Int type_ptr)];
-      `Assoc init_expr
-    ])
+    "VarDecl", Some (`Tuple (
+      _source_info ::
+      `Assoc varname_data ::
+      `Assoc [("type_ptr", `Int type_ptr)] ::
+      `Assoc init_expr ::
+      _
+    ))
   ) as yojson ->
     let name =
       begin match List.assoc_opt "name" varname_data with
@@ -219,75 +293,155 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
       Ast.VARDECL ([tpe], [(name, Ast.JUSTBASE), Ast.NO_INIT])
     end
   | `Variant (
-    "ReturnStmt", Some (`Tuple [
+    "IfStmt", Some (`Tuple (
+      _source_info ::
+      `List body ::
+      _
+    ))
+  ) as yojson ->
+    begin match body with
+    | [cond; true_stmts; false_stmts] ->
+      Ast.IF (
+        parse_expression typemap cond,
+        Ast.BLOCK (parse_body typemap true_stmts),
+        Ast.BLOCK (parse_body typemap false_stmts)
+      )
+    | [cond; true_stmts] ->
+      Ast.IF (
+        parse_expression typemap cond,
+        Ast.BLOCK (parse_body typemap true_stmts),
+        Ast.NOP
+      )
+    | _ -> raise (Invalid_Yojson ("Invalid IF statement.", yojson))
+    end
+  (* | `Variant (
+    "ForStmt", Some (`Tuple [
       _source_info;
-      `List [expr]
+      `List [
+        expr1;
+        expr2; (* What is it? *)
+        expr3;
+        expr4;
+        stmts;
+      ]
     ])
+  ) as yojson -> *)
+  | `Variant (
+    "WhileStmt", Some (`Tuple (
+      _source_info ::
+      `List [
+        expr;
+        stmts;
+      ] ::
+      _
+    ))
   ) ->
-    Ast.RETURN (parse_expression typemap expr)
-  | yojson ->
-    raise (Invalid_Yojson ("Invalid statement data.", yojson))
+    let expr = parse_expression typemap expr in
+    let body = parse_body typemap stmts in
+    Ast.WHILE (expr, Ast.BLOCK body)
+  | `Variant (
+    "ReturnStmt", Some (`Tuple (
+      _source_info ::
+      `List expr ::
+      _
+    ))
+  ) as yojson ->
+    begin match expr with
+    | [expr] -> Ast.RETURN (Some (parse_expression typemap expr))
+    | [] -> Ast.RETURN None
+    | _ -> raise (Invalid_Yojson ("Return statements has multiple expressions.", yojson))
+    end
+  | expr ->
+    Ast.COMPUTATION (parse_expression typemap expr)
 
 and parse_body typemap : Yojson.Safe.t -> Ast.block = function
   | `Variant (
-    "CompoundStmt", Some (`Tuple [
-      _source_info;
-      `List statements
-    ])
+    "CompoundStmt", Some (`Tuple (
+      _source_info ::
+      `List statements ::
+      _
+    ))
   ) ->
     statements |> List.map (parse_statement typemap)
   | yojson ->
-    raise (Invalid_Yojson ("Invalid block data.", yojson))
+    [parse_statement typemap yojson]
 
-let rec ast_of_yojson typemap function_typeinfo (definitions:Ast.definition list) : Yojson.Safe.t list -> Ast.definition list = function
-  | `Variant (
-    "FunctionDecl", Some (`Tuple [
-      _metadata; (* filename, line num, col num, &c. *)
-      `Assoc name_data;
-      `Assoc [("type_ptr", `Int type_ptr)];
-      `Assoc data
-    ])
-   ) as yojson :: _rest ->
+let ast_of_yojson typemap function_typeinfo definitions =
+  let parse_definition definitions = function
+    | `Variant (
+      "VarDecl", Some (`Tuple (
+        _metadata :: (* filename, line num, col num, &c. *)
+        `Assoc name_data ::
+        `Assoc [("type_ptr", `Int type_ptr)] ::
+        `Assoc [("is_global", `Bool _is_global)] ::
+        _
+      ))
+    ) as yojson ->
       let name =
         begin match List.assoc_opt "name" name_data with
         | Some (`String name) -> name
         | _ -> raise (Invalid_Yojson ("Function name not found.", yojson))
         end
       in
-      let {return_type; param_types= _} =
-        begin match PointerMap.find_opt type_ptr function_typeinfo with
-        | Some info -> info
-        | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
+      let tpe =
+        begin match PointerMap.find_opt type_ptr typemap with
+        | Some tpe -> tpe
+        | None -> raise (Invalid_Yojson ("Type not found.", yojson))
         end
       in
-      let single_name = [return_type], name in
-      let params =
-        begin match List.assoc_opt "parameters" data with
-        | Some `List params -> List.map (parse_parameters typemap) params
-        | _ -> []
-        end
-      in
-      let body =
-        begin match List.assoc_opt "body" data with
-        | Some body -> parse_body typemap body
-        | None -> raise (Invalid_Yojson ("Body not found.", yojson))
-        end
-      in
-      FUNDEF (single_name, params, body) :: definitions
-  | _ :: rest ->
-    ast_of_yojson typemap function_typeinfo definitions rest
-  | [] ->
-    definitions
+      Ast.DECDEF ([tpe], [((name, Ast.JUSTBASE), Ast.NO_INIT)]) :: definitions
+    | `Variant (
+      "FunctionDecl", Some (`Tuple (
+        _metadata :: (* filename, line num, col num, &c. *)
+        `Assoc name_data ::
+        `Assoc [("type_ptr", `Int type_ptr)] ::
+        `Assoc data ::
+        _
+      ))
+    ) as yojson ->
+        let name =
+          begin match List.assoc_opt "name" name_data with
+          | Some (`String name) -> name
+          | _ -> raise (Invalid_Yojson ("Function name not found.", yojson))
+          end
+        in
+        let {return_type; param_types= _} =
+          begin match PointerMap.find_opt type_ptr function_typeinfo with
+          | Some info -> info
+          | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
+          end
+        in
+        let single_name = [return_type], name in
+        let params =
+          begin match List.assoc_opt "parameters" data with
+          | Some `List params -> List.map (parse_parameters typemap) params
+          | _ -> []
+          end
+        in
+        let body =
+          begin match List.assoc_opt "body" data with
+          | Some body -> parse_body typemap body
+          | None -> raise (Invalid_Yojson ("Body not found.", yojson))
+          end
+        in
+        Ast.FUNDEF (single_name, params, body) :: definitions
+    | _ ->
+      definitions
+  in
+  definitions
+  |> List.fold_left parse_definition []
+  |> List.rev
 
 let ast_of_yojson (fname:string) : Yojson.Safe.t -> Ast.file = function
   | `Variant (
-      "TranslationUnitDecl", Some (`Tuple [
-        _metadata; (* ? *)
-        `List decls;
-        _any; (* This is empty. *)
-        `Assoc data
-      ]
-      )) as yojson ->
+      "TranslationUnitDecl", Some (`Tuple (
+        _metadata :: (* ? *)
+        `List decls ::
+        _any :: (* This is empty. *)
+        `Assoc data ::
+        _
+      ))
+    ) as yojson ->
         let typedata =
           begin match List.assoc_opt "types" data with
           | Some (`List typedata) -> typedata
@@ -298,7 +452,7 @@ let ast_of_yojson (fname:string) : Yojson.Safe.t -> Ast.file = function
         show_typemap typemap;
         let function_typeinfo = make_fuction_typeinfo typemap typedata in
         show_fuction_typeinfo function_typeinfo;
-        let definitions = ast_of_yojson typemap function_typeinfo [] decls in
+        let definitions = ast_of_yojson typemap function_typeinfo decls in
         fname, definitions
   | yojson ->
     raise (Invalid_Yojson ("Invalid AST Yojson.", yojson))
@@ -309,8 +463,8 @@ let parse_yojson fname =
     yojson 
     |> (ast_of_yojson fname) 
     |> Ast.show
-    |> Printf.printf "%s"
+    |> Printf.printf "%s\n"
   ) with
   | Invalid_Yojson (message, yojson) ->
     Printf.printf "%s\n" message;
-    Format.printf "%a" Yojson.Safe.pp yojson
+    Format.printf "%a\n" Yojson.Safe.pp yojson

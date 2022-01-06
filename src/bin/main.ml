@@ -1,4 +1,4 @@
-open Clang2cagbs_lib
+open Clang2cabs_lib
 
 let _ =
   let fname = Array.get Sys.argv 1 in

@@ -30,7 +30,7 @@ and statement =
   | BLOCK of block
   | IF of expression * statement * statement
   | WHILE of expression * statement
-  | RETURN of expression
+  | RETURN of expression option
   | VARDECL of init_name_group
 
 and binary_operator =
@@ -127,15 +127,21 @@ and show_statement indent = function
   | IF (cond, if_true, if_false) ->
     indent ^ "IF (" ^ show_expression cond ^ ") {\n" ^
     show_statement ("  " ^ indent) if_true ^ "\n" ^
-    indent ^ "} else {\n" ^
-    show_statement ("  " ^ indent) if_false ^ "\n" ^
-    indent ^ "}"
+    if if_false = NOP then
+      indent ^ "}"
+    else
+      indent ^ "} else {\n" ^
+      show_statement ("  " ^ indent) if_false ^ "\n" ^
+      indent ^ "}"
   | WHILE (cond, stat) ->
     indent ^ "WHILE (" ^ show_expression cond ^ ") {\n" ^
     show_statement ("  " ^ indent) stat ^ "\n" ^
     indent ^ "}"
   | RETURN expr ->
-    indent ^ "RETURN (" ^ show_expression expr ^ ")"
+    begin match expr with
+    | Some expr -> indent ^ "RETURN " ^ show_expression expr
+    | None -> indent ^ "RETURN"
+    end
   | VARDECL init_name_group ->
     let init_name_group = show_init_name_group ("  " ^ indent) init_name_group in
     indent ^ "VARDECL(\n" ^
