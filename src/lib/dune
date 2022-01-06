@@ -1,5 +1,5 @@
 (library
- (name clang2cagbs_lib)
+ (name clang2cabs_lib)
  (public_name clang2cabs.lib)
  (libraries unix str)
  (synopsis "This is a short description of the lib library."))
