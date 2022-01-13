@@ -28,6 +28,7 @@ void test2() {
 
 int main(void) {
     int a, b, c;
+    c = -101;
     a = 2 * (3 + 1) - 1;
     b = 10 % 6 / 4;
     c = test(a, b);

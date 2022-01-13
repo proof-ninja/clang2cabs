@@ -172,6 +172,7 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     let expr = parse_expression typemap expr in
     begin match kind with
     | "LNot" -> Ast.UNARY (Ast.NOT, expr)
+    | "Minus" -> Ast.UNARY (Ast.MINUS, expr)
     | _ -> raise (Invalid_Yojson ("Invalid unary operation.", yojson))
     end
   | `Variant (
