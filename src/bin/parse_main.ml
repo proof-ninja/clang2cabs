@@ -1,4 +1,5 @@
-open Clang2cabs_lib.Util
+open Clang2cabs_lib
+open Util
 
 let get_clang_command_path () =
   let envvar = "CLANG_TO_YOJSON" in
@@ -9,7 +10,10 @@ let get_clang_command_path () =
 let run dir =
   let cmd = get_clang_command_path () in
   Clang2yojson.convert_directory cmd dir
-    |> List.iter (fun f -> print_endline ("converted: "^f));
+    |> List.iter (fun f ->
+      print_endline ("converted: "^f);
+      Yojson2cabs.parse_yojson (f ^ ".yojson")
+    );
   Printf.printf "do parse c files in directory: '%s'\n" dir
 
 let help () =
