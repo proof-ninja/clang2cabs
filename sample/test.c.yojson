@@ -119,7 +119,7 @@
         "pointer" : 7,
         "source_range" : (
           {
-            "file" : "sample/test.c",
+            "file" : "clang2cabs/sample/test.c",
             "line" : 1,
             "column" : 1
           },
@@ -1069,9 +1069,929 @@
                 )>
               ]
             )>,
-            <"BinaryOperator" : (
+            <"ForStmt" : (
               {
                 "pointer" : 40,
+                "source_range" : (
+                  {
+                    "line" : 12,
+                    "column" : 5
+                  },
+                  {
+                    "line" : 14,
+                    "column" : 5
+                  }
+                )
+              },
+              [
+                <"BinaryOperator" : (
+                  {
+                    "pointer" : 41,
+                    "source_range" : (
+                      {
+                        "line" : 12,
+                        "column" : 10
+                      },
+                      {
+                        "column" : 14
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 42,
+                        "source_range" : (
+                          {
+                            "column" : 10
+                          },
+                          {
+                            "column" : 10
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 8
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 38,
+                          "name" : {
+                            "name" : "i",
+                            "qual_name" : [
+                              "i"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 8
+                          }
+                        }
+                      }
+                    )>,
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 43,
+                        "source_range" : (
+                          {
+                            "column" : 14
+                          },
+                          {
+                            "column" : 14
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 8
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "0"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 8
+                    }
+                  },
+                  {
+                    "kind" : <"Assign">
+                  }
+                )>,
+                <"NullStmt" : (
+                  {
+                    "pointer" : 44,
+                    "source_range" : (
+                      {
+                      },
+                      {
+                      }
+                    )
+                  },
+                  [
+                  ]
+                )>,
+                <"BinaryOperator" : (
+                  {
+                    "pointer" : 45,
+                    "source_range" : (
+                      {
+                        "column" : 17
+                      },
+                      {
+                        "column" : 42
+                      }
+                    )
+                  },
+                  [
+                    <"BinaryOperator" : (
+                      {
+                        "pointer" : 46,
+                        "source_range" : (
+                          {
+                            "column" : 17
+                          },
+                          {
+                            "column" : 32
+                          }
+                        )
+                      },
+                      [
+                        <"BinaryOperator" : (
+                          {
+                            "pointer" : 47,
+                            "source_range" : (
+                              {
+                                "column" : 17
+                              },
+                              {
+                                "column" : 21
+                              }
+                            )
+                          },
+                          [
+                            <"ImplicitCastExpr" : (
+                              {
+                                "pointer" : 48,
+                                "source_range" : (
+                                  {
+                                    "column" : 17
+                                  },
+                                  {
+                                    "column" : 17
+                                  }
+                                )
+                              },
+                              [
+                                <"DeclRefExpr" : (
+                                  {
+                                    "pointer" : 49,
+                                    "source_range" : (
+                                      {
+                                        "column" : 17
+                                      },
+                                      {
+                                        "column" : 17
+                                      }
+                                    )
+                                  },
+                                  [
+                                  ],
+                                  {
+                                    "qual_type" : {
+                                      "type_ptr" : 8
+                                    },
+                                    "value_kind" : <"LValue">
+                                  },
+                                  {
+                                    "decl_ref" : {
+                                      "kind" : <"Var">,
+                                      "decl_pointer" : 38,
+                                      "name" : {
+                                        "name" : "i",
+                                        "qual_name" : [
+                                          "i"
+                                        ]
+                                      },
+                                      "qual_type" : {
+                                        "type_ptr" : 8
+                                      }
+                                    }
+                                  }
+                                )>
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                }
+                              },
+                              {
+                                "cast_kind" : <"LValueToRValue">,
+                                "base_path" : [
+                                ]
+                              },
+                              false
+                            )>,
+                            <"IntegerLiteral" : (
+                              {
+                                "pointer" : 50,
+                                "source_range" : (
+                                  {
+                                    "column" : 21
+                                  },
+                                  {
+                                    "column" : 21
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                }
+                              },
+                              {
+                                "is_signed" : true,
+                                "bitwidth" : 32,
+                                "value" : "10"
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            }
+                          },
+                          {
+                            "kind" : <"LT">
+                          }
+                        )>,
+                        <"BinaryOperator" : (
+                          {
+                            "pointer" : 51,
+                            "source_range" : (
+                              {
+                                "column" : 27
+                              },
+                              {
+                                "column" : 32
+                              }
+                            )
+                          },
+                          [
+                            <"ImplicitCastExpr" : (
+                              {
+                                "pointer" : 52,
+                                "source_range" : (
+                                  {
+                                    "column" : 27
+                                  },
+                                  {
+                                    "column" : 27
+                                  }
+                                )
+                              },
+                              [
+                                <"DeclRefExpr" : (
+                                  {
+                                    "pointer" : 53,
+                                    "source_range" : (
+                                      {
+                                        "column" : 27
+                                      },
+                                      {
+                                        "column" : 27
+                                      }
+                                    )
+                                  },
+                                  [
+                                  ],
+                                  {
+                                    "qual_type" : {
+                                      "type_ptr" : 8
+                                    },
+                                    "value_kind" : <"LValue">
+                                  },
+                                  {
+                                    "decl_ref" : {
+                                      "kind" : <"Var">,
+                                      "decl_pointer" : 39,
+                                      "name" : {
+                                        "name" : "a",
+                                        "qual_name" : [
+                                          "a"
+                                        ]
+                                      },
+                                      "qual_type" : {
+                                        "type_ptr" : 8
+                                      }
+                                    }
+                                  }
+                                )>
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                }
+                              },
+                              {
+                                "cast_kind" : <"LValueToRValue">,
+                                "base_path" : [
+                                ]
+                              },
+                              false
+                            )>,
+                            <"IntegerLiteral" : (
+                              {
+                                "pointer" : 54,
+                                "source_range" : (
+                                  {
+                                    "column" : 32
+                                  },
+                                  {
+                                    "column" : 32
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                }
+                              },
+                              {
+                                "is_signed" : true,
+                                "bitwidth" : 32,
+                                "value" : "42"
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            }
+                          },
+                          {
+                            "kind" : <"EQ">
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 8
+                        }
+                      },
+                      {
+                        "kind" : <"LAnd">
+                      }
+                    )>,
+                    <"BinaryOperator" : (
+                      {
+                        "pointer" : 55,
+                        "source_range" : (
+                          {
+                            "column" : 38
+                          },
+                          {
+                            "column" : 42
+                          }
+                        )
+                      },
+                      [
+                        <"ImplicitCastExpr" : (
+                          {
+                            "pointer" : 56,
+                            "source_range" : (
+                              {
+                                "column" : 38
+                              },
+                              {
+                                "column" : 38
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 57,
+                                "source_range" : (
+                                  {
+                                    "column" : 38
+                                  },
+                                  {
+                                    "column" : 38
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                },
+                                "value_kind" : <"LValue">
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"Var">,
+                                  "decl_pointer" : 38,
+                                  "name" : {
+                                    "name" : "i",
+                                    "qual_name" : [
+                                      "i"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 8
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            }
+                          },
+                          {
+                            "cast_kind" : <"LValueToRValue">,
+                            "base_path" : [
+                            ]
+                          },
+                          false
+                        )>,
+                        <"ImplicitCastExpr" : (
+                          {
+                            "pointer" : 58,
+                            "source_range" : (
+                              {
+                                "column" : 42
+                              },
+                              {
+                                "column" : 42
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 59,
+                                "source_range" : (
+                                  {
+                                    "column" : 42
+                                  },
+                                  {
+                                    "column" : 42
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                },
+                                "value_kind" : <"LValue">
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"Var">,
+                                  "decl_pointer" : 39,
+                                  "name" : {
+                                    "name" : "a",
+                                    "qual_name" : [
+                                      "a"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 8
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            }
+                          },
+                          {
+                            "cast_kind" : <"LValueToRValue">,
+                            "base_path" : [
+                            ]
+                          },
+                          false
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 8
+                        }
+                      },
+                      {
+                        "kind" : <"LT">
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 8
+                    }
+                  },
+                  {
+                    "kind" : <"LOr">
+                  }
+                )>,
+                <"BinaryOperator" : (
+                  {
+                    "pointer" : 60,
+                    "source_range" : (
+                      {
+                        "column" : 45
+                      },
+                      {
+                        "column" : 53
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 61,
+                        "source_range" : (
+                          {
+                            "column" : 45
+                          },
+                          {
+                            "column" : 45
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 8
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 38,
+                          "name" : {
+                            "name" : "i",
+                            "qual_name" : [
+                              "i"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 8
+                          }
+                        }
+                      }
+                    )>,
+                    <"BinaryOperator" : (
+                      {
+                        "pointer" : 62,
+                        "source_range" : (
+                          {
+                            "column" : 49
+                          },
+                          {
+                            "column" : 53
+                          }
+                        )
+                      },
+                      [
+                        <"ImplicitCastExpr" : (
+                          {
+                            "pointer" : 63,
+                            "source_range" : (
+                              {
+                                "column" : 49
+                              },
+                              {
+                                "column" : 49
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 64,
+                                "source_range" : (
+                                  {
+                                    "column" : 49
+                                  },
+                                  {
+                                    "column" : 49
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                },
+                                "value_kind" : <"LValue">
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"Var">,
+                                  "decl_pointer" : 38,
+                                  "name" : {
+                                    "name" : "i",
+                                    "qual_name" : [
+                                      "i"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 8
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            }
+                          },
+                          {
+                            "cast_kind" : <"LValueToRValue">,
+                            "base_path" : [
+                            ]
+                          },
+                          false
+                        )>,
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 65,
+                            "source_range" : (
+                              {
+                                "column" : 53
+                              },
+                              {
+                                "column" : 53
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "1"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 8
+                        }
+                      },
+                      {
+                        "kind" : <"Add">
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 8
+                    }
+                  },
+                  {
+                    "kind" : <"Assign">
+                  }
+                )>,
+                <"CompoundStmt" : (
+                  {
+                    "pointer" : 66,
+                    "source_range" : (
+                      {
+                        "column" : 56
+                      },
+                      {
+                        "line" : 14,
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                    <"BinaryOperator" : (
+                      {
+                        "pointer" : 67,
+                        "source_range" : (
+                          {
+                            "line" : 13,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 17
+                          }
+                        )
+                      },
+                      [
+                        <"DeclRefExpr" : (
+                          {
+                            "pointer" : 68,
+                            "source_range" : (
+                              {
+                                "column" : 9
+                              },
+                              {
+                                "column" : 9
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            },
+                            "value_kind" : <"LValue">
+                          },
+                          {
+                            "decl_ref" : {
+                              "kind" : <"Var">,
+                              "decl_pointer" : 39,
+                              "name" : {
+                                "name" : "a",
+                                "qual_name" : [
+                                  "a"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 8
+                              }
+                            }
+                          }
+                        )>,
+                        <"BinaryOperator" : (
+                          {
+                            "pointer" : 69,
+                            "source_range" : (
+                              {
+                                "column" : 13
+                              },
+                              {
+                                "column" : 17
+                              }
+                            )
+                          },
+                          [
+                            <"ImplicitCastExpr" : (
+                              {
+                                "pointer" : 70,
+                                "source_range" : (
+                                  {
+                                    "column" : 13
+                                  },
+                                  {
+                                    "column" : 13
+                                  }
+                                )
+                              },
+                              [
+                                <"DeclRefExpr" : (
+                                  {
+                                    "pointer" : 71,
+                                    "source_range" : (
+                                      {
+                                        "column" : 13
+                                      },
+                                      {
+                                        "column" : 13
+                                      }
+                                    )
+                                  },
+                                  [
+                                  ],
+                                  {
+                                    "qual_type" : {
+                                      "type_ptr" : 8
+                                    },
+                                    "value_kind" : <"LValue">
+                                  },
+                                  {
+                                    "decl_ref" : {
+                                      "kind" : <"Var">,
+                                      "decl_pointer" : 39,
+                                      "name" : {
+                                        "name" : "a",
+                                        "qual_name" : [
+                                          "a"
+                                        ]
+                                      },
+                                      "qual_type" : {
+                                        "type_ptr" : 8
+                                      }
+                                    }
+                                  }
+                                )>
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                }
+                              },
+                              {
+                                "cast_kind" : <"LValueToRValue">,
+                                "base_path" : [
+                                ]
+                              },
+                              false
+                            )>,
+                            <"ImplicitCastExpr" : (
+                              {
+                                "pointer" : 72,
+                                "source_range" : (
+                                  {
+                                    "column" : 17
+                                  },
+                                  {
+                                    "column" : 17
+                                  }
+                                )
+                              },
+                              [
+                                <"DeclRefExpr" : (
+                                  {
+                                    "pointer" : 73,
+                                    "source_range" : (
+                                      {
+                                        "column" : 17
+                                      },
+                                      {
+                                        "column" : 17
+                                      }
+                                    )
+                                  },
+                                  [
+                                  ],
+                                  {
+                                    "qual_type" : {
+                                      "type_ptr" : 8
+                                    },
+                                    "value_kind" : <"LValue">
+                                  },
+                                  {
+                                    "decl_ref" : {
+                                      "kind" : <"Var">,
+                                      "decl_pointer" : 38,
+                                      "name" : {
+                                        "name" : "i",
+                                        "qual_name" : [
+                                          "i"
+                                        ]
+                                      },
+                                      "qual_type" : {
+                                        "type_ptr" : 8
+                                      }
+                                    }
+                                  }
+                                )>
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 8
+                                }
+                              },
+                              {
+                                "cast_kind" : <"LValueToRValue">,
+                                "base_path" : [
+                                ]
+                              },
+                              false
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 8
+                            }
+                          },
+                          {
+                            "kind" : <"Add">
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 8
+                        }
+                      },
+                      {
+                        "kind" : <"Assign">
+                      }
+                    )>
+                  ]
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 74,
                 "source_range" : (
                   {
                     "line" : 15,
@@ -1085,7 +2005,7 @@
               [
                 <"DeclRefExpr" : (
                   {
-                    "pointer" : 41,
+                    "pointer" : 75,
                     "source_range" : (
                       {
                         "column" : 5
@@ -1121,7 +2041,7 @@
                 )>,
                 <"IntegerLiteral" : (
                   {
-                    "pointer" : 42,
+                    "pointer" : 76,
                     "source_range" : (
                       {
                         "column" : 9
@@ -1156,7 +2076,7 @@
             )>,
             <"WhileStmt" : (
               {
-                "pointer" : 43,
+                "pointer" : 77,
                 "source_range" : (
                   {
                     "line" : 16,
@@ -1171,7 +2091,7 @@
               [
                 <"BinaryOperator" : (
                   {
-                    "pointer" : 44,
+                    "pointer" : 78,
                     "source_range" : (
                       {
                         "line" : 16,
@@ -1185,7 +2105,7 @@
                   [
                     <"ImplicitCastExpr" : (
                       {
-                        "pointer" : 45,
+                        "pointer" : 79,
                         "source_range" : (
                           {
                             "column" : 12
@@ -1198,7 +2118,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 46,
+                            "pointer" : 80,
                             "source_range" : (
                               {
                                 "column" : 12
@@ -1247,7 +2167,7 @@
                     )>,
                     <"IntegerLiteral" : (
                       {
-                        "pointer" : 47,
+                        "pointer" : 81,
                         "source_range" : (
                           {
                             "column" : 16
@@ -1282,7 +2202,7 @@
                 )>,
                 <"CompoundStmt" : (
                   {
-                    "pointer" : 48,
+                    "pointer" : 82,
                     "source_range" : (
                       {
                         "column" : 20
@@ -1296,7 +2216,7 @@
                   [
                     <"BinaryOperator" : (
                       {
-                        "pointer" : 49,
+                        "pointer" : 83,
                         "source_range" : (
                           {
                             "line" : 17,
@@ -1310,7 +2230,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 50,
+                            "pointer" : 84,
                             "source_range" : (
                               {
                                 "column" : 9
@@ -1346,7 +2266,7 @@
                         )>,
                         <"BinaryOperator" : (
                           {
-                            "pointer" : 51,
+                            "pointer" : 85,
                             "source_range" : (
                               {
                                 "column" : 13
@@ -1359,7 +2279,7 @@
                           [
                             <"ImplicitCastExpr" : (
                               {
-                                "pointer" : 52,
+                                "pointer" : 86,
                                 "source_range" : (
                                   {
                                     "column" : 13
@@ -1372,7 +2292,7 @@
                               [
                                 <"DeclRefExpr" : (
                                   {
-                                    "pointer" : 53,
+                                    "pointer" : 87,
                                     "source_range" : (
                                       {
                                         "column" : 13
@@ -1421,7 +2341,7 @@
                             )>,
                             <"ImplicitCastExpr" : (
                               {
-                                "pointer" : 54,
+                                "pointer" : 88,
                                 "source_range" : (
                                   {
                                     "column" : 17
@@ -1434,7 +2354,7 @@
                               [
                                 <"DeclRefExpr" : (
                                   {
-                                    "pointer" : 55,
+                                    "pointer" : 89,
                                     "source_range" : (
                                       {
                                         "column" : 17
@@ -1503,7 +2423,7 @@
                     )>,
                     <"BinaryOperator" : (
                       {
-                        "pointer" : 56,
+                        "pointer" : 90,
                         "source_range" : (
                           {
                             "line" : 18,
@@ -1517,7 +2437,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 57,
+                            "pointer" : 91,
                             "source_range" : (
                               {
                                 "column" : 9
@@ -1553,7 +2473,7 @@
                         )>,
                         <"BinaryOperator" : (
                           {
-                            "pointer" : 58,
+                            "pointer" : 92,
                             "source_range" : (
                               {
                                 "column" : 13
@@ -1566,7 +2486,7 @@
                           [
                             <"ImplicitCastExpr" : (
                               {
-                                "pointer" : 59,
+                                "pointer" : 93,
                                 "source_range" : (
                                   {
                                     "column" : 13
@@ -1579,7 +2499,7 @@
                               [
                                 <"DeclRefExpr" : (
                                   {
-                                    "pointer" : 60,
+                                    "pointer" : 94,
                                     "source_range" : (
                                       {
                                         "column" : 13
@@ -1628,7 +2548,7 @@
                             )>,
                             <"IntegerLiteral" : (
                               {
-                                "pointer" : 61,
+                                "pointer" : 95,
                                 "source_range" : (
                                   {
                                     "column" : 17
@@ -1677,7 +2597,7 @@
             )>,
             <"IfStmt" : (
               {
-                "pointer" : 62,
+                "pointer" : 96,
                 "source_range" : (
                   {
                     "line" : 20,
@@ -1692,7 +2612,7 @@
               [
                 <"UnaryOperator" : (
                   {
-                    "pointer" : 63,
+                    "pointer" : 97,
                     "source_range" : (
                       {
                         "line" : 20,
@@ -1706,7 +2626,7 @@
                   [
                     <"ParenExpr" : (
                       {
-                        "pointer" : 64,
+                        "pointer" : 98,
                         "source_range" : (
                           {
                             "column" : 10
@@ -1719,7 +2639,7 @@
                       [
                         <"BinaryOperator" : (
                           {
-                            "pointer" : 65,
+                            "pointer" : 99,
                             "source_range" : (
                               {
                                 "column" : 11
@@ -1732,7 +2652,7 @@
                           [
                             <"ImplicitCastExpr" : (
                               {
-                                "pointer" : 66,
+                                "pointer" : 100,
                                 "source_range" : (
                                   {
                                     "column" : 11
@@ -1745,7 +2665,7 @@
                               [
                                 <"DeclRefExpr" : (
                                   {
-                                    "pointer" : 67,
+                                    "pointer" : 101,
                                     "source_range" : (
                                       {
                                         "column" : 11
@@ -1794,7 +2714,7 @@
                             )>,
                             <"IntegerLiteral" : (
                               {
-                                "pointer" : 68,
+                                "pointer" : 102,
                                 "source_range" : (
                                   {
                                     "column" : 15
@@ -1846,7 +2766,7 @@
                 )>,
                 <"CompoundStmt" : (
                   {
-                    "pointer" : 69,
+                    "pointer" : 103,
                     "source_range" : (
                       {
                         "column" : 20
@@ -1860,7 +2780,7 @@
                   [
                     <"BinaryOperator" : (
                       {
-                        "pointer" : 70,
+                        "pointer" : 104,
                         "source_range" : (
                           {
                             "line" : 21,
@@ -1874,7 +2794,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 71,
+                            "pointer" : 105,
                             "source_range" : (
                               {
                                 "column" : 9
@@ -1910,7 +2830,7 @@
                         )>,
                         <"IntegerLiteral" : (
                           {
-                            "pointer" : 72,
+                            "pointer" : 106,
                             "source_range" : (
                               {
                                 "column" : 13
@@ -1945,7 +2865,7 @@
                     )>,
                     <"IfStmt" : (
                       {
-                        "pointer" : 73,
+                        "pointer" : 107,
                         "source_range" : (
                           {
                             "line" : 22,
@@ -1959,7 +2879,7 @@
                       [
                         <"BinaryOperator" : (
                           {
-                            "pointer" : 74,
+                            "pointer" : 108,
                             "source_range" : (
                               {
                                 "column" : 13
@@ -1972,7 +2892,7 @@
                           [
                             <"ImplicitCastExpr" : (
                               {
-                                "pointer" : 75,
+                                "pointer" : 109,
                                 "source_range" : (
                                   {
                                     "column" : 13
@@ -1985,7 +2905,7 @@
                               [
                                 <"DeclRefExpr" : (
                                   {
-                                    "pointer" : 76,
+                                    "pointer" : 110,
                                     "source_range" : (
                                       {
                                         "column" : 13
@@ -2034,7 +2954,7 @@
                             )>,
                             <"IntegerLiteral" : (
                               {
-                                "pointer" : 77,
+                                "pointer" : 111,
                                 "source_range" : (
                                   {
                                     "column" : 18
@@ -2069,7 +2989,7 @@
                         )>,
                         <"BinaryOperator" : (
                           {
-                            "pointer" : 78,
+                            "pointer" : 112,
                             "source_range" : (
                               {
                                 "column" : 22
@@ -2082,7 +3002,7 @@
                           [
                             <"DeclRefExpr" : (
                               {
-                                "pointer" : 79,
+                                "pointer" : 113,
                                 "source_range" : (
                                   {
                                     "column" : 22
@@ -2118,7 +3038,7 @@
                             )>,
                             <"IntegerLiteral" : (
                               {
-                                "pointer" : 80,
+                                "pointer" : 114,
                                 "source_range" : (
                                   {
                                     "column" : 26
@@ -2153,15 +3073,15 @@
                         )>
                       ],
                       {
-                        "cond" : 74,
-                        "then" : 78
+                        "cond" : 108,
+                        "then" : 112
                       }
                     )>
                   ]
                 )>,
                 <"CompoundStmt" : (
                   {
-                    "pointer" : 81,
+                    "pointer" : 115,
                     "source_range" : (
                       {
                         "line" : 23,
@@ -2176,7 +3096,7 @@
                   [
                     <"BinaryOperator" : (
                       {
-                        "pointer" : 82,
+                        "pointer" : 116,
                         "source_range" : (
                           {
                             "line" : 24,
@@ -2190,7 +3110,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 83,
+                            "pointer" : 117,
                             "source_range" : (
                               {
                                 "column" : 9
@@ -2226,7 +3146,7 @@
                         )>,
                         <"IntegerLiteral" : (
                           {
-                            "pointer" : 84,
+                            "pointer" : 118,
                             "source_range" : (
                               {
                                 "column" : 13
@@ -2263,10 +3183,10 @@
                 )>
               ],
               {
-                "cond" : 63,
-                "then" : 69,
+                "cond" : 97,
+                "then" : 103,
                 "else" : (
-                  81,
+                  115,
                   {
                     "line" : 23,
                     "column" : 7
@@ -2276,7 +3196,7 @@
             )>,
             <"ReturnStmt" : (
               {
-                "pointer" : 85,
+                "pointer" : 119,
                 "source_range" : (
                   {
                     "line" : 26,
@@ -2296,7 +3216,7 @@
     )>,
     <"FunctionDecl" : (
       {
-        "pointer" : 86,
+        "pointer" : 120,
         "source_range" : (
           {
             "line" : 29,
@@ -2315,13 +3235,13 @@
         ]
       },
       {
-        "type_ptr" : 87
+        "type_ptr" : 121
       },
       {
-        "decl_ptr_with_body" : 86,
+        "decl_ptr_with_body" : 120,
         "body" : <"CompoundStmt" : (
           {
-            "pointer" : 88,
+            "pointer" : 122,
             "source_range" : (
               {
                 "line" : 29,
@@ -2336,7 +3256,7 @@
           [
             <"DeclStmt" : (
               {
-                "pointer" : 89,
+                "pointer" : 123,
                 "source_range" : (
                   {
                     "line" : 30,
@@ -2352,7 +3272,7 @@
               [
                 <"VarDecl" : (
                   {
-                    "pointer" : 90,
+                    "pointer" : 124,
                     "source_range" : (
                       {
                         "column" : 5
@@ -2378,7 +3298,7 @@
                 )>,
                 <"VarDecl" : (
                   {
-                    "pointer" : 91,
+                    "pointer" : 125,
                     "source_range" : (
                       {
                         "column" : 5
@@ -2404,7 +3324,7 @@
                 )>,
                 <"VarDecl" : (
                   {
-                    "pointer" : 92,
+                    "pointer" : 126,
                     "source_range" : (
                       {
                         "column" : 5
@@ -2432,7 +3352,7 @@
             )>,
             <"BinaryOperator" : (
               {
-                "pointer" : 93,
+                "pointer" : 127,
                 "source_range" : (
                   {
                     "line" : 31,
@@ -2446,7 +3366,7 @@
               [
                 <"DeclRefExpr" : (
                   {
-                    "pointer" : 94,
+                    "pointer" : 128,
                     "source_range" : (
                       {
                         "column" : 5
@@ -2467,7 +3387,7 @@
                   {
                     "decl_ref" : {
                       "kind" : <"Var">,
-                      "decl_pointer" : 90,
+                      "decl_pointer" : 124,
                       "name" : {
                         "name" : "a",
                         "qual_name" : [
@@ -2482,7 +3402,7 @@
                 )>,
                 <"BinaryOperator" : (
                   {
-                    "pointer" : 95,
+                    "pointer" : 129,
                     "source_range" : (
                       {
                         "column" : 9
@@ -2495,7 +3415,7 @@
                   [
                     <"BinaryOperator" : (
                       {
-                        "pointer" : 96,
+                        "pointer" : 130,
                         "source_range" : (
                           {
                             "column" : 9
@@ -2508,7 +3428,7 @@
                       [
                         <"IntegerLiteral" : (
                           {
-                            "pointer" : 97,
+                            "pointer" : 131,
                             "source_range" : (
                               {
                                 "column" : 9
@@ -2533,7 +3453,7 @@
                         )>,
                         <"ParenExpr" : (
                           {
-                            "pointer" : 98,
+                            "pointer" : 132,
                             "source_range" : (
                               {
                                 "column" : 13
@@ -2546,7 +3466,7 @@
                           [
                             <"BinaryOperator" : (
                               {
-                                "pointer" : 99,
+                                "pointer" : 133,
                                 "source_range" : (
                                   {
                                     "column" : 14
@@ -2559,7 +3479,7 @@
                               [
                                 <"IntegerLiteral" : (
                                   {
-                                    "pointer" : 100,
+                                    "pointer" : 134,
                                     "source_range" : (
                                       {
                                         "column" : 14
@@ -2584,7 +3504,7 @@
                                 )>,
                                 <"IntegerLiteral" : (
                                   {
-                                    "pointer" : 101,
+                                    "pointer" : 135,
                                     "source_range" : (
                                       {
                                         "column" : 18
@@ -2636,7 +3556,7 @@
                     )>,
                     <"IntegerLiteral" : (
                       {
-                        "pointer" : 102,
+                        "pointer" : 136,
                         "source_range" : (
                           {
                             "column" : 23
@@ -2681,7 +3601,7 @@
             )>,
             <"BinaryOperator" : (
               {
-                "pointer" : 103,
+                "pointer" : 137,
                 "source_range" : (
                   {
                     "line" : 32,
@@ -2695,7 +3615,7 @@
               [
                 <"DeclRefExpr" : (
                   {
-                    "pointer" : 104,
+                    "pointer" : 138,
                     "source_range" : (
                       {
                         "column" : 5
@@ -2716,7 +3636,7 @@
                   {
                     "decl_ref" : {
                       "kind" : <"Var">,
-                      "decl_pointer" : 91,
+                      "decl_pointer" : 125,
                       "name" : {
                         "name" : "b",
                         "qual_name" : [
@@ -2731,7 +3651,7 @@
                 )>,
                 <"BinaryOperator" : (
                   {
-                    "pointer" : 105,
+                    "pointer" : 139,
                     "source_range" : (
                       {
                         "column" : 9
@@ -2744,7 +3664,7 @@
                   [
                     <"BinaryOperator" : (
                       {
-                        "pointer" : 106,
+                        "pointer" : 140,
                         "source_range" : (
                           {
                             "column" : 9
@@ -2757,7 +3677,7 @@
                       [
                         <"IntegerLiteral" : (
                           {
-                            "pointer" : 107,
+                            "pointer" : 141,
                             "source_range" : (
                               {
                                 "column" : 9
@@ -2782,7 +3702,7 @@
                         )>,
                         <"IntegerLiteral" : (
                           {
-                            "pointer" : 108,
+                            "pointer" : 142,
                             "source_range" : (
                               {
                                 "column" : 14
@@ -2817,7 +3737,7 @@
                     )>,
                     <"IntegerLiteral" : (
                       {
-                        "pointer" : 109,
+                        "pointer" : 143,
                         "source_range" : (
                           {
                             "column" : 18
@@ -2862,7 +3782,7 @@
             )>,
             <"BinaryOperator" : (
               {
-                "pointer" : 110,
+                "pointer" : 144,
                 "source_range" : (
                   {
                     "line" : 33,
@@ -2876,7 +3796,7 @@
               [
                 <"DeclRefExpr" : (
                   {
-                    "pointer" : 111,
+                    "pointer" : 145,
                     "source_range" : (
                       {
                         "column" : 5
@@ -2897,7 +3817,7 @@
                   {
                     "decl_ref" : {
                       "kind" : <"Var">,
-                      "decl_pointer" : 92,
+                      "decl_pointer" : 126,
                       "name" : {
                         "name" : "c",
                         "qual_name" : [
@@ -2912,7 +3832,7 @@
                 )>,
                 <"CallExpr" : (
                   {
-                    "pointer" : 112,
+                    "pointer" : 146,
                     "source_range" : (
                       {
                         "column" : 9
@@ -2925,7 +3845,7 @@
                   [
                     <"ImplicitCastExpr" : (
                       {
-                        "pointer" : 113,
+                        "pointer" : 147,
                         "source_range" : (
                           {
                             "column" : 9
@@ -2938,7 +3858,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 114,
+                            "pointer" : 148,
                             "source_range" : (
                               {
                                 "column" : 9
@@ -2974,7 +3894,7 @@
                       ],
                       {
                         "qual_type" : {
-                          "type_ptr" : 115
+                          "type_ptr" : 149
                         }
                       },
                       {
@@ -2986,7 +3906,7 @@
                     )>,
                     <"ImplicitCastExpr" : (
                       {
-                        "pointer" : 116,
+                        "pointer" : 150,
                         "source_range" : (
                           {
                             "column" : 14
@@ -2999,7 +3919,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 117,
+                            "pointer" : 151,
                             "source_range" : (
                               {
                                 "column" : 14
@@ -3020,7 +3940,7 @@
                           {
                             "decl_ref" : {
                               "kind" : <"Var">,
-                              "decl_pointer" : 90,
+                              "decl_pointer" : 124,
                               "name" : {
                                 "name" : "a",
                                 "qual_name" : [
@@ -3048,7 +3968,7 @@
                     )>,
                     <"ImplicitCastExpr" : (
                       {
-                        "pointer" : 118,
+                        "pointer" : 152,
                         "source_range" : (
                           {
                             "column" : 17
@@ -3061,7 +3981,7 @@
                       [
                         <"DeclRefExpr" : (
                           {
-                            "pointer" : 119,
+                            "pointer" : 153,
                             "source_range" : (
                               {
                                 "column" : 17
@@ -3082,7 +4002,7 @@
                           {
                             "decl_ref" : {
                               "kind" : <"Var">,
-                              "decl_pointer" : 91,
+                              "decl_pointer" : 125,
                               "name" : {
                                 "name" : "b",
                                 "qual_name" : [
@@ -3127,7 +4047,7 @@
             )>,
             <"ReturnStmt" : (
               {
-                "pointer" : 120,
+                "pointer" : 154,
                 "source_range" : (
                   {
                     "line" : 34,
@@ -3141,7 +4061,7 @@
               [
                 <"IntegerLiteral" : (
                   {
-                    "pointer" : 121,
+                    "pointer" : 155,
                     "source_range" : (
                       {
                         "column" : 12
@@ -3172,7 +4092,7 @@
     )>,
     <"TypedefDecl" : (
       {
-        "pointer" : 122,
+        "pointer" : 156,
         "source_range" : (
           {
           },
@@ -3187,7 +4107,7 @@
           "instancetype"
         ]
       },
-      123,
+      157,
       {
       }
     )>
@@ -3195,7 +4115,7 @@
   {
   },
   {
-    "input_path" : "sample/test.c",
+    "input_path" : "clang2cabs/sample/test.c",
     "input_kind" : <"IK_C">,
     "integer_type_widths" : {
       "char_type" : 8,
@@ -3207,31 +4127,31 @@
     "types" : [
       <"BuiltinType" : (
         {
-          "pointer" : 124
+          "pointer" : 158
         },
         <"Void">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 125
+          "pointer" : 159
         },
         <"Bool">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 126
+          "pointer" : 160
         },
         <"Char_S">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 127
+          "pointer" : 161
         },
         <"SChar">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 128
+          "pointer" : 162
         },
         <"Short">
       )>,
@@ -3243,359 +4163,359 @@
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 129
+          "pointer" : 163
         },
         <"Long">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 130
+          "pointer" : 164
         },
         <"LongLong">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 131
+          "pointer" : 165
         },
         <"UChar">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 132
+          "pointer" : 166
         },
         <"UShort">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 133
+          "pointer" : 167
         },
         <"UInt">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 134
+          "pointer" : 168
         },
         <"ULong">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 135
+          "pointer" : 169
         },
         <"ULongLong">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 136
+          "pointer" : 170
         },
         <"Float">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 137
+          "pointer" : 171
         },
         <"Double">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 138
+          "pointer" : 172
         },
         <"LongDouble">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 139
+          "pointer" : 173
         },
         <"Float128">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 140
+          "pointer" : 174
         },
         <"Float16">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 141
+          "pointer" : 175
         },
         <"ShortAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 142
+          "pointer" : 176
         },
         <"Accum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 143
+          "pointer" : 177
         },
         <"LongAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 144
+          "pointer" : 178
         },
         <"UShortAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 145
+          "pointer" : 179
         },
         <"UAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 146
+          "pointer" : 180
         },
         <"ULongAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 147
+          "pointer" : 181
         },
         <"ShortFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 148
+          "pointer" : 182
         },
         <"Fract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 149
+          "pointer" : 183
         },
         <"LongFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 150
+          "pointer" : 184
         },
         <"UShortFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 151
+          "pointer" : 185
         },
         <"UFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 152
+          "pointer" : 186
         },
         <"ULongFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 153
+          "pointer" : 187
         },
         <"SatShortAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 154
+          "pointer" : 188
         },
         <"SatAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 155
+          "pointer" : 189
         },
         <"SatLongAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 156
+          "pointer" : 190
         },
         <"SatUShortAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 157
+          "pointer" : 191
         },
         <"SatUAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 158
+          "pointer" : 192
         },
         <"SatULongAccum">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 159
+          "pointer" : 193
         },
         <"SatShortFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 160
+          "pointer" : 194
         },
         <"SatFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 161
+          "pointer" : 195
         },
         <"SatLongFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 162
+          "pointer" : 196
         },
         <"SatUShortFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 163
+          "pointer" : 197
         },
         <"SatUFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 164
+          "pointer" : 198
         },
         <"SatULongFract">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 165
+          "pointer" : 199
         },
         <"Int128">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 166
+          "pointer" : 200
         },
         <"UInt128">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 167
+          "pointer" : 201
         },
         <"WChar_S">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 168
+          "pointer" : 202
         },
         <"Char8">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 169
+          "pointer" : 203
         },
         <"Dependent">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 170
+          "pointer" : 204
         },
         <"Overload">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 171
+          "pointer" : 205
         },
         <"BoundMember">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 172
+          "pointer" : 206
         },
         <"PseudoObject">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 173
+          "pointer" : 207
         },
         <"UnknownAny">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 174
+          "pointer" : 208
         },
         <"ARCUnbridgedCast">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 175
+          "pointer" : 209
         },
         <"BuiltinFn">
       )>,
       <"ComplexType" : (
         {
-          "pointer" : 176
+          "pointer" : 210
         }
       )>,
       <"ComplexType" : (
         {
-          "pointer" : 177
+          "pointer" : 211
         }
       )>,
       <"ComplexType" : (
         {
-          "pointer" : 178
+          "pointer" : 212
         }
       )>,
       <"ComplexType" : (
         {
-          "pointer" : 179
+          "pointer" : 213
         }
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 180
+          "pointer" : 214
         },
         <"ObjCId">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 181
+          "pointer" : 215
         },
         <"ObjCClass">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 182
+          "pointer" : 216
         },
         <"ObjCSel">
       )>,
       <"PointerType" : (
         {
-          "pointer" : 183
+          "pointer" : 217
         },
         {
-          "type_ptr" : 124
+          "type_ptr" : 158
         }
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 184
+          "pointer" : 218
         },
         <"NullPtr">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 185
+          "pointer" : 219
         },
         <"Half">
       )>,
       <"BuiltinType" : (
         {
-          "pointer" : 186
+          "pointer" : 220
         },
         <"BFloat16">
       )>,
       <"RecordType" : (
         {
-          "pointer" : 187
+          "pointer" : 221
         },
-        188
+        222
       )>,
       <"PointerType" : (
         {
-          "pointer" : 189
+          "pointer" : 223
         },
         {
           "type_ptr" : 8,
@@ -3604,34 +4524,34 @@
       )>,
       <"PointerType" : (
         {
-          "pointer" : 190
+          "pointer" : 224
         },
         {
-          "type_ptr" : 126,
+          "type_ptr" : 160,
           "is_const" : true
         }
       )>,
       <"PointerType" : (
         {
-          "pointer" : 191
+          "pointer" : 225
         },
         {
-          "type_ptr" : 126
+          "type_ptr" : 160
         }
       )>,
       <"RecordType" : (
         {
-          "pointer" : 192
+          "pointer" : 226
         },
-        193
+        227
       )>,
       <"ConstantArrayType" : (
         {
-          "pointer" : 194
+          "pointer" : 228
         },
         {
           "element_type" : {
-            "type_ptr" : 192
+            "type_ptr" : 226
           },
           "stride" : 24
         },
@@ -3663,13 +4583,13 @@
         },
         {
           "return_type" : {
-            "type_ptr" : 124
+            "type_ptr" : 158
           }
         }
       )>,
       <"FunctionProtoType" : (
         {
-          "pointer" : 87
+          "pointer" : 121
         },
         {
           "return_type" : {
@@ -3681,15 +4601,15 @@
       )>,
       <"PointerType" : (
         {
-          "pointer" : 195
+          "pointer" : 229
         },
         {
-          "type_ptr" : 191
+          "type_ptr" : 225
         }
       )>,
       <"PointerType" : (
         {
-          "pointer" : 115
+          "pointer" : 149
         },
         {
           "type_ptr" : 10
@@ -3697,42 +4617,42 @@
       )>,
       <"ObjCObjectType" : (
         {
-          "pointer" : 196
+          "pointer" : 230
         },
         {
-          "base_type" : 180
+          "base_type" : 214
         }
       )>,
       <"ObjCObjectPointerType" : (
         {
-          "pointer" : 197
+          "pointer" : 231
         },
         {
-          "type_ptr" : 196
+          "type_ptr" : 230
         }
       )>,
       <"TypedefType" : (
         {
-          "pointer" : 198,
-          "desugared_type" : 197
+          "pointer" : 232,
+          "desugared_type" : 231
         },
         {
           "child_type" : {
-            "type_ptr" : 197
+            "type_ptr" : 231
           },
-          "decl_ptr" : 199
+          "decl_ptr" : 233
         }
       )>,
       <"TypedefType" : (
         {
-          "pointer" : 123,
-          "desugared_type" : 197
+          "pointer" : 157,
+          "desugared_type" : 231
         },
         {
           "child_type" : {
-            "type_ptr" : 198
+            "type_ptr" : 232
           },
-          "decl_ptr" : 122
+          "decl_ptr" : 156
         }
       )>,
       <"NoneType" : (

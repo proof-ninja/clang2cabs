@@ -9,9 +9,9 @@ int test(int x, int y) {
 
 void test2() {
     int i, a = 0;
-    // for (i = 0; i < 10; i = i + 1) {
-    //     a += i;
-    // }
+    for (i = 0; i < 10 && a == 42 || i < a; i = i + 1) {
+        a = a + i;
+    }
     i = 0;
     while (i < 10) {
         a = a + i;

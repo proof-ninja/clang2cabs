@@ -29,6 +29,7 @@ and statement =
   | COMPUTATION of expression
   | BLOCK of block
   | IF of expression * statement * statement
+  | FOR of expression * expression * expression * statement
   | WHILE of expression * statement
   | RETURN of expression option
   | VARDECL of init_name_group
@@ -105,7 +106,7 @@ and show_init_name ((name, decl_type), init_expr) =
     name ^ " = " ^ show_expression expr
 and show_decl_type = function
   | JUSTBASE -> ""
-  | ARRAY decl_type -> "[]" ^ show_decl_type decl_type
+  | ARRAY decl_type -> show_decl_type decl_type ^ "[]"
 and show_specifier specifier_list =
   String.concat ", " @@ List.map show_type_specifier specifier_list
 and show_type_specifier = function
@@ -133,6 +134,14 @@ and show_statement indent = function
       indent ^ "} else {\n" ^
       show_statement ("  " ^ indent) if_false ^ "\n" ^
       indent ^ "}"
+  | FOR (init, cond, mut, stats) ->
+    indent ^ "FOR(\n" ^
+    indent ^ "  " ^ show_expression init ^ "\n" ^
+    indent ^ "  " ^ show_expression cond ^ "\n" ^
+    indent ^ "  " ^ show_expression mut ^ "\n" ^
+    indent ^ ") {\n" ^
+    indent ^ show_statement ("  " ^ indent) stats ^ "\n" ^
+    indent ^ "}"
   | WHILE (cond, stat) ->
     indent ^ "WHILE (" ^ show_expression cond ^ ") {\n" ^
     show_statement ("  " ^ indent) stat ^ "\n" ^

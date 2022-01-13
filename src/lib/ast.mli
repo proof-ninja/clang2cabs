@@ -29,6 +29,7 @@ and statement =
   | COMPUTATION of expression
   | BLOCK of block
   | IF of expression * statement * statement
+  | FOR of expression * expression * expression * statement
   | WHILE of expression * statement
   | RETURN of expression option
   | VARDECL of init_name_group
