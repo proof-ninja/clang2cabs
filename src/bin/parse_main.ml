@@ -12,7 +12,10 @@ let run dir =
   Clang2yojson.convert_directory cmd dir
     |> List.iter (fun f ->
       print_endline ("converted: "^f);
-      Yojson2cabs.parse_yojson (f ^ ".yojson")
+      (* TODO: We should output serialized AST files instead of prettyprinting. *)
+      match Yojson2ast.parse_yojson (f ^ ".yojson") with
+      | Ok ast -> Printf.printf "%s" (Ast.show ast)
+      | Error (message, yojson) -> Printf.printf "%s\n%s\n" message yojson
     );
   Printf.printf "do parse c files in directory: '%s'\n" dir
 
