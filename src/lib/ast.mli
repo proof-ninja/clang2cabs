@@ -16,7 +16,7 @@ and name = string * decl_type
 
 and init_name = name * init_expression
 
-and single_name = specifier * string
+and single_name = specifier * name
 
 and definition =
   | FUNDEF of single_name * single_name list * block

@@ -16,7 +16,7 @@ and name = string * decl_type
 
 and init_name = name * init_expression
 
-and single_name = specifier * string
+and single_name = specifier * name
 
 and definition =
   | FUNDEF of single_name * single_name list * block
@@ -69,15 +69,17 @@ let rec show_file indent = function (filename, definition_list) ->
   indent ^ "File(name: " ^ filename ^ "\n" ^
   defs ^ "\n" ^
   ")"
+and show_name (name, decl_type) =
+  name ^ (show_decl_type decl_type)
 and show_definition indent = function
   | FUNDEF ((return_type, func_name), single_name_list, block) ->
     let args =
       single_name_list
-      |> List.map (fun (specifier, str) -> str ^ ":" ^ show_specifier specifier )
+      |> List.map (fun (specifier, name) -> show_name name ^ ":" ^ show_specifier specifier )
       |> String.concat ", "
     in
     indent ^ "Function(\n" ^
-    indent ^ "  name: " ^ func_name ^ "; return_type: " ^ show_specifier return_type ^ "\n" ^
+    indent ^ "  name: " ^ show_name func_name ^ "; return_type: " ^ show_specifier return_type ^ "\n" ^
     indent ^ "  arguments: " ^ args ^ "\n" ^
     indent ^ "  {\n" ^
     show_block ("  " ^ indent) block ^ "\n" ^
