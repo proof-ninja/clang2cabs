@@ -518,8 +518,10 @@ let ast_of_yojson (fname:string) : Yojson.Safe.t -> Ast.file = function
           end
         in
         let typemap = make_typemap typedata in
+        (* For debbug *)
         show_typemap typemap;
         let function_typeinfo = make_fuction_typeinfo typemap typedata in
+        (* For debbug *)
         show_fuction_typeinfo function_typeinfo;
         let definitions = ast_of_yojson typemap function_typeinfo decls in
         fname, definitions
@@ -528,12 +530,6 @@ let ast_of_yojson (fname:string) : Yojson.Safe.t -> Ast.file = function
 
 let parse_yojson fname =
   let yojson = Yojson.Safe.from_file fname in
-  try (
-    yojson 
-    |> (ast_of_yojson fname) 
-    |> Ast.show
-    |> Printf.printf "%s\n"
-  ) with
+  try Ok (ast_of_yojson fname yojson) with
   | Invalid_Yojson (message, yojson) ->
-    Printf.printf "%s\n" message;
-    Format.printf "%a\n" Yojson.Safe.pp yojson
+    Error (message, Yojson.Safe.show yojson)
