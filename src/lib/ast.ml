@@ -201,3 +201,7 @@ and show_constant = function
   | CONST_INT i_as_str -> i_as_str
 
 let show file = show_file "" file
+
+let save_to_file = Util.save_to_file
+
+let load_from_file = Util.load_from_file

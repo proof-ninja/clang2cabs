@@ -532,4 +532,4 @@ let parse_yojson fname =
   let yojson = Yojson.Safe.from_file fname in
   try Ok (ast_of_yojson fname yojson) with
   | Invalid_Yojson (message, yojson) ->
-    Error (message, Yojson.Safe.show yojson)
+    Error (Invalid_Yojson (message, yojson))
