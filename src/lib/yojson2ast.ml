@@ -148,14 +148,13 @@ let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
       | _ -> raise (Invalid_Yojson ("Paramater name not found.", yojson))
       end
     in
-    let tpe =
+    let tpe, decl_type =
       begin match find_type typemap type_ptr with
-      | Some (tpe, Ast.JUSTBASE) -> tpe
-      | Some _ -> raise (Invalid_Yojson ("Paramater type must not be ARRAY.", yojson))
+      | Some (tpe, decl_type) -> tpe, decl_type
       | None -> raise (Invalid_Yojson ("Paramater type not found.", yojson))
       end
     in
-    [tpe], name
+    [tpe], (name, decl_type)
   | yojson ->
     raise (Invalid_Yojson ("Invalid paramater data.", yojson))
 
@@ -470,17 +469,20 @@ let ast_of_yojson typemap function_typeinfo definitions =
           | _ -> raise (Invalid_Yojson ("Function name not found.", yojson))
           end
         in
-        let return_type =
+        let return_type, decl_type =
           begin match PointerMap.find_opt type_ptr function_typeinfo with
           | Some { return_type; _ } ->
             begin match return_type with
-            | Just tpe -> tpe
-            | Pointer _ -> raise (Invalid_Yojson ("Function Return type must not be ARRAY.", yojson))
+            | Just tpe -> tpe, Ast.JUSTBASE
+            | Pointer i ->
+              match find_type typemap i with
+              | Some (tpe, decl_type) -> tpe, (Ast.ARRAY decl_type)
+              | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
             end
           | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
           end
         in
-        let single_name = [return_type], name in
+        let single_name = [return_type], (name, decl_type) in
         let params =
           begin match List.assoc_opt "parameters" data with
           | Some `List params -> List.map (parse_parameters typemap) params
