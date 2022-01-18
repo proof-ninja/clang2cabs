@@ -64,3 +64,7 @@ and init_expression =
 val show : file -> string
 
 val show_type_specifier : type_specifier -> string
+
+val save_to_file : string -> file -> (unit, exn) result
+
+val load_from_file : string -> (file, exn) result

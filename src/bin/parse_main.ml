@@ -10,14 +10,12 @@ let get_clang_command_path () =
 let run dir =
   let cmd = get_clang_command_path () in
   Clang2yojson.convert_directory cmd dir
-    |> List.iter (fun f ->
+    |> result_iter_m (fun f ->
       print_endline ("converted: "^f);
-      (* TODO: We should output serialized AST files instead of prettyprinting. *)
-      match Yojson2ast.parse_yojson (f ^ ".yojson") with
-      | Ok ast -> Printf.printf "%s" (Ast.show ast)
-      | Error (message, yojson) -> Printf.printf "%s\n%s\n" message yojson
-    );
-  Printf.printf "do parse c files in directory: '%s'\n" dir
+      let* ast = Yojson2ast.parse_yojson (f ^ ".yojson") in
+      let* () = Ast.save_to_file (f ^ ".mas") ast in
+      Ok ()
+    )
 
 let help () =
   let usage_msg =
@@ -33,7 +31,10 @@ let dispatch_command () =
   match Sys.argv.(1) with
   | "help" | "-h" | "-help" | "--help" -> help ()
   | dir ->
-      run dir
+     begin match run dir with
+     | Error exn -> raise exn
+     | Ok () -> ()
+     end
 
 let main () =
   let len = Array.length Sys.argv in
