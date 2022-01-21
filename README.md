@@ -12,6 +12,7 @@ OCaml data.
 ### `parse`
 
 ```console
+export CLANG_TO_YOJSON=<PATH TO FACEBOOK CLANG PLUGIN>/clang2yojson.sh
 parse <dir>
 ```
 
