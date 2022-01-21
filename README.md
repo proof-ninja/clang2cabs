@@ -12,8 +12,8 @@ OCaml data.
 ### `parse`
 
 ```console
-export CLANG_TO_YOJSON=<PATH TO FACEBOOK CLANG PLUGIN>/clang2yojson.sh
-parse <dir>
+$ export CLANG_TO_YOJSON=<PATH TO FACEBOOK CLANG PLUGIN>/clang2yojson.sh
+$ parse <dir>
 ```
 
   parses each `<name>.c` and produces `<name>.mas` in each subdirectory of the directory `<dir>`.
@@ -21,7 +21,7 @@ parse <dir>
 ###  `prettyprint`
 
 ```console
-prettyprint <name>.mas
+$ prettyprint <name>.mas
 ```
 
   prettyprints abstract syntax trees in <`name>.mas` to the standard output.
@@ -29,7 +29,7 @@ prettyprint <name>.mas
 ### clang2cabs
 
 ```console
-clang2cabs <name>.mas
+$ clang2cabs <name>.mas
 ```
 
   translates the clang abstract syntax trees in `<name>.mas` into a CABS file `<name>.cabs`
@@ -42,10 +42,10 @@ Without opam, you can run the following which relies directly on
 dune:
 
 ```console
-git clone git@github.com:proof-ninja/clang2cabs.git
-cd clang2cabs/
-make
-make install
+$ git clone git@github.com:proof-ninja/clang2cabs.git
+$ cd clang2cabs/
+$ make
+$ make install
 ```
 
 With opam, you can install the current development version of your
