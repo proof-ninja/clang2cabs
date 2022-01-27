@@ -8,6 +8,7 @@ let get_clang_command_path () =
   | Some command_path -> command_path
 
 let run filename =
+  let open Result.Let in
   let* ast = Yojson2ast.parse_yojson filename in
   print_endline (Ast.show ast);
   Ok ()

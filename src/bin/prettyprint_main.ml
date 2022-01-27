@@ -2,6 +2,7 @@ open Clang2cabs_lib
 open Util
 
 let run mas_file =
+  let open Result.Let in
   let* ast = Ast.load_from_file mas_file in
   print_endline (Ast.show ast);
   Ok ()

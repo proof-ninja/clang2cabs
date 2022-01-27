@@ -8,6 +8,7 @@ let get_clang_command_path () =
   | Some command_path -> command_path
 
 let parse_yojson filename =
+  let open Result.Let in
   let* ast = Yojson2ast.parse_yojson (filename ^ ".yojson") in
   let* () = Ast.save_to_file (filename ^ ".mas") ast in
   Ok ()
@@ -15,8 +16,9 @@ let parse_yojson filename =
 let run dir =
   let cmd = get_clang_command_path () in
   Clang2yojson.convert_directory cmd dir
-    |> result_iter_m (fun f ->
+    |> Result.iter_m (fun f ->
       print_endline ("converted: "^f);
+      let open Result.Let in
       let* ast = Yojson2ast.parse_yojson (f ^ ".yojson") in
       let* () = Ast.save_to_file (f ^ ".mas") ast in
       Ok ()

@@ -5,6 +5,7 @@ let save_cabs_to_file filename (cabs : Cabs.file) =
   Util.save_to_file filename cabs
 
 let run mas_file =
+  let open Result.Let in
   let* ast = Ast.load_from_file mas_file in
   let cabs = Ast2cabs.cabs_of_ast ast in
   let filename = (Filename.chop_suffix mas_file ".mas") ^ ".cabs" in
