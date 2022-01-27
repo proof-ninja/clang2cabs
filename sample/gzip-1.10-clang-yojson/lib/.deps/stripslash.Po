@@ -1,0 +1,17 @@
+stripslash.o: stripslash.c config.h dirname.h \
+  /home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stdbool.h \
+  /home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stddef.h \
+  /home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/__stddef_max_align_t.h \
+  dosname.h
+
+config.h:
+
+dirname.h:
+
+/home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stdbool.h:
+
+/home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stddef.h:
+
+/home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/__stddef_max_align_t.h:
+
+dosname.h:

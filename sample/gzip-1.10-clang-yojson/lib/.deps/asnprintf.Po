@@ -1,0 +1,14 @@
+asnprintf.o: asnprintf.c config.h vasnprintf.h \
+  /home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stdarg.h \
+  /home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stddef.h \
+  /home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/__stddef_max_align_t.h
+
+config.h:
+
+vasnprintf.h:
+
+/home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stdarg.h:
+
+/home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/stddef.h:
+
+/home/kmr/Dropbox/Work/Research/Project/infer/facebook-clang-plugins/clang/install/lib/clang/12.0.1/include/__stddef_max_align_t.h:
