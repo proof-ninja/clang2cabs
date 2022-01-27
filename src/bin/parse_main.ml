@@ -26,9 +26,10 @@ let run dir =
 
 let help () =
   let usage_msg =
-    !%"Usage: %s <dir>\n\
+    !%"Usage: %s {<dir> | --from-yojson <filename>}\n\
        parses each <name>.c and produces <name>.mas\n\
-       in each subdirectory of the directory <dir>.\n"
+       in each subdirectory of the directory <dir>.\n\
+       Or parses <filename>.yojson and produces <filename>.mas.\n"
       Sys.argv.(0)
   in
   Printf.eprintf "%s%!" usage_msg
