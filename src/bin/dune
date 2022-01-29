@@ -2,8 +2,8 @@
 ; public_names = name of the executables
 
 (executables
- (names parse_main prettyprint_main clang2cabs_main)
- (public_names parse prettyprint clang2cabs)
+ (names parse_main prettyprint_main clang2cabs_main debug)
+ (public_names parse prettyprint clang2cabs debug)
  (libraries clang2cabs.lib)
  (package clang2cabs)
  )

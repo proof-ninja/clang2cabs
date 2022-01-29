@@ -22,27 +22,34 @@ let load_from_file filename =
   using_in filename (fun ch ->
       Marshal.from_channel ch)
 
-let ( let* ) m f = Result.bind m f
+module Result = struct
+  include Result
+  
+  let traverse f xs =
+    let rec iter store = function
+      | [] -> Ok (List.rev store)
+      | x :: xs ->
+        match f x with
+        | Ok y -> iter (y :: store) xs
+        | Error e -> Error e
+    in
+    iter [] xs
 
-let result_sequence ms =
-  let rec iter store = function
-    | [] -> Ok (List.rev store)
-    | Ok x :: ms ->
-       iter (x :: store) ms
-    | Error e :: _ -> Error e
-  in
-  iter [] ms
+  let sequence ms =
+    traverse Fun.id ms
+  
+  let iter_m f xs =
+    let rec iter = function
+      | [] -> Ok ()
+      | x :: xs ->
+         begin match f x with
+         | Ok () -> iter xs
+         | Error e -> Error e
+         end
+    in
+    iter xs
 
-let result_map_m f xs =
-  result_sequence @@ List.map f xs
-
-let result_iter_m f xs =
-  let rec iter = function
-    | [] -> Ok ()
-    | x :: xs ->
-       begin match f x with
-       | Ok () -> iter xs
-       | Error e -> Error e
-       end
-  in
-  iter xs
+  module Let = struct
+    let ( let* ) m f = Result.bind m f
+  end
+end
