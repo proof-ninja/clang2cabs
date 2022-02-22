@@ -164,7 +164,7 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
       _source_info ::
       `List [expr] ::
       _qual_type ::
-      `Assoc [("kind", `Variant (kind, None))] ::
+      `Assoc (("kind", `Variant (kind, None)) :: _) ::
       _
     ))
   ) as yojson ->
@@ -172,6 +172,10 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     begin match kind with
     | "LNot" -> Ast.UNARY (Ast.NOT, expr)
     | "Minus" -> Ast.UNARY (Ast.MINUS, expr)
+    | "PostInc" -> Ast.UNARY (Ast.POSINCR, expr)
+    | "PreInc" -> Ast.UNARY (Ast.PREINCR, expr)
+    | "PostDec" -> Ast.UNARY (Ast.POSDECR, expr)
+    | "PreDec" -> Ast.UNARY (Ast.PREDECR, expr)
     | _ -> raise (Invalid_Yojson ("Invalid unary operation.", yojson))
     end
   | `Variant (
