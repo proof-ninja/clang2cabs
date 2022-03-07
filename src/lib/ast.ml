@@ -1,3 +1,5 @@
+open Util
+
 type file = string * definition list
 
 and type_specifier =
@@ -81,9 +83,14 @@ and show_definition indent = function
     indent ^ "Function(\n" ^
     indent ^ "  name: " ^ show_name func_name ^ "; return_type: " ^ show_specifier return_type ^ "\n" ^
     indent ^ "  arguments: " ^ args ^ "\n" ^
-    indent ^ "  {\n" ^
-    show_block ("  " ^ indent) block ^ "\n" ^
-    indent ^ "  }\n" ^
+    (
+      if List.is_empty block then
+        ""
+      else
+        indent ^ "  {\n" ^
+        show_block ("  " ^ indent) block ^ "\n" ^
+        indent ^ "  }\n"
+    ) ^
     indent ^ ")"
   | DECDEF init_name_group ->
     let init_name_group = show_init_name_group ("  " ^ indent) init_name_group in

@@ -493,13 +493,13 @@ let ast_of_yojson typemap function_typeinfo definitions =
           | _ -> []
           end
         in
-        let body =
-          begin match List.assoc_opt "body" data with
-          | Some body -> parse_body typemap body
-          | None -> raise (Invalid_Yojson ("Body not found.", yojson))
-          end
-        in
-        Ast.FUNDEF (single_name, params, body) :: definitions
+        begin match List.assoc_opt "body" data with
+        | Some body ->
+          let body = parse_body typemap body in
+          Ast.FUNDEF (single_name, params, body) :: definitions
+        | None ->
+          Ast.FUNDEF (single_name, params, []) :: definitions
+        end
     | _ ->
       definitions
   in

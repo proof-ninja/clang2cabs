@@ -4,6 +4,12 @@ val save_to_file : string -> 'a -> (unit, exn) result
 
 val load_from_file : string -> ('a, exn) result
 
+module List : sig
+  include module type of List
+
+  val is_empty : 'a list -> bool
+end
+
 module Result : sig
   include module type of Result
   
