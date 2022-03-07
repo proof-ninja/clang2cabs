@@ -3,6 +3,10 @@
 ## Requirement
 
 * clang plugin by facebook infer
+* C source files according to the definition of ['small C'][smallc]
+  * The source code, including the include destination, must be strictly ['small C'][smallc] compliant.
+
+[smallc]: https://hackmd.io/d-mZWBTmReSPqx8HUMIk_g
 
 ## Comand line interfaces
 
