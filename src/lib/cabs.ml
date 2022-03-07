@@ -17,7 +17,8 @@ and spec_elem =
 and specifier = spec_elem list
 
 and decl_type =
-    JUSTBASE                               
+    JUSTBASE
+  | PTR of attribute list * decl_type (* Not appearing because it is outside the range of 'small c'. *)
   | ARRAY of decl_type * attribute list * expression                                      
 
 and name_group = specifier * name list

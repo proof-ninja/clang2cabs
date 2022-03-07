@@ -1,8 +1,9 @@
 exception Invalid_Yojson of string * Yojson.Safe.t
 
-type c_type =
+type [@warning "-37"] c_type =
   | Just of Ast.type_specifier
   | Pointer of int
+  | Array of { ptr: int; size: int }
 
 module PointerMap = Map.Make(Int)
 
@@ -10,9 +11,17 @@ let find_type typemap i =
   let rec impl p =
     match PointerMap.find_opt p typemap with
     | Some (Just tpe) -> Some (tpe, Ast.JUSTBASE)
-    | Some (Pointer p) ->
-      begin match impl p with
-      | Some (tpe, decl_type) -> Some (tpe, Ast.ARRAY decl_type)
+    | Some (Pointer ptr) ->
+      begin match impl ptr with
+      | Some (tpe, decl_type) ->
+        Some (tpe, Ast.PTR decl_type)
+      | None -> None
+      end
+    | Some (Array { ptr; size }) ->
+      begin match impl ptr with
+      | Some (tpe, decl_type) ->
+        let expr = Ast.CONSTANT (Ast.CONST_INT (string_of_int size)) in
+        Some (tpe, Ast.ARRAY (decl_type, expr))
       | None -> None
       end
     | None -> None
@@ -36,14 +45,15 @@ let make_typemap typedata = List.fold_left (fun map -> function
     ))
   ) ->
     PointerMap.add i (Just Ast.Tvoid) map
-  | `Variant (
+  (* in 'small C', we do not treat pointer type. *)
+  (* | `Variant (
     "PointerType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
       `Assoc [("type_ptr", `Int p)] ::
       _
     ))
   ) ->
-    PointerMap.add i (Pointer p) map
+    PointerMap.add i (Pointer p) map *)
   | `Variant (
     "ConstantArrayType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
@@ -51,10 +61,11 @@ let make_typemap typedata = List.fold_left (fun map -> function
         ("element_type", `Assoc [("type_ptr", `Int p)]);
         _stride
       ] ::
+      (`Int size) ::
       _
     ))
   ) ->
-    PointerMap.add i (Pointer p) map
+    PointerMap.add i (Array { ptr= p; size }) map
   | _ ->
     map
   )
@@ -64,6 +75,7 @@ let make_typemap typedata = List.fold_left (fun map -> function
 let show_c_type = function
   | Just tpe -> Ast.show_type_specifier tpe
   | Pointer p -> "Pointer->" ^ string_of_int p
+  | Array { ptr; size } -> "Array[" ^ string_of_int size ^ "]->" ^ string_of_int ptr
 
 let show_typemap typemap =
   typemap |> PointerMap.iter (fun idx tpe ->
@@ -478,9 +490,16 @@ let ast_of_yojson typemap function_typeinfo definitions =
           | Some { return_type; _ } ->
             begin match return_type with
             | Just tpe -> tpe, Ast.JUSTBASE
+            | Array { ptr; size} ->
+              begin match find_type typemap ptr with
+              | Some (tpe, decl_type) ->
+                let expr = Ast.CONSTANT (Ast.CONST_INT (string_of_int size)) in
+                tpe, (Ast.ARRAY (decl_type, expr))
+              | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
+              end
             | Pointer i ->
               match find_type typemap i with
-              | Some (tpe, decl_type) -> tpe, (Ast.ARRAY decl_type)
+              | Some (tpe, decl_type) -> tpe, (Ast.PTR decl_type)
               | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
             end
           | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
