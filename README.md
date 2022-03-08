@@ -1,12 +1,7 @@
 # CLANG Parser
 
-## Requirement
-
-* clang plugin by facebook infer
-* C source files according to the definition of ['small C'](#small-c)
-  * The source code, including the include destination, must be strictly ['small C'](#small-c) compliant.
-
-### small C
+Parses C source code to create an abstract syntax tree.
+The definition of "small C", the language to be parsed, is as follows:
 
 ```
 #include
@@ -27,6 +22,10 @@ type ::= void | int
 グローバル変数
 ローカル変数 (関数定義のはじめだけ)
 ```
+
+## Requirement
+
+* clang plugin by facebook infer
 
 ## Comand line interfaces
 
