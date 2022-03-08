@@ -3,10 +3,30 @@
 ## Requirement
 
 * clang plugin by facebook infer
-* C source files according to the definition of ['small C'][smallc]
-  * The source code, including the include destination, must be strictly ['small C'][smallc] compliant.
+* C source files according to the definition of ['small C'](#small-c)
+  * The source code, including the include destination, must be strictly ['small C'](#small-c) compliant.
 
-[smallc]: https://hackmd.io/d-mZWBTmReSPqx8HUMIk_g
+### small C
+
+```
+#include
+#define
+
+P ::= x=e; | if (b) P else P | while (b) P | for (e; e; e) P | return e; | return;
+        | { P ... P }
+e ::= int-constants (..., -1, 0, 1, 2, ...) | variables | a[e]
+        for array name a
+        | e + e | e - e | e * e | e / e | e % e | (e) | f(e, ..., e)
+        for function name f
+b ::= e == e | e != e | e < e | e > e | e <= e | e >= e | (e) | !e
+        | e && e | e '||' e
+
+type ::= void | int
+次元配列
+関数定義と呼び出し
+グローバル変数
+ローカル変数 (関数定義のはじめだけ)
+```
 
 ## Comand line interfaces
 
