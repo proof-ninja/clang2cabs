@@ -4,10 +4,13 @@ and type_specifier =
   | Tvoid
   | Tint
 
-(* In the 'small C' range, only type information is passed here. *)
+(**
+ * In the 'small C' range, only type information is passed here.
+ *)
 and specifier = type_specifier list
 
-(* Declarator type. They modify the base type given in the specifier.
+(**
+ * Declarator type. They modify the base type given in the specifier.
  * e.g.
  *   int[3][4] -> ARRAY(ARRAY(JUSTBASE, "3"), "4")
  *   int     -> JUSTBASE
@@ -17,13 +20,15 @@ and decl_type =
   | PTR of decl_type (* This is not used currently. *)
   | ARRAY of decl_type * expression
 
-(* like name_group, except the declared variables are allowed to have initializers
+(**
+ * like name_group, except the declared variables are allowed to have initializers
  * e.g.
  *   int x = 1, y = 2; 
  *)
 and init_name_group = specifier * init_name list
 
-(* The decl_type is in the order in which they are printed. Only the name of
+(**
+ * The decl_type is in the order in which they are printed. Only the name of
  * the declared identifier is pulled out. The attributes are those that are
  * printed after the declarator
  * e.g.
@@ -32,25 +37,28 @@ and init_name_group = specifier * init_name list
  *)
 and name = string * decl_type
 
-(* A variable declarator ("name") with an initializer. *)
+(**
+ * A variable declarator ("name") with an initializer.
+ *)
 and init_name = name * init_expression
 
-(* Single names are for declarations that cannot come in groups, like
+(**
+ * Single names are for declarations that cannot come in groups, like
  * function parameters and functions.
  *)
 and single_name = specifier * name
 
-(*
+(**
  * Declaration definition (at toplevel)
  *)
 and definition =
   (*
    * single_name: The function's name and type
    * single_name_list: The arguments' names and types
-   * block: The function's body
+   * block: The function's body and function prototype has empty body
    *)
   | FUNDEF of single_name * single_name list * block
-  | DECDEF of init_name_group (* global variable(s), or function prototype *)
+  | DECDEF of init_name_group (* global variable(s) *)
 
 and block = statement list
 
