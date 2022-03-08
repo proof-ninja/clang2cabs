@@ -4,23 +4,61 @@ and type_specifier =
   | Tvoid
   | Tint
 
+(**
+ * In the 'small C' range, only type information is passed here.
+ *)
 and specifier = type_specifier list
 
+(**
+ * Declarator type. They modify the base type given in the specifier.
+ * e.g.
+ *   int[3][4] -> ARRAY(ARRAY(JUSTBASE, "3"), "4")
+ *   int     -> JUSTBASE
+ *)
 and decl_type =
   | JUSTBASE
-  | ARRAY of decl_type
+  | PTR of decl_type (* This is not used currently. *)
+  | ARRAY of decl_type * expression
 
+(**
+ * like name_group, except the declared variables are allowed to have initializers
+ * e.g.
+ *   int x = 1, y = 2; 
+ *)
 and init_name_group = specifier * init_name list
 
+(**
+ * The decl_type is in the order in which they are printed. Only the name of
+ * the declared identifier is pulled out. The attributes are those that are
+ * printed after the declarator
+ * e.g.
+ *   in "int x[]", "x[]" is the declarator; "x" will be pulled out as
+ *   the string, and decl_type will be ARRAY(JUSTBASE)
+ *)
 and name = string * decl_type
 
+(**
+ * A variable declarator ("name") with an initializer.
+ *)
 and init_name = name * init_expression
 
+(**
+ * Single names are for declarations that cannot come in groups, like
+ * function parameters and functions.
+ *)
 and single_name = specifier * name
 
+(**
+ * Declaration definition (at toplevel)
+ *)
 and definition =
+  (*
+   * single_name: The function's name and type
+   * single_name_list: The arguments' names and types
+   * block: The function's body and function prototype has empty body
+   *)
   | FUNDEF of single_name * single_name list * block
-  | DECDEF of init_name_group (* global variable(s), or function prototype *)
+  | DECDEF of init_name_group (* global variable(s) *)
 
 and block = statement list
 

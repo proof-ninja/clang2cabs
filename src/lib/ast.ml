@@ -1,3 +1,5 @@
+open Util
+
 type file = string * definition list
 
 and type_specifier =
@@ -8,7 +10,8 @@ and specifier = type_specifier list
 
 and decl_type =
   | JUSTBASE
-  | ARRAY of decl_type
+  | PTR of decl_type
+  | ARRAY of decl_type * expression
 
 and init_name_group = specifier * init_name list
 
@@ -20,7 +23,7 @@ and single_name = specifier * name
 
 and definition =
   | FUNDEF of single_name * single_name list * block
-  | DECDEF of init_name_group (* global variable(s), or function prototype *)
+  | DECDEF of init_name_group
 
 and block = statement list
 
@@ -81,9 +84,14 @@ and show_definition indent = function
     indent ^ "Function(\n" ^
     indent ^ "  name: " ^ show_name func_name ^ "; return_type: " ^ show_specifier return_type ^ "\n" ^
     indent ^ "  arguments: " ^ args ^ "\n" ^
-    indent ^ "  {\n" ^
-    show_block ("  " ^ indent) block ^ "\n" ^
-    indent ^ "  }\n" ^
+    (
+      if List.is_empty block then
+        ""
+      else
+        indent ^ "  {\n" ^
+        show_block ("  " ^ indent) block ^ "\n" ^
+        indent ^ "  }\n"
+    ) ^
     indent ^ ")"
   | DECDEF init_name_group ->
     let init_name_group = show_init_name_group ("  " ^ indent) init_name_group in
@@ -108,7 +116,8 @@ and show_init_name ((name, decl_type), init_expr) =
     name ^ " = " ^ show_expression expr
 and show_decl_type = function
   | JUSTBASE -> ""
-  | ARRAY decl_type -> show_decl_type decl_type ^ "[]"
+  | PTR decl_type -> "*" ^ show_decl_type decl_type
+  | ARRAY (decl_type, expr) -> show_decl_type decl_type ^ "[" ^ show_expression expr ^ "]"
 and show_specifier specifier_list =
   String.concat ", " @@ List.map show_type_specifier specifier_list
 and show_type_specifier = function

@@ -110,7 +110,10 @@ and conv_specifiler type_specifiers : Cabs.specifier =
 
 and conv_decl_type : Ast.decl_type -> Cabs.decl_type = function
   | Ast.JUSTBASE -> Cabs.JUSTBASE
-  | Ast.ARRAY decl_type -> Cabs.ARRAY (conv_decl_type decl_type, [], Cabs.NOTHING)
+  | Ast.PTR decl_type ->
+    Cabs.PTR ([], conv_decl_type decl_type)
+  | Ast.ARRAY (decl_type, expr) ->
+    Cabs.ARRAY (conv_decl_type decl_type, [], conv_expression expr)
 
 and conv_name (name, decl_type) : Cabs.name =
   name, conv_decl_type decl_type, [], dummy_loc

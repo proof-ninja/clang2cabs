@@ -1,5 +1,28 @@
 # CLANG Parser
 
+Parses C source code to create an abstract syntax tree.
+The definition of "small C", the language to be parsed, is as follows:
+
+```
+#include
+#define
+
+P ::= x=e; | if (b) P else P | while (b) P | for (e; e; e) P | return e; | return;
+        | { P ... P }
+e ::= int-constants (..., -1, 0, 1, 2, ...) | variables | a[e]
+        for array name a
+        | e + e | e - e | e * e | e / e | e % e | (e) | f(e, ..., e)
+        for function name f
+b ::= e == e | e != e | e < e | e > e | e <= e | e >= e | (e) | !e
+        | e && e | e '||' e
+
+type ::= void | int
+次元配列
+関数定義と呼び出し
+グローバル変数
+ローカル変数 (関数定義のはじめだけ)
+```
+
 ## Requirement
 
 * clang plugin by facebook infer

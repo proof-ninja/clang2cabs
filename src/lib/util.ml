@@ -22,6 +22,14 @@ let load_from_file filename =
   using_in filename (fun ch ->
       Marshal.from_channel ch)
 
+module List = struct
+  include List
+  
+  let is_empty = function
+    | [] -> true
+    | _ -> false
+end
+
 module Result = struct
   include Result
   
