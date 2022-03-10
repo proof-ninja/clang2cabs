@@ -1,8 +1,8 @@
 type file = string * definition list
 
 and type_specifier =
-  | Tvoid
-  | Tint
+  | Tvoid (** [void] type *)
+  | Tint (** [int] type *)
 
 (**
    In the 'small C' range, only type information is passed here.
@@ -17,7 +17,7 @@ and specifier = type_specifier list
 *)
 and decl_type =
   | JUSTBASE
-  | PTR of decl_type (* This is not used currently. *)
+  | PTR of decl_type (** This is not used currently. *)
   | ARRAY of decl_type * expression
 
 (**
@@ -38,7 +38,7 @@ and init_name_group = specifier * init_name list
 and name = string * decl_type
 
 (**
-   A variable declarator ([name]) with an initializer.
+   A variable declarator [name] with an initializer [init_expression].
  *)
 and init_name = name * init_expression
 
@@ -65,8 +65,8 @@ and block = statement list
 
 and statement =
   | NOP (** empty statement *)
-  | COMPUTATION of expression
-  | BLOCK of block
+  | COMPUTATION of expression (** simple expression *)
+  | BLOCK of block (** block of statements [{ st; ... st; }] *)
   | IF of expression * statement * statement
   (** if statement
         {[if (cond) {
@@ -113,15 +113,15 @@ and binary_operator =
   | GT  (** [e1 > e2] *)
   | LE  (** [e1 <= e2] *)
   | GE  (** [e1 >= e2] *)
-  | ASSIGN (** [var = e] *)
+  | ASSIGN (** [e1 = e2] *)
 
 and unary_operator =
   | MINUS  (** [-e] *)
   | PLUS  (** [+e] *)
   | NOT (** [!e] *)
-  | BNOT (** *)
-  | MEMOF (** *)
-  | ADDROF (** [&e] *)
+  | BNOT (** unused [~e] *)
+  | MEMOF (** unused [*e] *)
+  | ADDROF (** unused [&e] *)
   | PREINCR (** [++e] *)
   | PREDECR (** [--e] *)
   | POSINCR (** [e++] *)
