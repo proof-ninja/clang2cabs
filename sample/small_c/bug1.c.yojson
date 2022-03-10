@@ -119,7 +119,7 @@
         "pointer" : 7,
         "source_range" : (
           {
-            "file" : "clang2cabs/sample/bug1.c",
+            "file" : "sample/small_c/bug1.c",
             "line" : 1,
             "column" : 1
           },
@@ -545,7 +545,7 @@
   {
   },
   {
-    "input_path" : "clang2cabs/sample/bug1.c",
+    "input_path" : "sample/small_c/bug1.c",
     "input_kind" : <"IK_C">,
     "integer_type_widths" : {
       "char_type" : 8,
