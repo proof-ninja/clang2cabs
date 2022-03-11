@@ -25,6 +25,7 @@ run-test: ["dune" "runtest" "-p" name]
 
 depends: [
   "dune"
+  "yojson"
   "ocamlformat" { >= "0.17.0" }
   "alcotest" {with-test}
 ]
