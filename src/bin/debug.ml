@@ -27,6 +27,9 @@ let dispatch_command () =
   | "help" | "-h" | "-help" | "--help" -> help ()
   | filename ->
      begin match run filename with
+     | Error (Yojson2ast.Invalid_Yojson (message, yojson)) ->
+      Printf.eprintf "%s%!" message;
+      Format.printf "%a\n" Yojson.Safe.pp yojson
      | Error exn -> raise exn
      | Ok () -> ()
      end

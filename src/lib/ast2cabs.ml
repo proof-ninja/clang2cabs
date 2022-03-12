@@ -1,4 +1,5 @@
 exception Cannot_convert of string
+exception Unimplemented_error of string
 
 let dummy_loc: Cabs.cabsloc = {
   lineno= 0;
@@ -101,9 +102,23 @@ and conv_block block : Cabs.block = {
   bstmts= List.map conv_statement block
 }
 
+(* and conv_field_group (specifier, name_expr_list) =
+  let specifier = conv_specifiler specifier in
+  let name_expr_list = 
+    name_expr_list
+    |> List.map (fun (name, expr_opt) ->
+      (
+        conv_name name,
+        Option.map conv_expression expr_opt
+      )
+    )
+  in
+  specifier, name_expr_list *)
+
 and conv_type_specifier : Ast.type_specifier -> Cabs.typeSpecifier = function
   | Ast.Tvoid -> Cabs.Tvoid
   | Ast.Tint -> Cabs.Tint
+  | _ -> raise (Unimplemented_error "Cabs cannot accept this type.")
 
 and conv_specifiler type_specifiers : Cabs.specifier =
   List.map (fun ts -> Cabs.SpecType (conv_type_specifier ts)) type_specifiers

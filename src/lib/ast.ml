@@ -4,7 +4,20 @@ type file = string * definition list
 
 and type_specifier =
   | Tvoid
+  | Tbool
+  | Tchar_s
+  | Tchar
+  | Tuchar
+  | Tshort
+  | Tushort
   | Tint
+  | Tuint
+  | Tlong
+  | Tulong
+  | Tlonglong
+  | Tulonglong
+  | Tfloat
+  | Tdouble
 
 and specifier = type_specifier list
 
@@ -12,6 +25,8 @@ and decl_type =
   | JUSTBASE
   | PTR of decl_type
   | ARRAY of decl_type * expression
+
+and field_group = specifier * (name * expression option) list
 
 and init_name_group = specifier * init_name list
 
@@ -74,6 +89,21 @@ let rec show_file indent = function (filename, definition_list) ->
   ")"
 and show_name (name, decl_type) =
   name ^ (show_decl_type decl_type)
+(* and show_field_group (specifier, name_expr_list) =
+  let name_expr_list =
+    name_expr_list
+    |>List.map (function
+    | (name, Some expr) ->
+      "  " ^ show_name name ^ " = " ^ show_expression expr ^ "\n"
+    | (name, None) ->
+      "  " ^ show_name name ^ "\n"
+    )
+    |> String.concat "\n"
+  in
+  show_specifier specifier ^
+  "[\n" ^
+   name_expr_list ^
+  "]" *)
 and show_definition indent = function
   | FUNDEF ((return_type, func_name), single_name_list, block) ->
     let args =
@@ -122,7 +152,20 @@ and show_specifier specifier_list =
   String.concat ", " @@ List.map show_type_specifier specifier_list
 and show_type_specifier = function
   | Tvoid -> "void"
-  | Tint -> "int"
+  | Tbool -> "bool"
+  | Tchar_s -> "char"
+  | Tchar -> "signed char"
+  | Tuchar -> "unsigned char"
+  | Tshort -> "signed short"
+  | Tushort -> "unsigned short"
+  | Tint -> "signed int"
+  | Tuint -> "unsigned int"
+  | Tlong -> "signed long"
+  | Tulong -> "unsigned long"
+  | Tlonglong -> "signed long long"
+  | Tulonglong -> "unsigned long long"
+  | Tfloat -> "float"
+  | Tdouble -> "double"
 and show_block indent block =
   block
   |> List.map (show_statement indent)
