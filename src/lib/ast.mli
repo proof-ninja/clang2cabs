@@ -39,8 +39,6 @@ and decl_type =
     {[int x = 1, y = 2;]}
  *)
 
-and field_group = specifier * (name * expression option) list
-
 and init_name_group = specifier * init_name list
 
 (**
