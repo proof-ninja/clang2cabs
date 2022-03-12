@@ -4,7 +4,20 @@ type file = string * definition list
 
 and type_specifier =
   | Tvoid
+  | Tbool
+  | Tchar_s
+  | Tchar
+  | Tuchar
+  | Tshort
+  | Tushort
   | Tint
+  | Tuint
+  | Tlong
+  | Tulong
+  | Tlonglong
+  | Tulonglong
+  | Tfloat
+  | Tdouble
 
 and specifier = type_specifier list
 
@@ -122,7 +135,20 @@ and show_specifier specifier_list =
   String.concat ", " @@ List.map show_type_specifier specifier_list
 and show_type_specifier = function
   | Tvoid -> "void"
-  | Tint -> "int"
+  | Tbool -> "bool"
+  | Tchar_s -> "char"
+  | Tchar -> "signed char"
+  | Tuchar -> "unsigned char"
+  | Tshort -> "signed short"
+  | Tushort -> "unsigned short"
+  | Tint -> "signed int"
+  | Tuint -> "unsigned int"
+  | Tlong -> "signed long"
+  | Tulong -> "unsigned long"
+  | Tlonglong -> "signed long long"
+  | Tulonglong -> "unsigned long long"
+  | Tfloat -> "float"
+  | Tdouble -> "double"
 and show_block indent block =
   block
   |> List.map (show_statement indent)

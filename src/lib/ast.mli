@@ -2,7 +2,20 @@ type file = string * definition list
 
 and type_specifier =
   | Tvoid (** [void] type *)
-  | Tint (** [int] type *)
+  | Tbool (** [bool] type *)
+  | Tchar_s (** [char] type *)
+  | Tchar (** [signed char] type *)
+  | Tuchar (** [unsigned char] type *)
+  | Tshort (** [signed short] type *)
+  | Tushort (** [unsigned short] type *)
+  | Tint (** [signed int] type *)
+  | Tuint (** [unsigned int] type *)
+  | Tlong (** [signed long] type *)
+  | Tulong (** [unsigned long] type *)
+  | Tlonglong (** [signed long long] type *)
+  | Tulonglong (** [unsigned long long] type *)
+  | Tfloat (** [float] type *)
+  | Tdouble (** [double] type *)
 
 (**
    In the 'small C' range, only type information is passed here.
@@ -25,6 +38,7 @@ and decl_type =
   e.g.
     {[int x = 1, y = 2;]}
  *)
+
 and init_name_group = specifier * init_name list
 
 (**

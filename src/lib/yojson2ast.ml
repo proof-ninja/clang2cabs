@@ -32,11 +32,37 @@ let make_typemap typedata = List.fold_left (fun map -> function
   | `Variant (
     "BuiltinType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
-      `Variant ("Int", None) ::
+      `Variant ((
+        "Bool" |
+        "Char_S" | "SChar" | "UChar" |
+        "Short" | "UShort" |
+        "Int" | "UInt" |
+        "Long" | "ULong" | 
+        "LongLong" | "ULongLong" |
+        "Float" |
+        "Double"
+      ) as tpe, None) ::
       _
     ))
-  ) ->
-    PointerMap.add i (Just Ast.Tint) map
+  ) as yojson ->
+    let tpe = match tpe with
+    | "Bool"  -> Ast.Tbool
+    | "Char_S" -> Ast.Tchar_s
+    | "SChar" -> Ast.Tchar
+    | "UChar" -> Ast.Tuchar
+    | "Short" -> Ast.Tshort
+    | "UShort" -> Ast.Tushort
+    | "Int" -> Ast.Tint
+    | "UInt" -> Ast.Tuint
+    | "Long" -> Ast.Tlong
+    | "ULong" -> Ast.Tulong
+    | "LongLong" -> Ast.Tlonglong
+    | "ULongLong" -> Ast.Tulonglong
+    | "Float" -> Ast.Tfloat
+    | "Double" -> Ast.Tdouble
+    | _ -> raise (Invalid_Yojson ("Invalid buildin type.", yojson))
+    in
+    PointerMap.add i (Just tpe) map
   | `Variant (
     "BuiltinType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
@@ -96,7 +122,7 @@ let parse_params_type typemap params_type yojson =
       | `Assoc[("type_ptr", `Int ptr)] ->
         begin match PointerMap.find_opt ptr typemap with
         | Some typ -> typ
-        | None -> raise (Invalid_Yojson ("Type not found", yojson))
+        | None -> raise (Invalid_Yojson ("Type not found. ptr: " ^ string_of_int ptr, yojson))
         end
       | _ -> raise (Invalid_Yojson ("type_ptr not found", yojson))
     )

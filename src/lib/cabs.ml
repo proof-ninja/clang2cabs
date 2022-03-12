@@ -23,6 +23,8 @@ and decl_type =
 
 and name_group = specifier * name list
 
+and field_group = specifier * (name * expression option) list
+
 and init_name_group = specifier * init_name list
 
 and name = string * decl_type * attribute list * cabsloc
