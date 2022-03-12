@@ -80,3 +80,8 @@ $ opam pin add -k path clang2cabs .
 
 For more information on `opam pin`, please consult the
 [opam documentation](https://opam.ocaml.org/doc/Usage.html)
+
+
+## ocamldoc API
+
+https://proof-ninja.github.io/clang2cabs/
