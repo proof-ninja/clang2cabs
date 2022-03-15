@@ -8,7 +8,7 @@ The definition of "small C", the language to be parsed, is as follows:
 #define
 
 P ::= x=e; | if (b) P else P | while (b) P | for (e; e; e) P | return e; | return;
-        | { P ... P }
+        | { P ... P } | e++; | ++e; | e--; | --e;
 e ::= int-constants (..., -1, 0, 1, 2, ...) | variables | a[e]
         for array name a
         | e + e | e - e | e * e | e / e | e % e | (e) | f(e, ..., e)
@@ -16,7 +16,8 @@ e ::= int-constants (..., -1, 0, 1, 2, ...) | variables | a[e]
 b ::= e == e | e != e | e < e | e > e | e <= e | e >= e | (e) | !e
         | e && e | e '||' e
 
-type ::= void | int
+type ::= void | bool | integer | float | double
+integer ::= [signed | unsigned] (char | short | int | long | long long)
 次元配列
 関数定義と呼び出し
 グローバル変数
