@@ -93,7 +93,7 @@ let rec conv_statement : Ast.statement -> Cabs.statement = function
     Cabs.RETURN (conv_expression expression, dummy_loc)
   | Ast.RETURN None ->
     raise (Cannot_convert "Cabs does not support empty RETURN statement")
-  | Ast.VARDECL init_name_group ->
+  | Ast.VARDECL (init_name_group, _) ->
     Cabs.DEFINITION (Cabs.DECDEF (conv_init_name_group init_name_group, dummy_loc))
 
 and conv_block block : Cabs.block = {
@@ -143,7 +143,7 @@ let conv_definition : Ast.definition -> Cabs.definition = function
       dummy_loc,
       dummy_loc
     )
-  | Ast.DECDEF init_name_group ->
+  | Ast.DECDEF (init_name_group, _) ->
     Cabs.DECDEF (conv_init_name_group init_name_group, dummy_loc)
 
 let conv_file (filename, definitions) : Cabs.file = filename, List.map conv_definition definitions
