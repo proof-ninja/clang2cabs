@@ -34,9 +34,15 @@ and init_name = name * init_expression
 
 and single_name = specifier * name
 
+and variable_scope = {
+  is_global : bool;
+  is_static : bool;
+  is_static_local : bool
+}
+
 and definition =
   | FUNDEF of single_name * single_name list * block
-  | DECDEF of init_name_group
+  | DECDEF of init_name_group * variable_scope
 
 and block = statement list
 
@@ -48,7 +54,7 @@ and statement =
   | FOR of expression * expression * expression * statement
   | WHILE of expression * statement
   | RETURN of expression option
-  | VARDECL of init_name_group
+  | VARDECL of init_name_group * variable_scope
 
 and binary_operator =
   | ADD | SUB | MUL | DIV | MOD
@@ -87,6 +93,12 @@ let rec show_file indent = function (filename, definition_list) ->
   ")"
 and show_name (name, decl_type) =
   name ^ (show_decl_type decl_type)
+and show_variable_scope {is_global; is_static; is_static_local} =
+  let info = [] in
+  let info = if is_static_local then "static_local" :: info else info in
+  let info = if is_static then "static" :: info else info in
+  let info = if is_global then "global" :: info else info in
+  String.concat " " info
 and show_definition indent = function
   | FUNDEF ((return_type, func_name), single_name_list, block) ->
     let args =
@@ -106,9 +118,9 @@ and show_definition indent = function
         indent ^ "  }\n"
     ) ^
     indent ^ ")"
-  | DECDEF init_name_group ->
+  | DECDEF (init_name_group, scope_info) ->
     let init_name_group = show_init_name_group ("  " ^ indent) init_name_group in
-    indent ^ "Decdef(\n" ^
+    indent ^ "Decdef[" ^ show_variable_scope scope_info ^ "](\n" ^
     init_name_group ^ "\n" ^
     indent ^ ")"
 and show_init_name_group indent (specifier, init_name_list) =
@@ -188,9 +200,9 @@ and show_statement indent = function
     | Some expr -> indent ^ "RETURN " ^ show_expression expr
     | None -> indent ^ "RETURN"
     end
-  | VARDECL init_name_group ->
+  | VARDECL (init_name_group, scope_info) ->
     let init_name_group = show_init_name_group ("  " ^ indent) init_name_group in
-    indent ^ "VARDECL(\n" ^
+    indent ^ "VARDECL[" ^ show_variable_scope scope_info ^ "](\n" ^
     init_name_group ^ "\n" ^
     indent ^ ")"
 and show_expression = function

@@ -63,6 +63,15 @@ and init_name = name * init_expression
 and single_name = specifier * name
 
 (**
+  The variable's scope info.
+*)
+and variable_scope = {
+  is_global : bool;
+  is_static : bool;
+  is_static_local : bool
+}
+
+(**
    Declaration definition (at toplevel)
  *)
 and definition =
@@ -73,7 +82,7 @@ and definition =
      [args] is the arguments' names and types.
      [body] is the function's body and function prototype has empty body.
    *)
-  | DECDEF of init_name_group (** global variable(s) *)
+  | DECDEF of init_name_group * variable_scope (** global variable(s) *)
 
 and block = statement list
 
@@ -110,7 +119,7 @@ and statement =
   (** return statement
       {[return e;]}
    *)
-  | VARDECL of init_name_group
+  | VARDECL of init_name_group * variable_scope
   (** variable declaration *)
 
 and binary_operator =

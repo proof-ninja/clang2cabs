@@ -196,6 +196,18 @@ let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
   | yojson ->
     raise (Invalid_Yojson ("Invalid paramater data.", yojson))
 
+let extract_variable_scope map =
+  let get_scope scope =
+    match List.assoc_opt scope map with
+    | Some (`Bool true) -> true
+    | _ -> false
+  in
+  Ast.{
+    is_global= get_scope "is_global";
+    is_static= get_scope "is_static";
+    is_static_local= get_scope "is_static_local"
+  }
+
 let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
   | `Variant (
     "UnaryOperator", Some (`Tuple (
@@ -368,7 +380,7 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
       _source_info ::
       `Assoc varname_data ::
       `Assoc [("type_ptr", `Int type_ptr)] ::
-      `Assoc init_expr ::
+      `Assoc var_info ::
       _
     ))
   ) as yojson ->
@@ -384,12 +396,18 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
       | None -> raise (Invalid_Yojson ("Variable type not found.", yojson))
       end
     in
-    begin match List.assoc_opt "init_expr" init_expr with
+    begin match List.assoc_opt "init_expr" var_info with
     | Some init_expr ->
       let init_expr = parse_expression typemap init_expr in
-      Ast.VARDECL ([tpe], [(name, decl_type), Ast.SINGLE_INIT init_expr])
+      Ast.VARDECL (
+        ([tpe], [(name, decl_type), Ast.SINGLE_INIT init_expr]),
+        extract_variable_scope var_info
+      )
     | None ->
-      Ast.VARDECL ([tpe], [(name, decl_type), Ast.NO_INIT])
+      Ast.VARDECL (
+        ([tpe], [(name, decl_type), Ast.NO_INIT]),
+        extract_variable_scope var_info
+      )
     end
   | `Variant (
     "IfStmt", Some (`Tuple (
@@ -479,7 +497,7 @@ let ast_of_yojson typemap function_typeinfo definitions =
         _metadata :: (* filename, line num, col num, &c. *)
         `Assoc name_data ::
         `Assoc [("type_ptr", `Int type_ptr)] ::
-        `Assoc [("is_global", `Bool _is_global)] ::
+        `Assoc var_info ::
         _
       ))
     ) as yojson ->
@@ -495,7 +513,19 @@ let ast_of_yojson typemap function_typeinfo definitions =
         | None -> raise (Invalid_Yojson ("Type not found.", yojson))
         end
       in
-      Ast.DECDEF ([tpe], [((name, decl_type), Ast.NO_INIT)]) :: definitions
+      begin match List.assoc_opt "init_expr" var_info with
+      | Some init_expr ->
+        let init_expr = parse_expression typemap init_expr in
+        Ast.DECDEF (
+          ([tpe], [(name, decl_type), Ast.SINGLE_INIT init_expr]),
+          extract_variable_scope var_info
+        ) :: definitions
+      | None ->
+        Ast.DECDEF (
+          ([tpe], [(name, decl_type), Ast.NO_INIT]),
+          extract_variable_scope var_info
+        ) :: definitions
+      end
     | `Variant (
       "FunctionDecl", Some (`Tuple (
         _metadata :: (* filename, line num, col num, &c. *)
