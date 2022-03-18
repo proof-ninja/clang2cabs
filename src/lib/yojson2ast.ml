@@ -185,12 +185,17 @@ let extract_location info =
       in
       let result =
         match List.assoc_opt "line" start_info with
-        | Some (`Int line) -> { result with line= Some line }
+        | Some (`Int line) -> { result with start_line= Some line }
         | _ -> result
       in
       let result =
         match List.assoc_opt "column" start_info with
         | Some (`Int column) -> { result with start_column= Some column }
+        | _ -> result
+      in
+      let result =
+        match List.assoc_opt "line" end_info with
+        | Some (`Int line) -> { result with end_line= Some line }
         | _ -> result
       in
       let result =

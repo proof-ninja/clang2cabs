@@ -9,9 +9,9 @@ let dummy_loc: Cabs.cabsloc = {
 }
 
 let conv_location : Ast.location -> Cabs.cabsloc = function
-  | Ast.{ file; line; _ } ->
+  | Ast.{ file; start_line; _ } ->
     Cabs.{
-      lineno= Option.value ~default:0 line;
+      lineno= Option.value ~default:0 start_line;
       filename= Option.value ~default:"" file;
       byteno= 0;
       ident= 0;

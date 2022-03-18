@@ -4,7 +4,8 @@
 *)
 type location = {
   file : string option;
-  line : int option;
+  start_line : int option;
+  end_line : int option;
   start_column : int option;
   end_column : int option
 }
