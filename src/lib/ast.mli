@@ -1,3 +1,17 @@
+
+(**
+  Location infomations of the definition.
+*)
+type location = {
+  file : string option;
+  start_line : int option;
+  end_line : int option;
+  start_column : int option;
+  end_column : int option
+}
+
+val empty_location : location
+
 type file = string * definition list
 
 and type_specifier =
@@ -60,7 +74,7 @@ and init_name = name * init_expression
    Single names are for declarations that cannot come in groups, like
    function parameters and functions.
  *)
-and single_name = specifier * name
+and single_name = specifier * name * location
 
 (**
   The variable's scope info.
@@ -75,22 +89,22 @@ and variable_scope = {
    Declaration definition (at toplevel)
  *)
 and definition =
-  | FUNDEF of single_name * single_name list * block
+  | FUNDEF of single_name * single_name list * block * location
   (**
      When you got [FUNDEF(sname, args, body)],
      [sname] is the function's name and type.
      [args] is the arguments' names and types.
      [body] is the function's body and function prototype has empty body.
    *)
-  | DECDEF of init_name_group * variable_scope (** global variable(s) *)
+  | DECDEF of init_name_group * variable_scope * location (** global variable(s) *)
 
 and block = statement list
 
 and statement =
   | NOP (** empty statement *)
   | COMPUTATION of expression (** simple expression *)
-  | BLOCK of block (** block of statements [{ st; ... st; }] *)
-  | IF of expression * statement * statement
+  | BLOCK of block * location (** block of statements [{ st; ... st; }] *)
+  | IF of expression * statement * statement * location
   (** if statement
         {[if (cond) {
           st1;
@@ -99,7 +113,7 @@ and statement =
         }
         ]}
    *)
-  | FOR of expression * expression * expression * statement
+  | FOR of expression * expression * expression * statement * location
   (** for loop statement
       {[
       for (e1; e2; e3) {
@@ -107,7 +121,7 @@ and statement =
       }
       ]}
    *)
-  | WHILE of expression * statement
+  | WHILE of expression * statement * location
   (** while loop statemnt
       {[
       while (cond) {
@@ -115,11 +129,11 @@ and statement =
       }
       ]}
    *)
-  | RETURN of expression option
+  | RETURN of expression option * location
   (** return statement
       {[return e;]}
    *)
-  | VARDECL of init_name_group * variable_scope
+  | VARDECL of init_name_group * variable_scope * location
   (** variable declaration *)
 
 and binary_operator =
@@ -151,13 +165,13 @@ and unary_operator =
   | POSDECR (** [e--] *)
 
 and expression =
-  | UNARY of unary_operator * expression  (** unary operation *)
-  | BINARY of binary_operator * expression * expression (** binary operation *)
-  | CALL of string * expression list (** function call [f(e1, ..., en)] *)
-  | CONSTANT of constant (** constant expression *)
-  | PAREN of expression (** [(expression)] *)
-  | VARIABLE of string (** variable *)
-  | INDEX of expression * expression (** array index expression [a[i]] *)
+  | UNARY of unary_operator * expression * location  (** unary operation *)
+  | BINARY of binary_operator * expression * expression * location (** binary operation *)
+  | CALL of string * expression list * location (** function call [f(e1, ..., en)] *)
+  | CONSTANT of constant * location (** constant expression *)
+  | PAREN of expression * location (** [(expression)] *)
+  | VARIABLE of string * location (** variable *)
+  | INDEX of expression * expression * location (** array index expression [a[i]] *)
 
 and constant =
   | CONST_INT of string (** the textual representation *)
