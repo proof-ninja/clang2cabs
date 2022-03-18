@@ -1,5 +1,19 @@
 open Util
 
+type location = {
+  file : string option;
+  line : int option;
+  start_column : int option;
+  end_column : int option
+}
+
+let empty_location = {
+  file= None;
+  line= None;
+  start_column= None;
+  end_column= None
+}
+
 type file = string * definition list
 
 and type_specifier =
@@ -32,7 +46,7 @@ and name = string * decl_type
 
 and init_name = name * init_expression
 
-and single_name = specifier * name
+and single_name = specifier * name * location
 
 and variable_scope = {
   is_global : bool;
@@ -41,20 +55,20 @@ and variable_scope = {
 }
 
 and definition =
-  | FUNDEF of single_name * single_name list * block
-  | DECDEF of init_name_group * variable_scope
+  | FUNDEF of single_name * single_name list * block * location
+  | DECDEF of init_name_group * variable_scope * location
 
 and block = statement list
 
 and statement =
   | NOP
   | COMPUTATION of expression
-  | BLOCK of block
-  | IF of expression * statement * statement
-  | FOR of expression * expression * expression * statement
-  | WHILE of expression * statement
-  | RETURN of expression option
-  | VARDECL of init_name_group * variable_scope
+  | BLOCK of block * location
+  | IF of expression * statement * statement * location
+  | FOR of expression * expression * expression * statement * location
+  | WHILE of expression * statement * location
+  | RETURN of expression option * location
+  | VARDECL of init_name_group * variable_scope * location
 
 and binary_operator =
   | ADD | SUB | MUL | DIV | MOD
@@ -67,13 +81,13 @@ and unary_operator =
   | PREINCR | PREDECR | POSINCR | POSDECR
 
 and expression =
-  | UNARY of unary_operator * expression
-  | BINARY of binary_operator * expression * expression
-  | CALL of string * expression list
-  | CONSTANT of constant
-  | PAREN of expression
-  | VARIABLE of string
-  | INDEX of expression * expression
+  | UNARY of unary_operator * expression * location
+  | BINARY of binary_operator * expression * expression * location
+  | CALL of string * expression list * location
+  | CONSTANT of constant * location
+  | PAREN of expression * location
+  | VARIABLE of string * location
+  | INDEX of expression * expression * location
 
 and constant =
   | CONST_INT of string (* the textual representation *)
@@ -100,10 +114,10 @@ and show_variable_scope {is_global; is_static; is_static_local} =
   let info = if is_global then "global" :: info else info in
   String.concat " " info
 and show_definition indent = function
-  | FUNDEF ((return_type, func_name), single_name_list, block) ->
+  | FUNDEF ((return_type, func_name, _location1), single_name_list, block, _location2) ->
     let args =
       single_name_list
-      |> List.map (fun (specifier, name) -> show_name name ^ ":" ^ show_specifier specifier )
+      |> List.map (fun (specifier, name, _location) -> show_name name ^ ":" ^ show_specifier specifier )
       |> String.concat ", "
     in
     indent ^ "Function(\n" ^
@@ -118,7 +132,7 @@ and show_definition indent = function
         indent ^ "  }\n"
     ) ^
     indent ^ ")"
-  | DECDEF (init_name_group, scope_info) ->
+  | DECDEF (init_name_group, scope_info, _location) ->
     let init_name_group = show_init_name_group ("  " ^ indent) init_name_group in
     indent ^ "Decdef[" ^ show_variable_scope scope_info ^ "](\n" ^
     init_name_group ^ "\n" ^
@@ -170,11 +184,11 @@ and show_statement indent = function
     ""
   | COMPUTATION expr ->
     indent ^ show_expression expr
-  | BLOCK block ->
+  | BLOCK (block, _location) ->
     indent ^ "{\n" ^
     show_block ("  " ^ indent) block ^ "\n" ^
     indent ^ "}"
-  | IF (cond, if_true, if_false) ->
+  | IF (cond, if_true, if_false, _location) ->
     indent ^ "IF (" ^ show_expression cond ^ ") {\n" ^
     show_statement ("  " ^ indent) if_true ^ "\n" ^
     if if_false = NOP then
@@ -183,7 +197,7 @@ and show_statement indent = function
       indent ^ "} else {\n" ^
       show_statement ("  " ^ indent) if_false ^ "\n" ^
       indent ^ "}"
-  | FOR (init, cond, mut, stats) ->
+  | FOR (init, cond, mut, stats, _location) ->
     indent ^ "FOR(\n" ^
     indent ^ "  " ^ show_expression init ^ "\n" ^
     indent ^ "  " ^ show_expression cond ^ "\n" ^
@@ -191,34 +205,34 @@ and show_statement indent = function
     indent ^ ") {\n" ^
     indent ^ show_statement ("  " ^ indent) stats ^ "\n" ^
     indent ^ "}"
-  | WHILE (cond, stat) ->
+  | WHILE (cond, stat, _location) ->
     indent ^ "WHILE (" ^ show_expression cond ^ ") {\n" ^
     show_statement ("  " ^ indent) stat ^ "\n" ^
     indent ^ "}"
-  | RETURN expr ->
+  | RETURN (expr, _location) ->
     begin match expr with
     | Some expr -> indent ^ "RETURN " ^ show_expression expr
     | None -> indent ^ "RETURN"
     end
-  | VARDECL (init_name_group, scope_info) ->
+  | VARDECL (init_name_group, scope_info, _location) ->
     let init_name_group = show_init_name_group ("  " ^ indent) init_name_group in
     indent ^ "VARDECL[" ^ show_variable_scope scope_info ^ "](\n" ^
     init_name_group ^ "\n" ^
     indent ^ ")"
 and show_expression = function
-  | UNARY (op, expr) ->
+  | UNARY (op, expr, _location) ->
     show_unary_operator (show_expression expr) op
-  | BINARY (op, lhs, rhs) ->
+  | BINARY (op, lhs, rhs, _location) ->
     show_expression lhs ^ " " ^ show_binary_operator op ^ " " ^ show_expression rhs
-  | CALL (name, expr_list) ->
+  | CALL (name, expr_list, _location) ->
     name ^ "(" ^ (expr_list |> List.map show_expression |> String.concat ", ") ^ ")"
-  | CONSTANT constant ->
+  | CONSTANT (constant, _location) ->
     show_constant constant
-  | PAREN expr ->
+  | PAREN (expr, _location) ->
     "(" ^ show_expression expr ^ ")"
-  | VARIABLE name ->
+  | VARIABLE (name, _location) ->
     name
-  | INDEX (arr, idx) ->
+  | INDEX (arr, idx, _location) ->
     show_expression arr ^ "[" ^ show_expression idx ^ "]"
 and show_unary_operator v = function
   | MINUS -> "-" ^ v
