@@ -18,7 +18,7 @@ let empty_location = {
 
 type file = string * definition list
 
-and type_specifier =
+and ctype =
   | Tvoid
   | Tbool
   | Tchar_s
@@ -35,20 +35,18 @@ and type_specifier =
   | Tfloat
   | Tdouble
 
-and specifier = type_specifier list
-
 and decl_type =
   | JUSTBASE
   | PTR of decl_type
   | ARRAY of decl_type * expression
 
-and init_name_group = specifier * init_name list
+and init_name_group = ctype * init_name list
 
 and name = string * decl_type
 
 and init_name = name * init_expression
 
-and single_name = specifier * name * location
+and single_name = ctype * name * location
 
 and variable_scope = {
   is_global : bool;
@@ -119,11 +117,11 @@ and show_definition indent = function
   | FUNDEF ((return_type, func_name, _location1), single_name_list, block, _location2) ->
     let args =
       single_name_list
-      |> List.map (fun (specifier, name, _location) -> show_name name ^ ":" ^ show_specifier specifier )
+      |> List.map (fun (ctype, name, _location) -> show_name name ^ ":" ^ show_ctype ctype)
       |> String.concat ", "
     in
     indent ^ "Function(\n" ^
-    indent ^ "  name: " ^ show_name func_name ^ "; return_type: " ^ show_specifier return_type ^ "\n" ^
+    indent ^ "  name: " ^ show_name func_name ^ "; return_type: " ^ show_ctype return_type ^ "\n" ^
     indent ^ "  arguments: " ^ args ^ "\n" ^
     (
       if List.is_empty block then
@@ -139,7 +137,7 @@ and show_definition indent = function
     indent ^ "Decdef[" ^ show_variable_scope scope_info ^ "](\n" ^
     init_name_group ^ "\n" ^
     indent ^ ")"
-and show_init_name_group indent (specifier, init_name_list) =
+and show_init_name_group indent (ctype, init_name_list) =
   let names =
     init_name_list
     |> List.map (fun init_name -> "  " ^ indent ^ show_init_name init_name)
@@ -147,7 +145,7 @@ and show_init_name_group indent (specifier, init_name_list) =
   in
   indent ^ "names: \n" ^
   names ^ "\n" ^
-  indent ^ "types: " ^ show_specifier specifier
+  indent ^ "types: " ^ show_ctype ctype
 and show_init_name ((name, decl_type), init_expr) =
   let name = show_decl_type decl_type ^ name in
   match init_expr with
@@ -159,9 +157,7 @@ and show_decl_type = function
   | JUSTBASE -> ""
   | PTR decl_type -> "*" ^ show_decl_type decl_type
   | ARRAY (decl_type, expr) -> show_decl_type decl_type ^ "[" ^ show_expression expr ^ "]"
-and show_specifier specifier_list =
-  String.concat ", " @@ List.map show_type_specifier specifier_list
-and show_type_specifier = function
+and show_ctype = function
   | Tvoid -> "void"
   | Tbool -> "bool"
   | Tchar_s -> "char"

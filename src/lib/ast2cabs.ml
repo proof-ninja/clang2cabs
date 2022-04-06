@@ -114,13 +114,10 @@ and conv_block block : Cabs.block = {
   bstmts= List.map conv_statement block
 }
 
-and conv_type_specifier : Ast.type_specifier -> Cabs.typeSpecifier = function
-  | Ast.Tvoid -> Cabs.Tvoid
-  | Ast.Tint -> Cabs.Tint
+and conv_ctype : Ast.ctype -> Cabs.specifier = function
+  | Ast.Tvoid -> [Cabs.SpecType Cabs.Tvoid]
+  | Ast.Tint -> [Cabs.SpecType Cabs.Tint]
   | _ -> raise (Unimplemented_error "Cabs cannot accept this type.")
-
-and conv_specifiler type_specifiers : Cabs.specifier =
-  List.map (fun ts -> Cabs.SpecType (conv_type_specifier ts)) type_specifiers
 
 and conv_decl_type : Ast.decl_type -> Cabs.decl_type = function
   | Ast.JUSTBASE -> Cabs.JUSTBASE
@@ -132,8 +129,8 @@ and conv_decl_type : Ast.decl_type -> Cabs.decl_type = function
 and conv_name (name, decl_type) : Cabs.name =
   name, conv_decl_type decl_type, [], dummy_loc
 
-and conv_single_name (specifiler, name, _location) : Cabs.single_name =
-  (conv_specifiler specifiler), (conv_name name)
+and conv_single_name (ctype, name, _location) : Cabs.single_name =
+  (conv_ctype ctype), (conv_name name)
 
 and conv_init_expression : Ast.init_expression -> Cabs.init_expression = function
   | Ast.NO_INIT -> Cabs.NO_INIT
@@ -142,8 +139,8 @@ and conv_init_expression : Ast.init_expression -> Cabs.init_expression = functio
 and conv_init_name (name, init_expression) =
   (conv_name name), (conv_init_expression init_expression)
 
-and conv_init_name_group (specifier, init_names) =
-  (conv_specifiler specifier), List.map conv_init_name init_names
+and conv_init_name_group (ctype, init_names) =
+  (conv_ctype ctype), List.map conv_init_name init_names
 
 let conv_definition : Ast.definition -> Cabs.definition = function
   | Ast.FUNDEF (single_name, _single_names, block, location) ->
