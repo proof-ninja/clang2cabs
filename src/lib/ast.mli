@@ -14,7 +14,7 @@ val empty_location : location
 
 type file = string * definition list
 
-and type_specifier =
+and ctype =
   | Tvoid (** [void] type *)
   | Tbool (** [bool] type *)
   | Tchar_s (** [char] type *)
@@ -30,11 +30,6 @@ and type_specifier =
   | Tulonglong (** [unsigned long long] type *)
   | Tfloat (** [float] type *)
   | Tdouble (** [double] type *)
-
-(**
-   In the 'small C' range, only type information is passed here.
- *)
-and specifier = type_specifier list
 
 (**
   Declarator type. They modify the base type given in the specifier.
@@ -53,7 +48,7 @@ and decl_type =
     {[int x = 1, y = 2;]}
  *)
 
-and init_name_group = specifier * init_name list
+and init_name_group = ctype * init_name list
 
 (**
   The decl_type is in the order in which they are printed. Only the name of
@@ -74,7 +69,7 @@ and init_name = name * init_expression
    Single names are for declarations that cannot come in groups, like
    function parameters and functions.
  *)
-and single_name = specifier * name * location
+and single_name = ctype * name * location
 
 (**
   The variable's scope info.
@@ -183,7 +178,7 @@ and init_expression =
 
 val show : file -> string
 
-val show_type_specifier : type_specifier -> string
+val show_ctype : ctype -> string
 
 val save_to_file : string -> file -> (unit, exn) result
 

@@ -3,7 +3,7 @@ open Util
 exception Invalid_Yojson of string * Yojson.Safe.t
 
 type [@warning "-37"] c_type =
-  | Just of Ast.type_specifier
+  | Just of Ast.ctype
   | Pointer of int
   | Array of { ptr: int; size: int }
 
@@ -101,7 +101,7 @@ let make_typemap typedata = List.fold_left (fun map -> function
   typedata
 
 let show_c_type = function
-  | Just tpe -> Ast.show_type_specifier tpe
+  | Just tpe -> Ast.show_ctype tpe
   | Pointer p -> "Pointer->" ^ string_of_int p
   | Array { ptr; size } -> "Array[" ^ string_of_int size ^ "]->" ^ string_of_int ptr
 
@@ -229,7 +229,7 @@ let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
       | None -> raise (Invalid_Yojson ("Paramater type not found.", yojson))
       end
     in
-    [tpe], (name, decl_type), extract_location source_info
+    tpe, (name, decl_type), extract_location source_info
   | yojson ->
     raise (Invalid_Yojson ("Invalid paramater data.", yojson))
 
@@ -446,13 +446,13 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
     | Some init_expr ->
       let init_expr = parse_expression typemap init_expr in
       Ast.VARDECL (
-        ([tpe], [(name, decl_type), Ast.SINGLE_INIT init_expr]),
+        (tpe, [(name, decl_type), Ast.SINGLE_INIT init_expr]),
         extract_variable_scope var_info,
         location
       )
     | None ->
       Ast.VARDECL (
-        ([tpe], [(name, decl_type), Ast.NO_INIT]),
+        (tpe, [(name, decl_type), Ast.NO_INIT]),
         extract_variable_scope var_info,
         location
       )
@@ -574,13 +574,13 @@ let ast_of_yojson typemap function_typeinfo definitions =
       | Some init_expr ->
         let init_expr = parse_expression typemap init_expr in
         Ast.DECDEF (
-          ([tpe], [(name, decl_type), Ast.SINGLE_INIT init_expr]),
+          (tpe, [(name, decl_type), Ast.SINGLE_INIT init_expr]),
           variable_scope,
           location
         ) :: definitions
       | None ->
         Ast.DECDEF (
-          ([tpe], [(name, decl_type), Ast.NO_INIT]),
+          (tpe, [(name, decl_type), Ast.NO_INIT]),
           variable_scope,
           location
         ) :: definitions
@@ -621,7 +621,7 @@ let ast_of_yojson typemap function_typeinfo definitions =
           | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
           end
         in
-        let single_name = [return_type], (name, decl_type), location in
+        let single_name = return_type, (name, decl_type), location in
         let params =
           begin match List.assoc_opt "parameters" data with
           | Some `List params -> List.map (parse_parameters typemap) params
