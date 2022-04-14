@@ -36,6 +36,12 @@ and ctype =
   | Tdouble
   | Tarray of ctype * int
   | Tpointer of ctype
+  | Trecord of { name: string; fields: record_field list; location: location }
+
+and record_field = {
+  ctype: ctype;
+  name: string;
+}
 
 and init_name_group = ctype * init_name list
 
@@ -85,6 +91,8 @@ and expression =
   | PAREN of expression * location
   | VARIABLE of string * location
   | INDEX of expression * expression * location
+  | MEMBER of expression * string * location
+  | INIT_LIST of expression list * location
 
 and constant =
   | CONST_INT of string (* the textual representation *)
@@ -165,6 +173,18 @@ and show_ctype = function
   | Tdouble -> "double"
   | Tarray (tpe, len) -> show_ctype tpe ^ "[" ^ string_of_int len ^ "]"
   | Tpointer tpe -> "*" ^ show_ctype tpe
+  | Trecord { name; fields; _ } ->
+    let fields =
+      fields
+      |> List.map (fun field -> "  " ^ show_field field)
+      |> String.concat "\n"
+    in
+    "struct " ^ name ^ " {\n" ^
+    fields ^ "\n" ^
+    "}"
+
+and show_field { ctype; name } =
+  show_ctype ctype ^ " " ^ name
 and show_block indent block =
   block
   |> List.map (show_statement indent)
@@ -224,6 +244,15 @@ and show_expression = function
     name
   | INDEX (arr, idx, _location) ->
     show_expression arr ^ "[" ^ show_expression idx ^ "]"
+  | MEMBER (expr, field, _location) ->
+    show_expression expr ^ "." ^ field
+  | INIT_LIST (exprs, _location) ->
+    let exprs =
+      exprs
+      |> List.map show_expression
+      |> String.concat ", "
+    in
+    "{ " ^ exprs ^ "}"
 and show_unary_operator v = function
   | MINUS -> "-" ^ v
   | PLUS -> "+" ^ v

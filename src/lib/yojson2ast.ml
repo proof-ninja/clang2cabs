@@ -2,10 +2,17 @@ open Util
 
 exception Invalid_Yojson of string * Yojson.Safe.t
 
+type record_field = {
+  ptr: int;
+  name: string
+}
+
 type [@warning "-37"] c_type =
   | Just of Ast.ctype
+  | Alias of int
   | Pointer of int
   | Array of { ptr: int; size: int }
+  | Record of { name: string; fields: record_field list; location: Ast.location }
 
 module PointerMap = Map.Make(Int)
 
@@ -13,6 +20,10 @@ let resolve_ctype typemap tpe =
   let open Option.Let in
   let rec impl = function
     | Just tpe -> Some tpe
+    | Alias ptr ->
+      let* tpe = PointerMap.find_opt ptr typemap in
+      let* tpe = impl tpe in
+      Some tpe
     | Pointer ptr ->
       let* tpe = PointerMap.find_opt ptr typemap in
       let* tpe = impl tpe in
@@ -21,6 +32,17 @@ let resolve_ctype typemap tpe =
       let* tpe = PointerMap.find_opt ptr typemap in
       let* tpe = impl tpe in
       Some (Ast.Tarray (tpe, size))
+    | Record { name; fields; location } ->
+      let fields =
+        fields
+        |> List.map (fun { ptr; name } -> Option.to_list (
+            let* tpe = PointerMap.find_opt ptr typemap in
+            let* ctype = impl tpe in
+            Some (Ast.{ ctype; name })
+          ))
+        |> List.flatten
+      in
+      Some (Ast.Trecord { name; fields; location })
   in
   impl tpe
 
@@ -29,7 +51,134 @@ let find_type typemap i =
   let* tpe = PointerMap.find_opt i typemap in
   resolve_ctype typemap tpe
 
-let make_typemap typedata = List.fold_left (fun map -> function
+let extract_pointer yojson =
+  match List.assoc_opt "pointer" yojson with
+  | Some (`Int ptr) -> Some ptr
+  | _ -> None
+
+let extract_location info =
+  let result = Ast.empty_location in
+  let result =
+    match List.assoc_opt "source_range" info with
+    | Some (`Tuple (`Assoc start_info :: `Assoc end_info :: _)) ->
+      let result =
+        match List.assoc_opt "file" start_info with
+        | Some (`String file) -> { result with file= Some file }
+        | _ -> result
+      in
+      let result =
+        match List.assoc_opt "line" start_info with
+        | Some (`Int line) -> { result with start_line= Some line }
+        | _ -> result
+      in
+      let result =
+        match List.assoc_opt "column" start_info with
+        | Some (`Int column) -> { result with start_column= Some column }
+        | _ -> result
+      in
+      let result =
+        match List.assoc_opt "line" end_info with
+        | Some (`Int line) -> { result with end_line= Some line }
+        | _ -> result
+      in
+      let result =
+        match List.assoc_opt "column" end_info with
+        | Some (`Int column) -> { result with end_column= Some column }
+        | _ -> result
+      in
+      result
+    | _ -> result
+  in
+  result
+
+let extract_name yojson =
+  match List.assoc_opt "name" yojson with
+  | Some (`String name) -> Some name
+  | _ -> None
+
+let extract_qual_names yojson =
+  match List.assoc_opt "qual_name" yojson with
+  | Some (`List qual_name) ->
+    qual_name
+    |> List.map (function
+      | `String name -> [name]
+      | _ -> []
+    )
+    |> List.flatten
+  | _ -> []
+
+let extract_type_ptr yojson =
+  match List.assoc_opt "type_ptr" yojson with
+  | Some (`Int ptr) -> Some ptr
+  | _ -> None
+
+let extract_desugared_type yojson =
+  match List.assoc_opt "desugared_type" yojson with
+  | Some (`Int ptr) -> Some ptr
+  | _ -> None
+
+let make_typedef_typemap typemap definitions =
+  let parse_fields fields_yojson = List.fold_left (fun fields -> function
+    | `Variant (
+      "FieldDecl", Some (`Tuple (
+        `Assoc _metadata ::
+        `Assoc namedata ::
+        `Assoc typedata ::
+        _
+        ))
+      ) ->
+        let ptr = extract_type_ptr typedata in
+        let name = extract_name namedata in
+        begin match ptr, name with
+        | (Some ptr), (Some name) ->
+          { ptr; name } :: fields
+        | _ ->
+          fields
+        end
+    | _ ->
+      fields
+    )
+    []
+    fields_yojson
+  in
+  List.fold_left (fun map -> function
+  | `Variant (
+    "RecordDecl", Some (`Tuple (
+      `Assoc metadata ::
+      `Assoc namedata ::
+      `Int _type_ptr ::
+      `List fields ::
+      _ :: (* empty? *)
+      _ :: (* ex. <"TTK_Struct"> *)
+      `Assoc _definition_data ::
+      _
+      ))
+    ) ->
+    let ptr = extract_pointer metadata in
+    let location = extract_location metadata in
+    let qual_names = extract_qual_names namedata in
+    let name =
+      let rec go = function
+        | name :: [] -> Some name
+        | _ :: tail -> go tail
+        | [] -> None
+      in
+      go qual_names
+    in
+    let fields = parse_fields fields in
+    begin match ptr, name with
+    | (Some ptr), (Some name) ->
+      PointerMap.add ptr (Record { name; fields; location }) map
+    | _ ->
+      map
+    end
+  | _ ->
+    map
+  )
+  typemap
+  definitions
+
+let make_typemap typemap typedata = List.fold_left (fun map -> function
   | `Variant (
     "BuiltinType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
@@ -93,16 +242,64 @@ let make_typemap typedata = List.fold_left (fun map -> function
     ))
   ) ->
     PointerMap.add i (Array { ptr= p; size }) map
+  | `Variant (
+    "RecordType", Some (`Tuple (
+      `Assoc pointer_data ::
+      `Int ptr ::
+      _
+    ))
+  ) ->
+    begin match extract_pointer pointer_data with
+    | Some i -> PointerMap.add i (Alias ptr) map
+    | _ -> map
+    end
+  | `Variant (
+    "ElaboratedType", Some (`Tuple (
+      `Assoc pointer_data ::
+      _
+    ))
+  ) ->
+    let ptr = extract_pointer pointer_data in
+    let desugared = extract_desugared_type pointer_data in
+    begin match ptr, desugared with
+    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
+    | _ -> map
+    end
+  | `Variant (
+    "TypedefType", Some (`Tuple (
+      `Assoc pointer_data ::
+      `Assoc _typedata ::
+      _
+    ))
+  ) ->
+    let ptr = extract_pointer pointer_data in
+    let desugared = extract_desugared_type pointer_data in
+    begin match ptr, desugared with
+    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
+    | _ -> map
+    end
   | _ ->
     map
   )
-  PointerMap.empty
+  typemap
   typedata
+
+let show_record_field { ptr; name } = name ^ "->" ^ string_of_int ptr
 
 let show_c_type = function
   | Just tpe -> Ast.show_ctype tpe
+  | Alias ptr -> "Alias->" ^ string_of_int ptr
   | Pointer p -> "Pointer->" ^ string_of_int p
   | Array { ptr; size } -> "Array[" ^ string_of_int size ^ "]->" ^ string_of_int ptr
+  | Record { name; fields; _ } ->
+    let fields =
+      fields
+      |> List.map (fun field -> "  " ^ show_record_field field)
+      |> String.concat "\n"
+    in
+    "Struct " ^ name ^ " {\n" ^
+    fields ^ "\n" ^
+    "}"
 
 let show_typemap typemap =
   typemap |> PointerMap.iter (fun idx tpe ->
@@ -171,41 +368,6 @@ let show_fuction_typeinfo function_typeinfo =
     let at = param_types |> List.map show_c_type |> String.concat "," in
     Printf.printf "%d => { return: %s, args: %s }\n" idx rt at
   )
-
-let extract_location info =
-  let result = Ast.empty_location in
-  let result =
-    match List.assoc_opt "source_range" info with
-    | Some (`Tuple (`Assoc start_info :: `Assoc end_info :: _)) ->
-      let result =
-        match List.assoc_opt "file" start_info with
-        | Some (`String file) -> { result with file= Some file }
-        | _ -> result
-      in
-      let result =
-        match List.assoc_opt "line" start_info with
-        | Some (`Int line) -> { result with start_line= Some line }
-        | _ -> result
-      in
-      let result =
-        match List.assoc_opt "column" start_info with
-        | Some (`Int column) -> { result with start_column= Some column }
-        | _ -> result
-      in
-      let result =
-        match List.assoc_opt "line" end_info with
-        | Some (`Int line) -> { result with end_line= Some line }
-        | _ -> result
-      in
-      let result =
-        match List.assoc_opt "column" end_info with
-        | Some (`Int column) -> { result with end_column= Some column }
-        | _ -> result
-      in
-      result
-    | _ -> result
-  in
-  result
 
 let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
   | `Variant (
@@ -404,6 +566,42 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
       parse_expression typemap idx,
       extract_location source_info
     )
+  | `Variant (
+    "MemberExpr", Some (`Tuple (
+      `Assoc source_info ::
+      `List (expr :: _) ::
+      `Assoc _type_info ::
+      `Assoc member_info ::
+      _
+    ))
+  ) as yojson ->
+    let expr = parse_expression typemap expr in
+    let location = extract_location source_info in
+    let name =
+      let open Option.Let in
+      let* name =
+        match List.assoc_opt "name" member_info with
+        | Some (`Assoc name) -> Some name
+        | _ -> None
+      in
+      extract_name name
+    in
+    begin match name with
+    | Some name ->
+      Ast.MEMBER (expr, name, location)
+    | None -> raise (Invalid_Yojson ("Invalid expression data. Member expression must have it's field name.", yojson))
+    end
+  | `Variant (
+    "InitListExpr", Some (`Tuple (
+      `Assoc source_info ::
+      `List exprs ::
+      `Assoc _type_info ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    let exprs = List.map (parse_expression typemap) exprs in
+    Ast.INIT_LIST (exprs, location)
   | yojson ->
     raise (Invalid_Yojson ("Invalid expression data.", yojson))
 
@@ -647,9 +845,11 @@ let ast_of_yojson (fname:string) : Yojson.Safe.t -> Ast.file = function
           | _ -> raise (Invalid_Yojson ("Type data not found.", yojson))
           end
         in
-        let typemap = make_typemap typedata in
+        let typemap = make_typedef_typemap PointerMap.empty decls in
+        let typemap = make_typemap typemap typedata in
         (* For debbug *)
         show_typemap typemap;
+
         let function_typeinfo = make_fuction_typeinfo typemap typedata in
         (* For debbug *)
         show_fuction_typeinfo function_typeinfo;
