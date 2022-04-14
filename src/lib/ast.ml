@@ -34,15 +34,12 @@ and ctype =
   | Tulonglong
   | Tfloat
   | Tdouble
-
-and decl_type =
-  | JUSTBASE
-  | PTR of decl_type
-  | ARRAY of decl_type * expression
+  | Tarray of ctype * int
+  | Tpointer of ctype
 
 and init_name_group = ctype * init_name list
 
-and name = string * decl_type
+and name = string
 
 and init_name = name * init_expression
 
@@ -105,8 +102,6 @@ let rec show_file indent = function (filename, definition_list) ->
   indent ^ "File(name: " ^ filename ^ "\n" ^
   defs ^ "\n" ^
   ")"
-and show_name (name, decl_type) =
-  name ^ (show_decl_type decl_type)
 and show_variable_scope {is_global; is_static; is_static_local} =
   let info = [] in
   let info = if is_static_local then "static_local" :: info else info in
@@ -117,11 +112,11 @@ and show_definition indent = function
   | FUNDEF ((return_type, func_name, _location1), single_name_list, block, _location2) ->
     let args =
       single_name_list
-      |> List.map (fun (ctype, name, _location) -> show_name name ^ ":" ^ show_ctype ctype)
+      |> List.map (fun (ctype, name, _location) -> name ^ ":" ^ show_ctype ctype)
       |> String.concat ", "
     in
     indent ^ "Function(\n" ^
-    indent ^ "  name: " ^ show_name func_name ^ "; return_type: " ^ show_ctype return_type ^ "\n" ^
+    indent ^ "  name: " ^ func_name ^ "; return_type: " ^ show_ctype return_type ^ "\n" ^
     indent ^ "  arguments: " ^ args ^ "\n" ^
     (
       if List.is_empty block then
@@ -146,17 +141,12 @@ and show_init_name_group indent (ctype, init_name_list) =
   indent ^ "names: \n" ^
   names ^ "\n" ^
   indent ^ "types: " ^ show_ctype ctype
-and show_init_name ((name, decl_type), init_expr) =
-  let name = show_decl_type decl_type ^ name in
+and show_init_name (name, init_expr) =
   match init_expr with
   | NO_INIT ->
     name
   | SINGLE_INIT expr ->
     name ^ " = " ^ show_expression expr
-and show_decl_type = function
-  | JUSTBASE -> ""
-  | PTR decl_type -> "*" ^ show_decl_type decl_type
-  | ARRAY (decl_type, expr) -> show_decl_type decl_type ^ "[" ^ show_expression expr ^ "]"
 and show_ctype = function
   | Tvoid -> "void"
   | Tbool -> "bool"
@@ -173,6 +163,8 @@ and show_ctype = function
   | Tulonglong -> "unsigned long long"
   | Tfloat -> "float"
   | Tdouble -> "double"
+  | Tarray (tpe, len) -> show_ctype tpe ^ "[" ^ string_of_int len ^ "]"
+  | Tpointer tpe -> "*" ^ show_ctype tpe
 and show_block indent block =
   block
   |> List.map (show_statement indent)

@@ -4,6 +4,16 @@ val save_to_file : string -> 'a -> (unit, exn) result
 
 val load_from_file : string -> ('a, exn) result
 
+module Option : sig
+  include module type of Option
+
+  val flat_map : ('a -> 'b option) -> 'a option -> 'b option
+
+  module Let : sig
+    val ( let* ) : 'a option -> ('a -> 'b option) -> 'b option
+  end
+end
+
 module List : sig
   include module type of List
 

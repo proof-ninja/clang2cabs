@@ -9,26 +9,25 @@ type [@warning "-37"] c_type =
 
 module PointerMap = Map.Make(Int)
 
-let find_type typemap i =
-  let rec impl p =
-    match PointerMap.find_opt p typemap with
-    | Some (Just tpe) -> Some (tpe, Ast.JUSTBASE)
-    | Some (Pointer ptr) ->
-      begin match impl ptr with
-      | Some (tpe, decl_type) ->
-        Some (tpe, Ast.PTR decl_type)
-      | None -> None
-      end
-    | Some (Array { ptr; size }) ->
-      begin match impl ptr with
-      | Some (tpe, decl_type) ->
-        let expr = Ast.CONSTANT (Ast.CONST_INT (string_of_int size), Ast.empty_location) in
-        Some (tpe, Ast.ARRAY (decl_type, expr))
-      | None -> None
-      end
-    | None -> None
+let resolve_ctype typemap tpe =
+  let open Option.Let in
+  let rec impl = function
+    | Just tpe -> Some tpe
+    | Pointer ptr ->
+      let* tpe = PointerMap.find_opt ptr typemap in
+      let* tpe = impl tpe in
+      Some (Ast.Tpointer tpe)
+    | Array { ptr; size } ->
+      let* tpe = PointerMap.find_opt ptr typemap in
+      let* tpe = impl tpe in
+      Some (Ast.Tarray (tpe, size))
   in
-  impl i
+  impl tpe
+
+let find_type typemap i =
+  let open Option.Let in
+  let* tpe = PointerMap.find_opt i typemap in
+  resolve_ctype typemap tpe
 
 let make_typemap typedata = List.fold_left (fun map -> function
   | `Variant (
@@ -223,13 +222,13 @@ let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
       | _ -> raise (Invalid_Yojson ("Paramater name not found.", yojson))
       end
     in
-    let tpe, decl_type =
+    let tpe =
       begin match find_type typemap type_ptr with
-      | Some (tpe, decl_type) -> tpe, decl_type
+      | Some tpe -> tpe
       | None -> raise (Invalid_Yojson ("Paramater type not found.", yojson))
       end
     in
-    tpe, (name, decl_type), extract_location source_info
+    tpe, name, extract_location source_info
   | yojson ->
     raise (Invalid_Yojson ("Invalid paramater data.", yojson))
 
@@ -435,9 +434,9 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
       | _ -> raise (Invalid_Yojson ("Variable name not found.", yojson))
       end
     in
-    let tpe, decl_type =
+    let tpe =
       begin match find_type typemap type_ptr with
-      | Some (tpe, decl_type) -> tpe, decl_type
+      | Some tpe -> tpe
       | None -> raise (Invalid_Yojson ("Variable type not found.", yojson))
       end
     in
@@ -446,13 +445,13 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
     | Some init_expr ->
       let init_expr = parse_expression typemap init_expr in
       Ast.VARDECL (
-        (tpe, [(name, decl_type), Ast.SINGLE_INIT init_expr]),
+        (tpe, [name, Ast.SINGLE_INIT init_expr]),
         extract_variable_scope var_info,
         location
       )
     | None ->
       Ast.VARDECL (
-        (tpe, [(name, decl_type), Ast.NO_INIT]),
+        (tpe, [name, Ast.NO_INIT]),
         extract_variable_scope var_info,
         location
       )
@@ -564,9 +563,9 @@ let ast_of_yojson typemap function_typeinfo definitions =
         | _ -> raise (Invalid_Yojson ("Function name not found.", yojson))
         end
       in
-      let tpe, decl_type =
+      let tpe =
         begin match find_type typemap type_ptr with
-        | Some (tpe, decl_type) -> tpe, decl_type
+        | Some tpe -> tpe
         | None -> raise (Invalid_Yojson ("Type not found.", yojson))
         end
       in
@@ -574,13 +573,13 @@ let ast_of_yojson typemap function_typeinfo definitions =
       | Some init_expr ->
         let init_expr = parse_expression typemap init_expr in
         Ast.DECDEF (
-          (tpe, [(name, decl_type), Ast.SINGLE_INIT init_expr]),
+          (tpe, [name, Ast.SINGLE_INIT init_expr]),
           variable_scope,
           location
         ) :: definitions
       | None ->
         Ast.DECDEF (
-          (tpe, [(name, decl_type), Ast.NO_INIT]),
+          (tpe, [name, Ast.NO_INIT]),
           variable_scope,
           location
         ) :: definitions
@@ -601,27 +600,17 @@ let ast_of_yojson typemap function_typeinfo definitions =
           end
         in
         let location = extract_location source_info in
-        let return_type, decl_type =
-          begin match PointerMap.find_opt type_ptr function_typeinfo with
-          | Some { return_type; _ } ->
-            begin match return_type with
-            | Just tpe -> tpe, Ast.JUSTBASE
-            | Array { ptr; size} ->
-              begin match find_type typemap ptr with
-              | Some (tpe, decl_type) ->
-                let expr = Ast.CONSTANT (Ast.CONST_INT (string_of_int size), location) in
-                tpe, (Ast.ARRAY (decl_type, expr))
-              | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
-              end
-            | Pointer i ->
-              match find_type typemap i with
-              | Some (tpe, decl_type) -> tpe, (Ast.PTR decl_type)
-              | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
-            end
+        let return_type =
+          let tpe = 
+            match PointerMap.find_opt type_ptr function_typeinfo with
+            | Some { return_type; _ } -> return_type
+            | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
+          in
+          match resolve_ctype typemap tpe with
+          | Some tpe -> tpe
           | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
-          end
         in
-        let single_name = return_type, (name, decl_type), location in
+        let single_name = return_type, name, location in
         let params =
           begin match List.assoc_opt "parameters" data with
           | Some `List params -> List.map (parse_parameters typemap) params

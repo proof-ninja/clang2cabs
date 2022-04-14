@@ -119,15 +119,9 @@ and conv_ctype : Ast.ctype -> Cabs.specifier = function
   | Ast.Tint -> [Cabs.SpecType Cabs.Tint]
   | _ -> raise (Unimplemented_error "Cabs cannot accept this type.")
 
-and conv_decl_type : Ast.decl_type -> Cabs.decl_type = function
-  | Ast.JUSTBASE -> Cabs.JUSTBASE
-  | Ast.PTR decl_type ->
-    Cabs.PTR ([], conv_decl_type decl_type)
-  | Ast.ARRAY (decl_type, expr) ->
-    Cabs.ARRAY (conv_decl_type decl_type, [], conv_expression expr)
-
-and conv_name (name, decl_type) : Cabs.name =
-  name, conv_decl_type decl_type, [], dummy_loc
+and conv_name name : Cabs.name =
+  (* CAUTION: We don't treat decl_types. *)
+  name, Cabs.JUSTBASE, [], dummy_loc
 
 and conv_single_name (ctype, name, _location) : Cabs.single_name =
   (conv_ctype ctype), (conv_name name)
