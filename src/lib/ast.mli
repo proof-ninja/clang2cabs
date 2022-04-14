@@ -30,17 +30,8 @@ and ctype =
   | Tulonglong (** [unsigned long long] type *)
   | Tfloat (** [float] type *)
   | Tdouble (** [double] type *)
-
-(**
-  Declarator type. They modify the base type given in the specifier.
-  e.g.
-  - [int[3][4]] -> [ARRAY(ARRAY(JUSTBASE, "3"), "4")]
-  - [int]     -> [JUSTBASE]
-*)
-and decl_type =
-  | JUSTBASE
-  | PTR of decl_type (** This is not used currently. *)
-  | ARRAY of decl_type * expression
+  | Tarray of ctype * int (** [Array] type *)
+  | Tpointer of ctype (** [Pointer] type *)
 
 (**
   like name_group, except the declared variables are allowed to have initializers
@@ -51,14 +42,9 @@ and decl_type =
 and init_name_group = ctype * init_name list
 
 (**
-  The decl_type is in the order in which they are printed. Only the name of
-  the declared identifier is pulled out. The attributes are those that are
-  printed after the declarator
-  e.g.
-    in [int x[]], [x[]] is the declarator; [x] will be pulled out as
-    the string, and decl_type will be [ARRAY(JUSTBASE)]
+  A name of symbol.
  *)
-and name = string * decl_type
+and name = string
 
 (**
    A variable declarator [name] with an initializer [init_expression].

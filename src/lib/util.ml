@@ -22,6 +22,17 @@ let load_from_file filename =
   using_in filename (fun ch ->
       Marshal.from_channel ch)
 
+
+module Option = struct
+  include Option
+
+  let flat_map f m = bind m f
+
+  module Let = struct
+    let ( let* ) m f = bind m f
+  end
+end
+
 module List = struct
   include List
   
