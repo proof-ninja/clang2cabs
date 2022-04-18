@@ -32,6 +32,12 @@ and ctype =
   | Tdouble (** [double] type *)
   | Tarray of ctype * int (** [Array] type *)
   | Tpointer of ctype (** [Pointer] type *)
+  | Trecord of { name: string; fields: record_field list; location: location }
+
+and record_field = {
+  ctype: ctype;
+  name: string;
+}
 
 (**
   like name_group, except the declared variables are allowed to have initializers
@@ -153,6 +159,8 @@ and expression =
   | PAREN of expression * location (** [(expression)] *)
   | VARIABLE of string * location (** variable *)
   | INDEX of expression * expression * location (** array index expression [a[i]] *)
+  | MEMBER of expression * string * location (** record's field expression [a.x] *)
+  | INIT_LIST of expression list * location (** initializer list [struct foo = { 1, { 2, 3 } }] *)
 
 and constant =
   | CONST_INT of string (** the textual representation *)
