@@ -60,6 +60,8 @@ let rec conv_expression : Ast.expression -> Cabs.expression = function
       conv_expression expr1,
       conv_expression expr2
     )
+  | Ast.CONDITIONAL (_cond, _lhs, _rhs, _location) ->
+    raise (Cannot_convert "Cabs does not support CONDITIONAL expression")
   | Ast.CALL (name, exprs, _location) ->
     Cabs.CALL (
       Cabs.CONSTANT (Cabs.CONST_STRING name),

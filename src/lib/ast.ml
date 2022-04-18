@@ -86,6 +86,7 @@ and unary_operator =
 and expression =
   | UNARY of unary_operator * expression * location
   | BINARY of binary_operator * expression * expression * location
+  | CONDITIONAL of expression * expression * expression * location
   | CALL of string * expression list * location
   | CONSTANT of constant * location
   | PAREN of expression * location
@@ -234,6 +235,8 @@ and show_expression = function
     show_unary_operator (show_expression expr) op
   | BINARY (op, lhs, rhs, _location) ->
     show_expression lhs ^ " " ^ show_binary_operator op ^ " " ^ show_expression rhs
+  | CONDITIONAL (cond, lhs, rhs, _location) ->
+    show_expression cond ^ " ? " ^ show_expression lhs ^ " : " ^ show_expression rhs
   | CALL (name, expr_list, _location) ->
     name ^ "(" ^ (expr_list |> List.map show_expression |> String.concat ", ") ^ ")"
   | CONSTANT (constant, _location) ->
