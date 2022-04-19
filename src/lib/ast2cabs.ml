@@ -41,7 +41,7 @@ let conv_unary_operator : Ast.unary_operator -> Cabs.unary_operator = function
   | Ast.PLUS -> Cabs.PLUS
   | Ast.NOT -> Cabs.NOT
   | Ast.BNOT -> Cabs.BNOT
-  | Ast.MEMOF -> Cabs.MEMOF
+  | Ast.DEREF -> Cabs.MEMOF
   | Ast.ADDROF -> Cabs.ADDROF
   | Ast.PREINCR -> Cabs.PREINCR
   | Ast.PREDECR -> Cabs.PREDECR

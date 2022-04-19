@@ -35,6 +35,10 @@ end
 
 module List = struct
   include List
+
+  let flat_map f list = List.fold_right (fun e acc ->
+      List.fold_right (fun e acc -> e :: acc ) (f e) acc
+    ) list []
   
   let is_empty = function
     | [] -> true

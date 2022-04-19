@@ -35,12 +35,11 @@ let resolve_ctype typemap tpe =
     | Record { name; fields; location } ->
       let fields =
         fields
-        |> List.map (fun { ptr; name } -> Option.to_list (
+        |> List.flat_map (fun { ptr; name } -> Option.to_list (
             let* tpe = PointerMap.find_opt ptr typemap in
             let* ctype = impl tpe in
             Some (Ast.{ ctype; name })
           ))
-        |> List.flatten
       in
       Some (Ast.Trecord { name; fields; location })
   in
@@ -454,6 +453,8 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     | "PreInc" -> Ast.UNARY (Ast.PREINCR, expr, location)
     | "PostDec" -> Ast.UNARY (Ast.POSDECR, expr, location)
     | "PreDec" -> Ast.UNARY (Ast.PREDECR, expr, location)
+    | "Deref" -> Ast.UNARY (Ast.DEREF, expr, location)
+    | "AddrOf" -> Ast.UNARY (Ast.ADDROF, expr, location)
     | _ -> raise (Invalid_Yojson ("Invalid unary operation.", yojson))
     end
   | `Variant (
@@ -891,11 +892,14 @@ let ast_of_yojson (fname:string) : Yojson.Safe.t -> Ast.file = function
         let typemap = make_typedef_typemap PointerMap.empty decls in
         let typemap = make_typemap typemap typedata in
         (* For debbug *)
+        Printf.printf "Show typemap\n";
         show_typemap typemap;
 
         let function_typeinfo = make_fuction_typeinfo typemap typedata in
         (* For debbug *)
+        Printf.printf "Show function typeinfo\n";
         show_fuction_typeinfo function_typeinfo;
+
         let definitions = ast_of_yojson typemap function_typeinfo decls in
         fname, definitions
   | yojson ->

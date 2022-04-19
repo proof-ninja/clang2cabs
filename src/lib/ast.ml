@@ -80,7 +80,7 @@ and binary_operator =
   | ASSIGN
 
 and unary_operator =
-  | MINUS | PLUS | NOT | BNOT | MEMOF | ADDROF
+  | MINUS | PLUS | NOT | BNOT | DEREF | ADDROF
   | PREINCR | PREDECR | POSINCR | POSDECR
 
 and expression =
@@ -261,7 +261,7 @@ and show_unary_operator v = function
   | PLUS -> "+" ^ v
   | NOT -> "!" ^ v
   | BNOT -> "^" ^ v
-  | MEMOF -> "*" ^ v
+  | DEREF -> "*" ^ v
   | ADDROF -> "&" ^ v
   | PREINCR -> "++" ^ v
   | PREDECR -> "--" ^ v
