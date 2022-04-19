@@ -154,6 +154,7 @@ and unary_operator =
 and expression =
   | UNARY of unary_operator * expression * location  (** unary operation *)
   | BINARY of binary_operator * expression * expression * location (** binary operation *)
+  | CONDITIONAL of expression * expression * expression * location (** conditional operator *)
   | CALL of string * expression list * location (** function call [f(e1, ..., en)] *)
   | CONSTANT of constant * location (** constant expression *)
   | PAREN of expression * location (** [(expression)] *)

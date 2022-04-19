@@ -221,15 +221,24 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     ))
   ) ->
     PointerMap.add i (Just Ast.Tvoid) map
-  (* in 'small C', we do not treat pointer type. *)
-  (* | `Variant (
+  | `Variant (
     "PointerType", Some (`Tuple (
-      `Assoc [("pointer", `Int i)] ::
-      `Assoc [("type_ptr", `Int p)] ::
+      `Assoc pointer_data ::
+      `Assoc typedata ::
       _
     ))
   ) ->
-    PointerMap.add i (Pointer p) map *)
+    let info =
+      let open Option.Let in
+      let* ptr = extract_pointer pointer_data in
+      let* type_ptr = extract_type_ptr typedata in
+      Some ((ptr, type_ptr))
+    in
+    begin match info with
+    | Some ((i, p)) ->
+      PointerMap.add i (Pointer p) map
+    | _ -> map
+    end
   | `Variant (
     "ConstantArrayType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
@@ -267,6 +276,19 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     end
   | `Variant (
     "TypedefType", Some (`Tuple (
+      `Assoc pointer_data ::
+      `Assoc _typedata ::
+      _
+    ))
+  ) ->
+    let ptr = extract_pointer pointer_data in
+    let desugared = extract_desugared_type pointer_data in
+    begin match ptr, desugared with
+    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
+    | _ -> map
+    end
+  | `Variant (
+    "DecayedType", Some (`Tuple (
       `Assoc pointer_data ::
       `Assoc _typedata ::
       _
@@ -317,11 +339,18 @@ let parse_params_type typemap params_type yojson =
     param_types
     |> List.map (
       function
-      | `Assoc[("type_ptr", `Int ptr)] ->
-        begin match PointerMap.find_opt ptr typemap with
-        | Some typ -> typ
-        | None -> raise (Invalid_Yojson ("Type not found. ptr: " ^ string_of_int ptr, yojson))
-        end
+      | `Assoc type_info ->
+        let ptr =
+          match extract_type_ptr type_info with
+          | Some ptr -> ptr
+          | None -> raise (Invalid_Yojson ("Type not found. Cannot resolve type_ptr", yojson))
+        in
+        let tpe =
+          match PointerMap.find_opt ptr typemap with
+          | Some tpe -> tpe
+          | None -> raise (Invalid_Yojson ("Type not found. ptr:" ^ string_of_int ptr, yojson))
+        in
+        tpe
       | _ -> raise (Invalid_Yojson ("type_ptr not found", yojson))
     )
   | _ -> []
@@ -460,6 +489,20 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     | "Assign" -> Ast.BINARY (Ast.ASSIGN, left, right, location)
     | _ -> raise (Invalid_Yojson ("Invalid binary operation.", yojson))
     end
+  | `Variant (
+    "ConditionalOperator", Some (`Tuple (
+      `Assoc source_info ::
+      (* It is sufficient to deal only with cases where there are strictly three arguments. *)
+      ` List [ cond; lhs; rhs ] ::
+      `Assoc _type_info ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    let cond = parse_expression typemap cond in
+    let lhs = parse_expression typemap lhs in
+    let rhs = parse_expression typemap rhs in
+    Ast.CONDITIONAL (cond, lhs, rhs, location)
   (* We should care function call if and only if it is called with constant name. *)
   | `Variant (
     "CallExpr", Some (`Tuple (
