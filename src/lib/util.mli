@@ -17,6 +17,8 @@ end
 module List : sig
   include module type of List
 
+  val flat_map : ('a -> 'b list) -> 'a list -> 'b list
+
   val is_empty : 'a list -> bool
 end
 
