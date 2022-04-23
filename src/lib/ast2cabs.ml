@@ -8,8 +8,8 @@ let dummy_loc: Cabs.cabsloc = {
   ident= 0;
 }
 
-let conv_location : Ast.location -> Cabs.cabsloc = function
-  | Ast.{ file; start_line; _ } ->
+let conv_location : Ast.Location.t -> Cabs.cabsloc = function
+  | Ast.Location.{ file; start_line; _ } ->
     Cabs.{
       lineno= Option.value ~default:0 start_line;
       filename= Option.value ~default:"" file;
@@ -120,9 +120,9 @@ and conv_block block : Cabs.block = {
   bstmts= List.map conv_statement block
 }
 
-and conv_ctype : Ast.ctype -> Cabs.specifier = function
-  | Ast.Tvoid -> [Cabs.SpecType Cabs.Tvoid]
-  | Ast.Tint -> [Cabs.SpecType Cabs.Tint]
+and conv_ctype : Ast.CType.t -> Cabs.specifier = function
+  | Ast.CType.Tvoid -> [Cabs.SpecType Cabs.Tvoid]
+  | Ast.CType.Tint -> [Cabs.SpecType Cabs.Tint]
   | _ -> raise (Unimplemented_error "Cabs cannot accept this type.")
 
 and conv_name name : Cabs.name =
