@@ -2,53 +2,9 @@ open Util
 
 exception Invalid_Yojson of string * Yojson.Safe.t
 
-type record_field = {
-  ptr: int;
-  name: string
-}
-
-type [@warning "-37"] c_type =
-  | Just of Ast.ctype
-  | Alias of int
-  | Pointer of int
-  | Array of { ptr: int; size: int }
-  | Record of { name: string; fields: record_field list; location: Ast.location }
-
 module PointerMap = Map.Make(Int)
 
-let resolve_ctype typemap tpe =
-  let open Option.Let in
-  let rec impl = function
-    | Just tpe -> Some tpe
-    | Alias ptr ->
-      let* tpe = PointerMap.find_opt ptr typemap in
-      let* tpe = impl tpe in
-      Some tpe
-    | Pointer ptr ->
-      let* tpe = PointerMap.find_opt ptr typemap in
-      let* tpe = impl tpe in
-      Some (Ast.Tpointer tpe)
-    | Array { ptr; size } ->
-      let* tpe = PointerMap.find_opt ptr typemap in
-      let* tpe = impl tpe in
-      Some (Ast.Tarray (tpe, size))
-    | Record { name; fields; location } ->
-      let fields =
-        fields
-        |> List.flat_map (fun { ptr; name } -> Option.to_list (
-            let* tpe = PointerMap.find_opt ptr typemap in
-            let* ctype = impl tpe in
-            Some (Ast.{ ctype; name })
-          ))
-      in
-      Some (Ast.Trecord { name; fields; location })
-  in
-  impl tpe
-
-let find_type typemap i =
-  let open Option.Let in
-  let* tpe = PointerMap.find_opt i typemap in
-  resolve_ctype typemap tpe
+let find_type typemap i = PointerMap.find_opt i typemap
 
 let extract_pointer yojson =
   match List.assoc_opt "pointer" yojson with
@@ -56,7 +12,7 @@ let extract_pointer yojson =
   | _ -> None
 
 let extract_location info =
-  let result = Ast.empty_location in
+  let result = Ast.Location.empty in
   let result =
     match List.assoc_opt "source_range" info with
     | Some (`Tuple (`Assoc start_info :: `Assoc end_info :: _)) ->
@@ -129,8 +85,8 @@ let make_typedef_typemap typemap definitions =
         let ptr = extract_type_ptr typedata in
         let name = extract_name namedata in
         begin match ptr, name with
-        | (Some ptr), (Some name) ->
-          { ptr; name } :: fields
+        | (Some ctype), (Some name) ->
+          Ast.CType.{ ctype; name } :: fields
         | _ ->
           fields
         end
@@ -167,7 +123,7 @@ let make_typedef_typemap typemap definitions =
     let fields = parse_fields fields in
     begin match ptr, name with
     | (Some ptr), (Some name) ->
-      PointerMap.add ptr (Record { name; fields; location }) map
+      PointerMap.add ptr (Ast.CType.Trecord { name; fields; location }) map
     | _ ->
       map
     end
@@ -195,23 +151,23 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     ))
   ) as yojson ->
     let tpe = match tpe with
-    | "Bool"  -> Ast.Tbool
-    | "Char_S" -> Ast.Tchar_s
-    | "SChar" -> Ast.Tchar
-    | "UChar" -> Ast.Tuchar
-    | "Short" -> Ast.Tshort
-    | "UShort" -> Ast.Tushort
-    | "Int" -> Ast.Tint
-    | "UInt" -> Ast.Tuint
-    | "Long" -> Ast.Tlong
-    | "ULong" -> Ast.Tulong
-    | "LongLong" -> Ast.Tlonglong
-    | "ULongLong" -> Ast.Tulonglong
-    | "Float" -> Ast.Tfloat
-    | "Double" -> Ast.Tdouble
+    | "Bool"  -> Ast.CType.Tbool
+    | "Char_S" -> Ast.CType.Tchar_s
+    | "SChar" -> Ast.CType.Tchar
+    | "UChar" -> Ast.CType.Tuchar
+    | "Short" -> Ast.CType.Tshort
+    | "UShort" -> Ast.CType.Tushort
+    | "Int" -> Ast.CType.Tint
+    | "UInt" -> Ast.CType.Tuint
+    | "Long" -> Ast.CType.Tlong
+    | "ULong" -> Ast.CType.Tulong
+    | "LongLong" -> Ast.CType.Tlonglong
+    | "ULongLong" -> Ast.CType.Tulonglong
+    | "Float" -> Ast.CType.Tfloat
+    | "Double" -> Ast.CType.Tdouble
     | _ -> raise (Invalid_Yojson ("Invalid buildin type.", yojson))
     in
-    PointerMap.add i (Just tpe) map
+    PointerMap.add i tpe map
   | `Variant (
     "BuiltinType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
@@ -219,7 +175,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
       _
     ))
   ) ->
-    PointerMap.add i (Just Ast.Tvoid) map
+    PointerMap.add i Ast.CType.Tvoid map
   | `Variant (
     "PointerType", Some (`Tuple (
       `Assoc pointer_data ::
@@ -235,7 +191,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     in
     begin match info with
     | Some ((i, p)) ->
-      PointerMap.add i (Pointer p) map
+      PointerMap.add i (Ast.CType.Tpointer p) map
     | _ -> map
     end
   | `Variant (
@@ -249,7 +205,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
       _
     ))
   ) ->
-    PointerMap.add i (Array { ptr= p; size }) map
+    PointerMap.add i (Ast.CType.Tarray (p, size)) map
   | `Variant (
     "RecordType", Some (`Tuple (
       `Assoc pointer_data ::
@@ -258,7 +214,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     ))
   ) ->
     begin match extract_pointer pointer_data with
-    | Some i -> PointerMap.add i (Alias ptr) map
+    | Some i -> PointerMap.add i (Ast.CType.Talias ptr) map
     | _ -> map
     end
   | `Variant (
@@ -270,7 +226,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     let ptr = extract_pointer pointer_data in
     let desugared = extract_desugared_type pointer_data in
     begin match ptr, desugared with
-    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
+    | (Some i), (Some ptr) -> PointerMap.add i (Ast.CType.Talias ptr) map
     | _ -> map
     end
   | `Variant (
@@ -283,7 +239,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     let ptr = extract_pointer pointer_data in
     let desugared = extract_desugared_type pointer_data in
     begin match ptr, desugared with
-    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
+    | (Some i), (Some ptr) -> PointerMap.add i (Ast.CType.Talias ptr) map
     | _ -> map
     end
   | `Variant (
@@ -296,7 +252,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     let ptr = extract_pointer pointer_data in
     let desugared = extract_desugared_type pointer_data in
     begin match ptr, desugared with
-    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
+    | (Some i), (Some ptr) -> PointerMap.add i (Ast.CType.Talias ptr) map
     | _ -> map
     end
   | _ ->
@@ -305,31 +261,14 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
   typemap
   typedata
 
-let show_record_field { ptr; name } = name ^ "->" ^ string_of_int ptr
-
-let show_c_type = function
-  | Just tpe -> Ast.show_ctype tpe
-  | Alias ptr -> "Alias->" ^ string_of_int ptr
-  | Pointer p -> "Pointer->" ^ string_of_int p
-  | Array { ptr; size } -> "Array[" ^ string_of_int size ^ "]->" ^ string_of_int ptr
-  | Record { name; fields; _ } ->
-    let fields =
-      fields
-      |> List.map (fun field -> "  " ^ show_record_field field)
-      |> String.concat "\n"
-    in
-    "Struct " ^ name ^ " {\n" ^
-    fields ^ "\n" ^
-    "}"
-
 let show_typemap typemap =
   typemap |> PointerMap.iter (fun idx tpe ->
-    Printf.printf "%d => %s\n" idx (show_c_type tpe)
+    Printf.printf "%d => %s\n" idx (Ast.show_ctype tpe)
   )
 
 type function_typeinfo = {
-  return_type: c_type;
-  param_types: c_type list
+  return_type: Ast.CType.t;
+  param_types: Ast.CType.t list
 }
 
 let parse_params_type typemap params_type yojson =
@@ -392,8 +331,8 @@ let make_fuction_typeinfo typemap typedata = List.fold_left (fun map -> function
 
 let show_fuction_typeinfo function_typeinfo =
   function_typeinfo |> PointerMap.iter (fun idx {return_type; param_types} ->
-    let rt = show_c_type return_type in
-    let at = param_types |> List.map show_c_type |> String.concat "," in
+    let rt = Ast.show_ctype return_type in
+    let at = param_types |> List.map Ast.show_ctype |> String.concat "," in
     Printf.printf "%d => { return: %s, args: %s }\n" idx rt at
   )
 
@@ -843,13 +782,8 @@ let ast_of_yojson typemap function_typeinfo definitions =
         in
         let location = extract_location source_info in
         let return_type =
-          let tpe = 
-            match PointerMap.find_opt type_ptr function_typeinfo with
-            | Some { return_type; _ } -> return_type
-            | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
-          in
-          match resolve_ctype typemap tpe with
-          | Some tpe -> tpe
+          match PointerMap.find_opt type_ptr function_typeinfo with
+          | Some { return_type; _ } -> return_type
           | None -> raise (Invalid_Yojson ("Function type not found.", yojson))
         in
         let single_name = return_type, name, location in

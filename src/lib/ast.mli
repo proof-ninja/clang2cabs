@@ -2,50 +2,57 @@
 (**
   Location infomations of the definition.
 *)
-type location = {
-  file : string option;
-  start_line : int option;
-  end_line : int option;
-  start_column : int option;
-  end_column : int option
-}
+module Location : sig
+  type t = {
+    file : string option;
+    start_line : int option;
+    end_line : int option;
+    start_column : int option;
+    end_column : int option
+  }
 
-val empty_location : location
+  val empty : t
+end
 
-type file = string * definition list
+(**
+  All types appearing in the source code.
+*)
+module CType : sig
+  type id = int (** Unique ID assigned to every type *)
+  
+  type record_field = {
+    ctype: id;
+    name: string;
+  }
 
-and ctype =
-  | Tvoid (** [void] type *)
-  | Tbool (** [bool] type *)
-  | Tchar_s (** [char] type *)
-  | Tchar (** [signed char] type *)
-  | Tuchar (** [unsigned char] type *)
-  | Tshort (** [signed short] type *)
-  | Tushort (** [unsigned short] type *)
-  | Tint (** [signed int] type *)
-  | Tuint (** [unsigned int] type *)
-  | Tlong (** [signed long] type *)
-  | Tulong (** [unsigned long] type *)
-  | Tlonglong (** [signed long long] type *)
-  | Tulonglong (** [unsigned long long] type *)
-  | Tfloat (** [float] type *)
-  | Tdouble (** [double] type *)
-  | Tarray of ctype * int (** [Array] type *)
-  | Tpointer of ctype (** [Pointer] type *)
-  | Trecord of { name: string; fields: record_field list; location: location }
-
-and record_field = {
-  ctype: ctype;
-  name: string;
-}
+  type t =
+    | Tvoid (** [void] type *)
+    | Tbool (** [bool] type *)
+    | Tchar_s (** [char] type *)
+    | Tchar (** [signed char] type *)
+    | Tuchar (** [unsigned char] type *)
+    | Tshort (** [signed short] type *)
+    | Tushort (** [unsigned short] type *)
+    | Tint (** [signed int] type *)
+    | Tuint (** [unsigned int] type *)
+    | Tlong (** [signed long] type *)
+    | Tulong (** [unsigned long] type *)
+    | Tlonglong (** [signed long long] type *)
+    | Tulonglong (** [unsigned long long] type *)
+    | Tfloat (** [float] type *)
+    | Tdouble (** [double] type *)
+    | Tarray of id * int (** [Array] type *)
+    | Tpointer of id (** [Pointer] type *)
+    | Trecord of { name: string; fields: record_field list; location: Location.t }
+    | Talias of id (** Just alias of other types. *)
+end
 
 (**
   like name_group, except the declared variables are allowed to have initializers
   e.g.
     {[int x = 1, y = 2;]}
  *)
-
-and init_name_group = ctype * init_name list
+type init_name_group = CType.t * init_name list
 
 (**
   A name of symbol.
@@ -61,7 +68,7 @@ and init_name = name * init_expression
    Single names are for declarations that cannot come in groups, like
    function parameters and functions.
  *)
-and single_name = ctype * name * location
+and single_name = CType.t * name * Location.t
 
 (**
   The variable's scope info.
@@ -76,22 +83,22 @@ and variable_scope = {
    Declaration definition (at toplevel)
  *)
 and definition =
-  | FUNDEF of single_name * single_name list * block * location
+  | FUNDEF of single_name * single_name list * block * Location.t
   (**
      When you got [FUNDEF(sname, args, body)],
      [sname] is the function's name and type.
      [args] is the arguments' names and types.
      [body] is the function's body and function prototype has empty body.
    *)
-  | DECDEF of init_name_group * variable_scope * location (** global variable(s) *)
+  | DECDEF of init_name_group * variable_scope * Location.t (** global variable(s) *)
 
 and block = statement list
 
 and statement =
   | NOP (** empty statement *)
   | COMPUTATION of expression (** simple expression *)
-  | BLOCK of block * location (** block of statements [{ st; ... st; }] *)
-  | IF of expression * statement * statement * location
+  | BLOCK of block * Location.t (** block of statements [{ st; ... st; }] *)
+  | IF of expression * statement * statement * Location.t
   (** if statement
         {[if (cond) {
           st1;
@@ -100,7 +107,7 @@ and statement =
         }
         ]}
    *)
-  | FOR of expression * expression * expression * statement * location
+  | FOR of expression * expression * expression * statement * Location.t
   (** for loop statement
       {[
       for (e1; e2; e3) {
@@ -108,7 +115,7 @@ and statement =
       }
       ]}
    *)
-  | WHILE of expression * statement * location
+  | WHILE of expression * statement * Location.t
   (** while loop statemnt
       {[
       while (cond) {
@@ -116,11 +123,11 @@ and statement =
       }
       ]}
    *)
-  | RETURN of expression option * location
+  | RETURN of expression option * Location.t
   (** return statement
       {[return e;]}
    *)
-  | VARDECL of init_name_group * variable_scope * location
+  | VARDECL of init_name_group * variable_scope * Location.t
   (** variable declaration *)
 
 and binary_operator =
@@ -152,16 +159,16 @@ and unary_operator =
   | POSDECR (** [e--] *)
 
 and expression =
-  | UNARY of unary_operator * expression * location  (** unary operation *)
-  | BINARY of binary_operator * expression * expression * location (** binary operation *)
-  | CONDITIONAL of expression * expression * expression * location (** conditional operator *)
-  | CALL of string * expression list * location (** function call [f(e1, ..., en)] *)
-  | CONSTANT of constant * location (** constant expression *)
-  | PAREN of expression * location (** [(expression)] *)
-  | VARIABLE of string * location (** variable *)
-  | INDEX of expression * expression * location (** array index expression [a[i]] *)
-  | MEMBER of expression * string * location (** record's field expression [a.x] *)
-  | INIT_LIST of expression list * location (** initializer list [struct foo = { 1, { 2, 3 } }] *)
+  | UNARY of unary_operator * expression * Location.t  (** unary operation *)
+  | BINARY of binary_operator * expression * expression * Location.t (** binary operation *)
+  | CONDITIONAL of expression * expression * expression * Location.t (** conditional operator *)
+  | CALL of string * expression list * Location.t (** function call [f(e1, ..., en)] *)
+  | CONSTANT of constant * Location.t (** constant expression *)
+  | PAREN of expression * Location.t (** [(expression)] *)
+  | VARIABLE of string * Location.t (** variable *)
+  | INDEX of expression * expression * Location.t (** array index expression [a[i]] *)
+  | MEMBER of expression * string * Location.t (** record's field expression [a.x] *)
+  | INIT_LIST of expression list * Location.t (** initializer list [struct foo = { 1, { 2, 3 } }] *)
 
 and constant =
   | CONST_INT of string (** the textual representation *)
@@ -170,10 +177,11 @@ and init_expression =
   | NO_INIT
   | SINGLE_INIT of expression
 
+type file = string * definition list
 
 val show : file -> string
 
-val show_ctype : ctype -> string
+val show_ctype : CType.t -> string
 
 val save_to_file : string -> file -> (unit, exn) result
 

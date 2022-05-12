@@ -1,55 +1,60 @@
 open Util
 
-type location = {
-  file : string option;
-  start_line : int option;
-  end_line : int option;
-  start_column : int option;
-  end_column : int option
-}
+module Location = struct
+  type t = {
+    file : string option;
+    start_line : int option;
+    end_line : int option;
+    start_column : int option;
+    end_column : int option
+  }
 
-let empty_location = {
-  file= None;
-  start_line= None;
-  end_line= None;
-  start_column= None;
-  end_column= None
-}
+  let empty = {
+    file= None;
+    start_line= None;
+    end_line= None;
+    start_column= None;
+    end_column= None
+  }
+end
 
-type file = string * definition list
+module CType = struct
+  type id = int
+  
+  type record_field = {
+    ctype: id;
+    name: string;
+  }
 
-and ctype =
-  | Tvoid
-  | Tbool
-  | Tchar_s
-  | Tchar
-  | Tuchar
-  | Tshort
-  | Tushort
-  | Tint
-  | Tuint
-  | Tlong
-  | Tulong
-  | Tlonglong
-  | Tulonglong
-  | Tfloat
-  | Tdouble
-  | Tarray of ctype * int
-  | Tpointer of ctype
-  | Trecord of { name: string; fields: record_field list; location: location }
+  type t =
+    | Tvoid
+    | Tbool
+    | Tchar_s
+    | Tchar
+    | Tuchar
+    | Tshort
+    | Tushort
+    | Tint
+    | Tuint
+    | Tlong
+    | Tulong
+    | Tlonglong
+    | Tulonglong
+    | Tfloat
+    | Tdouble
+    | Tarray of id * int
+    | Tpointer of id
+    | Trecord of { name: string; fields: record_field list; location: Location.t }
+    | Talias of id
+end
 
-and record_field = {
-  ctype: ctype;
-  name: string;
-}
-
-and init_name_group = ctype * init_name list
+type init_name_group = CType.t * init_name list
 
 and name = string
 
 and init_name = name * init_expression
 
-and single_name = ctype * name * location
+and single_name = CType.t * name * Location.t
 
 and variable_scope = {
   is_global : bool;
@@ -58,20 +63,20 @@ and variable_scope = {
 }
 
 and definition =
-  | FUNDEF of single_name * single_name list * block * location
-  | DECDEF of init_name_group * variable_scope * location
+  | FUNDEF of single_name * single_name list * block * Location.t
+  | DECDEF of init_name_group * variable_scope * Location.t
 
 and block = statement list
 
 and statement =
   | NOP
   | COMPUTATION of expression
-  | BLOCK of block * location
-  | IF of expression * statement * statement * location
-  | FOR of expression * expression * expression * statement * location
-  | WHILE of expression * statement * location
-  | RETURN of expression option * location
-  | VARDECL of init_name_group * variable_scope * location
+  | BLOCK of block * Location.t
+  | IF of expression * statement * statement * Location.t
+  | FOR of expression * expression * expression * statement * Location.t
+  | WHILE of expression * statement * Location.t
+  | RETURN of expression option * Location.t
+  | VARDECL of init_name_group * variable_scope * Location.t
 
 and binary_operator =
   | ADD | SUB | MUL | DIV | MOD
@@ -84,16 +89,16 @@ and unary_operator =
   | PREINCR | PREDECR | POSINCR | POSDECR
 
 and expression =
-  | UNARY of unary_operator * expression * location
-  | BINARY of binary_operator * expression * expression * location
-  | CONDITIONAL of expression * expression * expression * location
-  | CALL of string * expression list * location
-  | CONSTANT of constant * location
-  | PAREN of expression * location
-  | VARIABLE of string * location
-  | INDEX of expression * expression * location
-  | MEMBER of expression * string * location
-  | INIT_LIST of expression list * location
+  | UNARY of unary_operator * expression * Location.t
+  | BINARY of binary_operator * expression * expression * Location.t
+  | CONDITIONAL of expression * expression * expression * Location.t
+  | CALL of string * expression list * Location.t
+  | CONSTANT of constant * Location.t
+  | PAREN of expression * Location.t
+  | VARIABLE of string * Location.t
+  | INDEX of expression * expression * Location.t
+  | MEMBER of expression * string * Location.t
+  | INIT_LIST of expression list * Location.t
 
 and constant =
   | CONST_INT of string (* the textual representation *)
@@ -172,8 +177,8 @@ and show_ctype = function
   | Tulonglong -> "unsigned long long"
   | Tfloat -> "float"
   | Tdouble -> "double"
-  | Tarray (tpe, len) -> show_ctype tpe ^ "[" ^ string_of_int len ^ "]"
-  | Tpointer tpe -> "*" ^ show_ctype tpe
+  | Tarray (p, len) -> "Type:" ^ string_of_int p ^ "[" ^ string_of_int len ^ "]"
+  | Tpointer tpe -> "*" ^ "Type:" ^ string_of_int tpe
   | Trecord { name; fields; _ } ->
     let fields =
       fields
@@ -183,9 +188,10 @@ and show_ctype = function
     "struct " ^ name ^ " {\n" ^
     fields ^ "\n" ^
     "}"
+  | Talias p -> "Alias->" ^ string_of_int p
 
 and show_field { ctype; name } =
-  show_ctype ctype ^ " " ^ name
+  "Type:" ^ string_of_int ctype ^ " " ^ name
 and show_block indent block =
   block
   |> List.map (show_statement indent)
@@ -284,6 +290,8 @@ and show_binary_operator = function
   | ASSIGN -> "="
 and show_constant = function
   | CONST_INT i_as_str -> i_as_str
+
+type file = string * definition list
 
 let show file = show_file "" file
 
