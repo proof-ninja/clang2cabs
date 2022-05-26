@@ -158,6 +158,10 @@ let conv_definition : Ast.definition -> Cabs.definition = function
       conv_init_name_group init_name_group,
       conv_location location
     )
+  | Ast.TYPEDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
+  | Ast.RECORDDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
 
 let conv_file (filename, definitions) : Cabs.file = filename, List.map conv_definition definitions
 

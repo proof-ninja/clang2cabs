@@ -19,11 +19,6 @@ end
 *)
 module CType : sig
   type id = int (** Unique ID assigned to every type *)
-  
-  type record_field = {
-    ctype: id;
-    name: string;
-  }
 
   type t =
     | Tvoid (** [void] type *)
@@ -41,10 +36,21 @@ module CType : sig
     | Tulonglong (** [unsigned long long] type *)
     | Tfloat (** [float] type *)
     | Tdouble (** [double] type *)
-    | Tarray of id * int (** [Array] type *)
-    | Tpointer of id (** [Pointer] type *)
-    | Trecord of { name: string; fields: record_field list; location: Location.t }
-    | Talias of id (** Just alias of other types. *)
+    | Tarray of t * int (** [Array] type *)
+    | Tpointer of t (** [Pointer] type *)
+    | Tdefined of id (** User defined type like such as struct *)
+end
+
+module Record : sig
+  type field = {
+    ctype: CType.t;
+    name: string;
+  }
+
+  type t = {
+    name: string;
+    fields: field list;
+  }
 end
 
 (**
@@ -91,6 +97,8 @@ and definition =
      [body] is the function's body and function prototype has empty body.
    *)
   | DECDEF of init_name_group * variable_scope * Location.t (** global variable(s) *)
+  | TYPEDEF of CType.id * string * Location.t (** A definition of type *)
+  | RECORDDEF of CType.id * Record.t * Location.t (** A definition of struct *)
 
 and block = statement list
 
