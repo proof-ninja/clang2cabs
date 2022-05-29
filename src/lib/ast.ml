@@ -20,11 +20,6 @@ end
 
 module CType = struct
   type id = int
-  
-  type record_field = {
-    ctype: id;
-    name: string;
-  }
 
   type t =
     | Tvoid
@@ -42,10 +37,21 @@ module CType = struct
     | Tulonglong
     | Tfloat
     | Tdouble
-    | Tarray of id * int
-    | Tpointer of id
-    | Trecord of { name: string; fields: record_field list; location: Location.t }
-    | Talias of id
+    | Tarray of t * int
+    | Tpointer of t
+    | Tdefined of id
+end
+
+module Record = struct
+  type field = {
+    ctype: CType.t;
+    name: string;
+  }
+
+  type t = {
+    name: string;
+    fields: field list;
+  }
 end
 
 type init_name_group = CType.t * init_name list
@@ -65,6 +71,8 @@ and variable_scope = {
 and definition =
   | FUNDEF of single_name * single_name list * block * Location.t
   | DECDEF of init_name_group * variable_scope * Location.t
+  | TYPEDEF of CType.id * string * Location.t
+  | RECORDDEF of CType.id * Record.t * Location.t
 
 and block = statement list
 
@@ -146,6 +154,17 @@ and show_definition indent = function
     indent ^ "Decdef[" ^ show_variable_scope scope_info ^ "](\n" ^
     init_name_group ^ "\n" ^
     indent ^ ")"
+  | TYPEDEF (id, name, _location) ->
+    "type " ^ name ^ "(" ^ string_of_int id ^ ")\n"
+  | RECORDDEF (id, Record.{ name; fields }, _location) ->
+    let fields =
+      fields
+      |> List.map (fun Record.{ ctype; name } -> "  " ^ name ^ ": " ^ show_ctype ctype )
+      |> String.concat "\n"
+    in
+    "struct " ^ name ^ " {\n" ^
+    fields ^ "\n" ^
+    "}(" ^ string_of_int id ^ ")\n"
 and show_init_name_group indent (ctype, init_name_list) =
   let names =
     init_name_list
@@ -177,21 +196,9 @@ and show_ctype = function
   | Tulonglong -> "unsigned long long"
   | Tfloat -> "float"
   | Tdouble -> "double"
-  | Tarray (p, len) -> "Type:" ^ string_of_int p ^ "[" ^ string_of_int len ^ "]"
-  | Tpointer tpe -> "*" ^ "Type:" ^ string_of_int tpe
-  | Trecord { name; fields; _ } ->
-    let fields =
-      fields
-      |> List.map (fun field -> "  " ^ show_field field)
-      |> String.concat "\n"
-    in
-    "struct " ^ name ^ " {\n" ^
-    fields ^ "\n" ^
-    "}"
-  | Talias p -> "Alias->" ^ string_of_int p
-
-and show_field { ctype; name } =
-  "Type:" ^ string_of_int ctype ^ " " ^ name
+  | Tarray (tpe, len) -> "Type:" ^ show_ctype tpe ^ "[" ^ string_of_int len ^ "]"
+  | Tpointer tpe -> "*" ^ "Type:" ^ show_ctype tpe
+  | Tdefined p -> "(User Defined Type of ->" ^ string_of_int p ^ ")"
 and show_block indent block =
   block
   |> List.map (show_statement indent)
