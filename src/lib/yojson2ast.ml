@@ -329,21 +329,22 @@ let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
     "ParmVarDecl", Some (`Tuple (
       `Assoc source_info ::
       `Assoc name_info ::
-      `Assoc [("type_ptr", `Int type_ptr)] ::
+      `Assoc typedata ::
       _
     ))
   ) as yojson ->
     let name =
-      begin match List.assoc_opt "name" name_info with
+      match List.assoc_opt "name" name_info with
       | Some (`String name) -> name
       | _ -> raise (Invalid_Yojson ("Paramater name not found.", yojson))
-      end
     in
     let tpe =
-      begin match find_type typemap type_ptr with
+      match
+        extract_type_ptr typedata
+        |> Option.flat_map (find_type typemap)
+      with
       | Some tpe -> tpe
       | None -> raise (Invalid_Yojson ("Paramater type not found.", yojson))
-      end
     in
     tpe, name, extract_location source_info
   | yojson ->
@@ -412,8 +413,8 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     | "LE" -> Ast.BINARY (Ast.LE, left, right, location)
     | "GT" -> Ast.BINARY (Ast.GT, left, right, location)
     | "GE" -> Ast.BINARY (Ast.GE, left, right, location)
-    | "LAnd" -> Ast.BINARY (Ast.AND, left, right, location)
-    | "LOr" -> Ast.BINARY (Ast.OR, left, right, location)
+    | "And" | "LAnd" -> Ast.BINARY (Ast.AND, left, right, location)
+    | "Or" | "LOr" -> Ast.BINARY (Ast.OR, left, right, location)
     | "Assign" -> Ast.BINARY (Ast.ASSIGN, left, right, location)
     | _ -> raise (Invalid_Yojson ("Invalid binary operation.", yojson))
     end
@@ -477,7 +478,7 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
   ) ->
     Ast.PAREN (parse_expression typemap expr, extract_location source_info)
   | `Variant (
-    "ImplicitCastExpr", Some (`Tuple (
+    ("ImplicitCastExpr" | "CStyleCastExpr"), Some (`Tuple (
       _source_info ::
       `List [expr] ::
       _
@@ -522,6 +523,18 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     in
     let location = extract_location source_info in
     Ast.CONSTANT (Ast.CONST_INT value, location)
+  | `Variant (
+    "CharacterLiteral", Some (`Tuple (
+      `Assoc source_info ::
+      _children ::
+      _qual_type ::
+      `Int value ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    (* Currently characters are represented as const int. *)
+    Ast.CONSTANT (Ast.CONST_INT (string_of_int value), location)
   | `Variant (
     "ArraySubscriptExpr", Some (`Tuple (
       `Assoc source_info ::
