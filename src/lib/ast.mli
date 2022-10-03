@@ -41,24 +41,23 @@ module CType : sig
     | Tdefined of id (** User defined type like such as struct *)
 end
 
-module Record : sig
-  type field = {
-    ctype: CType.t;
-    name: string;
-  }
+type field = {
+  ctype: CType.t;
+  field_name: string;
+  bit_width_expr: expression option;
+}
 
-  type t = {
-    name: string;
-    fields: field list;
-  }
-end
+and record = {
+  record_name: string;
+  record_fields: field list;
+}
 
 (**
   like name_group, except the declared variables are allowed to have initializers
   e.g.
     {[int x = 1, y = 2;]}
  *)
-type init_name_group = CType.t * init_name list
+and init_name_group = CType.t * init_name list
 
 (**
   A name of symbol.
@@ -98,7 +97,7 @@ and definition =
    *)
   | DECDEF of init_name_group * variable_scope * Location.t (** global variable(s) *)
   | TYPEDEF of CType.id * string * Location.t (** A definition of type *)
-  | RECORDDEF of CType.id * Record.t * Location.t (** A definition of struct *)
+  | RECORDDEF of CType.id * record * Location.t (** A definition of struct *)
 
 and block = statement list
 
@@ -167,6 +166,7 @@ and unary_operator =
   | POSDECR (** [e--] *)
 
 and expression =
+  | CONST_EXPR of expression * Location.t (** constant expression *)
   | UNARY of unary_operator * expression * Location.t  (** unary operation *)
   | BINARY of binary_operator * expression * expression * Location.t (** binary operation *)
   | CONDITIONAL of expression * expression * expression * Location.t (** conditional operator *)

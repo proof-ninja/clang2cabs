@@ -42,19 +42,18 @@ module CType = struct
     | Tdefined of id
 end
 
-module Record = struct
-  type field = {
-    ctype: CType.t;
-    name: string;
-  }
+type field = {
+  ctype: CType.t;
+  field_name: string;
+  bit_width_expr: expression option;
+}
 
-  type t = {
-    name: string;
-    fields: field list;
-  }
-end
+and record = {
+  record_name: string;
+  record_fields: field list;
+}
 
-type init_name_group = CType.t * init_name list
+and init_name_group = CType.t * init_name list
 
 and name = string
 
@@ -72,7 +71,7 @@ and definition =
   | FUNDEF of single_name * single_name list * block * Location.t
   | DECDEF of init_name_group * variable_scope * Location.t
   | TYPEDEF of CType.id * string * Location.t
-  | RECORDDEF of CType.id * Record.t * Location.t
+  | RECORDDEF of CType.id * record * Location.t
 
 and block = statement list
 
@@ -97,6 +96,7 @@ and unary_operator =
   | PREINCR | PREDECR | POSINCR | POSDECR
 
 and expression =
+  | CONST_EXPR of expression * Location.t (** constant expression *)
   | UNARY of unary_operator * expression * Location.t
   | BINARY of binary_operator * expression * expression * Location.t
   | CONDITIONAL of expression * expression * expression * Location.t
@@ -156,15 +156,23 @@ and show_definition indent = function
     indent ^ ")"
   | TYPEDEF (id, name, _location) ->
     "type " ^ name ^ "(" ^ string_of_int id ^ ")\n"
-  | RECORDDEF (id, Record.{ name; fields }, _location) ->
+  | RECORDDEF (id, { record_name; record_fields }, _location) ->
+    let show_field { ctype; field_name; bit_width_expr } =
+      let ctype = show_ctype ctype in
+      let bit_width_expr = bit_width_expr
+        |> Option.map (fun expr -> " (bit_width: " ^ show_expression expr ^ ")")
+        |> Option.value ~default:""
+      in
+      "  " ^ field_name ^ ": " ^ ctype ^ bit_width_expr
+    in
     let fields =
-      fields
-      |> List.map (fun Record.{ ctype; name } -> "  " ^ name ^ ": " ^ show_ctype ctype )
+      record_fields
+      |> List.map show_field
       |> String.concat "\n"
     in
-    "struct " ^ name ^ " {\n" ^
+    "struct " ^ record_name ^ " {\n" ^
     fields ^ "\n" ^
-    "}(" ^ string_of_int id ^ ")\n"
+    "}(User defined as " ^ string_of_int id ^ ")\n"
 and show_init_name_group indent (ctype, init_name_list) =
   let names =
     init_name_list
@@ -244,6 +252,8 @@ and show_statement indent = function
     init_name_group ^ "\n" ^
     indent ^ ")"
 and show_expression = function
+  | CONST_EXPR (expr, _location) ->
+    show_expression expr
   | UNARY (op, expr, _location) ->
     show_unary_operator (show_expression expr) op
   | BINARY (op, lhs, rhs, _location) ->
@@ -268,7 +278,7 @@ and show_expression = function
       |> List.map show_expression
       |> String.concat ", "
     in
-    "{ " ^ exprs ^ "}"
+    "{ " ^ exprs ^ " }"
 and show_unary_operator v = function
   | MINUS -> "-" ^ v
   | PLUS -> "+" ^ v

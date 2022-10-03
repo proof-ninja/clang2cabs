@@ -364,6 +364,17 @@ let extract_variable_scope map =
 
 let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
   | `Variant (
+    "ConstantExpr", Some (`Tuple (
+      `Assoc source_info ::
+      `List [expr] ::
+      _qual_type ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    let expr = parse_expression typemap expr in
+    Ast.CONST_EXPR (expr, location)
+  | `Variant (
     "UnaryOperator", Some (`Tuple (
       `Assoc source_info ::
       `List [expr] ::
@@ -733,6 +744,7 @@ let parse_record typemap yojson =
         `Assoc _metadata ::
         `Assoc namedata ::
         `Assoc typedata ::
+        `Assoc bit_width_expr_data ::
         _
         ))
       ) ->
@@ -742,8 +754,12 @@ let parse_record typemap yojson =
         in
         let name = extract_name namedata in
         begin match ctype, name with
-        | (Some ctype), (Some name) ->
-          Ast.Record.{ ctype; name } :: fields
+        | (Some ctype), (Some field_name) ->
+          let bit_width_expr = bit_width_expr_data
+            |> List.assoc_opt "bit_width_expr" 
+            |> Option.map (parse_expression typemap)
+          in
+          Ast.{ ctype; field_name; bit_width_expr } :: fields
         | _ ->
           fields
         end
@@ -777,10 +793,10 @@ let parse_record typemap yojson =
         in
         go qual_names
       in
-      let fields = parse_fields fields in
+      let record_fields = parse_fields fields in
       begin match ptr, name with
-      | (Some ptr), (Some name) ->
-        let record = Ast.Record.{ name; fields } in
+      | (Some ptr), (Some record_name) ->
+        let record = Ast.{ record_name; record_fields } in
         Ast.RECORDDEF (ptr, record, location)
       | _ ->
         raise (Invalid_Yojson ("Invalid record definition.", yojson))

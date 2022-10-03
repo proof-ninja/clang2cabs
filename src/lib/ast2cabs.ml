@@ -49,6 +49,8 @@ let conv_unary_operator : Ast.unary_operator -> Cabs.unary_operator = function
   | Ast.POSDECR -> Cabs.POSDECR
 
 let rec conv_expression : Ast.expression -> Cabs.expression = function
+  | Ast.CONST_EXPR (expr, _location) ->
+    conv_expression expr (* Simply ignore a constant expression. *)
   | Ast.UNARY (unary_operator, expression, _location) ->
     Cabs.UNARY (
       conv_unary_operator unary_operator,
