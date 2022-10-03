@@ -43,7 +43,7 @@ module CType = struct
 end
 
 type field = {
-  ctype: CType.t;
+  field_type: CType.t;
   field_name: string;
   bit_width_expr: expression option;
 }
@@ -84,6 +84,7 @@ and statement =
   | WHILE of expression * statement * Location.t
   | RETURN of expression option * Location.t
   | VARDECL of init_name_group * variable_scope * Location.t
+  | RECORDDEC of CType.id * record * Location.t
 
 and binary_operator =
   | ADD | SUB | MUL | DIV | MOD
@@ -124,6 +125,23 @@ let rec show_file indent = function (filename, definition_list) ->
   indent ^ "File(name: " ^ filename ^ "\n" ^
   defs ^ "\n" ^
   ")"
+and show_record_definition id { record_name; record_fields } _location =
+  let show_field { field_type; field_name; bit_width_expr } =
+    let field_type = show_ctype field_type in
+    let bit_width_expr = bit_width_expr
+      |> Option.map (fun expr -> " (bit_width: " ^ show_expression expr ^ ")")
+      |> Option.value ~default:""
+    in
+    "  " ^ field_name ^ ": " ^ field_type ^ bit_width_expr
+  in
+  let fields =
+    record_fields
+    |> List.map show_field
+    |> String.concat "\n"
+  in
+  "struct " ^ record_name ^ " {\n" ^
+  fields ^ "\n" ^
+  "}(User defined as " ^ string_of_int id ^ ")\n"
 and show_variable_scope {is_global; is_static; is_static_local} =
   let info = [] in
   let info = if is_static_local then "static_local" :: info else info in
@@ -156,23 +174,8 @@ and show_definition indent = function
     indent ^ ")"
   | TYPEDEF (id, name, _location) ->
     "type " ^ name ^ "(" ^ string_of_int id ^ ")\n"
-  | RECORDDEF (id, { record_name; record_fields }, _location) ->
-    let show_field { ctype; field_name; bit_width_expr } =
-      let ctype = show_ctype ctype in
-      let bit_width_expr = bit_width_expr
-        |> Option.map (fun expr -> " (bit_width: " ^ show_expression expr ^ ")")
-        |> Option.value ~default:""
-      in
-      "  " ^ field_name ^ ": " ^ ctype ^ bit_width_expr
-    in
-    let fields =
-      record_fields
-      |> List.map show_field
-      |> String.concat "\n"
-    in
-    "struct " ^ record_name ^ " {\n" ^
-    fields ^ "\n" ^
-    "}(User defined as " ^ string_of_int id ^ ")\n"
+  | RECORDDEF (id, record, location) ->
+    show_record_definition id record location
 and show_init_name_group indent (ctype, init_name_list) =
   let names =
     init_name_list
@@ -251,6 +254,8 @@ and show_statement indent = function
     indent ^ "VARDECL[" ^ show_variable_scope scope_info ^ "](\n" ^
     init_name_group ^ "\n" ^
     indent ^ ")"
+  | RECORDDEC (id, record, location) ->
+    show_record_definition id record location
 and show_expression = function
   | CONST_EXPR (expr, _location) ->
     show_expression expr

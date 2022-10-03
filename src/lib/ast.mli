@@ -42,7 +42,7 @@ module CType : sig
 end
 
 type field = {
-  ctype: CType.t;
+  field_type: CType.t;
   field_name: string;
   bit_width_expr: expression option;
 }
@@ -136,6 +136,8 @@ and statement =
    *)
   | VARDECL of init_name_group * variable_scope * Location.t
   (** variable declaration *)
+  | RECORDDEC of CType.id * record * Location.t
+  (** struct definition in statements *)
 
 and binary_operator =
   | ADD (** [e1 + e2] *)

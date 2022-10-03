@@ -32,4 +32,18 @@ int main(void)
   x1.m = 1;
 
   struct X x2 = { 0, 0, 0, 0, 0 };
+
+  struct A {
+    int n, m;
+  };
+  struct A a;
+  a.n = 42;
+  a.m = 99;
+
+  struct {
+    int id;
+    unsigned int age;
+  } user;
+  user.id = 0;
+  user.age = 20;
 }

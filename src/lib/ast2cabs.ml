@@ -115,6 +115,8 @@ let rec conv_statement : Ast.statement -> Cabs.statement = function
       conv_init_name_group init_name_group,
       conv_location location
     ))
+  | Ast.RECORDDEC (_id, _record, _location) ->
+    raise (Cannot_convert "Cabs does not support the definition in statements")
 
 and conv_block block : Cabs.block = {
   blabels= [];

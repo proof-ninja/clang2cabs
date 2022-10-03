@@ -600,6 +600,72 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
   | yojson ->
     raise (Invalid_Yojson ("Invalid expression data.", yojson))
 
+and parse_record typemap yojson =
+  let parse_fields fields_yojson = List.fold_left (fun fields -> function
+    | `Variant (
+      "FieldDecl", Some (`Tuple (
+        `Assoc _metadata ::
+        `Assoc namedata ::
+        `Assoc typedata ::
+        `Assoc bit_width_expr_data ::
+        _
+        ))
+      ) ->
+        let ctype = typedata
+          |> extract_type_ptr
+          |> Option.flat_map (fun ptr -> PointerMap.find_opt ptr typemap)
+        in
+        let name = extract_name namedata in
+        begin match ctype, name with
+        | (Some field_type), (Some field_name) ->
+          let bit_width_expr = bit_width_expr_data
+            |> List.assoc_opt "bit_width_expr" 
+            |> Option.map (parse_expression typemap)
+          in
+          Ast.{ field_type; field_name; bit_width_expr } :: fields
+        | _ ->
+          fields
+        end
+    | _ ->
+      fields
+    )
+    []
+    fields_yojson
+  in
+  match yojson with
+  | `Variant (
+    "RecordDecl", Some (`Tuple (
+      `Assoc metadata ::
+      `Assoc namedata ::
+      `Int _type_ptr ::
+      `List fields ::
+      _ :: (* empty? *)
+      _ :: (* ex. <"TTK_Struct"> *)
+      `Assoc _definition_data ::
+      _
+      ))
+    ) ->
+      let ptr = extract_pointer metadata in
+      let location = extract_location metadata in
+      let qual_names = extract_qual_names namedata in
+      let name =
+        let rec loop = function
+          | name :: [] -> Some name
+          | name :: tail -> Option.map (fun name' -> name' ^ "." ^ name) @@ loop tail
+          | [] -> None
+        in
+        loop qual_names
+      in
+      let record_fields = parse_fields fields in
+      begin match ptr, name with
+      | (Some ptr), (Some record_name) ->
+        let record = Ast.{ record_name; record_fields } in
+        ptr, record, location
+      | _ ->
+        raise (Invalid_Yojson ("Invalid record definition.", yojson))
+      end
+  | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
+
 and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
   | `Variant (
     "DeclStmt", Some (`Tuple (
@@ -649,6 +715,9 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
         location
       )
     end
+  | `Variant ("RecordDecl", _) as yojson ->
+    let id, record, location = parse_record typemap yojson in 
+    Ast.RECORDDEC (id, record, location)
   | `Variant (
     "IfStmt", Some (`Tuple (
       `Assoc source_info ::
@@ -737,72 +806,6 @@ and parse_body typemap : Yojson.Safe.t -> Ast.block = function
   | yojson ->
     [parse_statement typemap yojson]
 
-let parse_record typemap yojson =
-  let parse_fields fields_yojson = List.fold_left (fun fields -> function
-    | `Variant (
-      "FieldDecl", Some (`Tuple (
-        `Assoc _metadata ::
-        `Assoc namedata ::
-        `Assoc typedata ::
-        `Assoc bit_width_expr_data ::
-        _
-        ))
-      ) ->
-        let ctype = typedata
-          |> extract_type_ptr
-          |> Option.flat_map (fun ptr -> PointerMap.find_opt ptr typemap)
-        in
-        let name = extract_name namedata in
-        begin match ctype, name with
-        | (Some ctype), (Some field_name) ->
-          let bit_width_expr = bit_width_expr_data
-            |> List.assoc_opt "bit_width_expr" 
-            |> Option.map (parse_expression typemap)
-          in
-          Ast.{ ctype; field_name; bit_width_expr } :: fields
-        | _ ->
-          fields
-        end
-    | _ ->
-      fields
-    )
-    []
-    fields_yojson
-  in
-  match yojson with
-  | `Variant (
-    "RecordDecl", Some (`Tuple (
-      `Assoc metadata ::
-      `Assoc namedata ::
-      `Int _type_ptr ::
-      `List fields ::
-      _ :: (* empty? *)
-      _ :: (* ex. <"TTK_Struct"> *)
-      `Assoc _definition_data ::
-      _
-      ))
-    ) ->
-      let ptr = extract_pointer metadata in
-      let location = extract_location metadata in
-      let qual_names = extract_qual_names namedata in
-      let name =
-        let rec go = function
-          | name :: [] -> Some name
-          | _ :: tail -> go tail
-          | [] -> None
-        in
-        go qual_names
-      in
-      let record_fields = parse_fields fields in
-      begin match ptr, name with
-      | (Some ptr), (Some record_name) ->
-        let record = Ast.{ record_name; record_fields } in
-        Ast.RECORDDEF (ptr, record, location)
-      | _ ->
-        raise (Invalid_Yojson ("Invalid record definition.", yojson))
-      end
-  | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
-
 let ast_of_yojson typemap function_typeinfo definitions =
   let parse_definition definitions = function
     | `Variant (
@@ -879,7 +882,8 @@ let ast_of_yojson typemap function_typeinfo definitions =
           Ast.FUNDEF (single_name, params, [], location) :: definitions
         end
     | `Variant ("RecordDecl", _) as yojson ->
-      parse_record typemap yojson :: definitions
+      let id, record, location = parse_record typemap yojson in
+      Ast.RECORDDEF (id, record, location) :: definitions
     | _ ->
       definitions
   in
