@@ -49,6 +49,8 @@ let conv_unary_operator : Ast.unary_operator -> Cabs.unary_operator = function
   | Ast.POSDECR -> Cabs.POSDECR
 
 let rec conv_expression : Ast.expression -> Cabs.expression = function
+  | Ast.CONST_EXPR (expr, _location) ->
+    conv_expression expr (* Simply ignore a constant expression. *)
   | Ast.UNARY (unary_operator, expression, _location) ->
     Cabs.UNARY (
       conv_unary_operator unary_operator,
@@ -113,6 +115,8 @@ let rec conv_statement : Ast.statement -> Cabs.statement = function
       conv_init_name_group init_name_group,
       conv_location location
     ))
+  | Ast.RECORDDEC (_id, _record, _location) ->
+    raise (Cannot_convert "Cabs does not support the definition in statements")
 
 and conv_block block : Cabs.block = {
   blabels= [];
@@ -158,6 +162,10 @@ let conv_definition : Ast.definition -> Cabs.definition = function
       conv_init_name_group init_name_group,
       conv_location location
     )
+  | Ast.TYPEDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
+  | Ast.RECORDDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
 
 let conv_file (filename, definitions) : Cabs.file = filename, List.map conv_definition definitions
 

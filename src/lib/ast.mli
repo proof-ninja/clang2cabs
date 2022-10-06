@@ -19,11 +19,6 @@ end
 *)
 module CType : sig
   type id = int (** Unique ID assigned to every type *)
-  
-  type record_field = {
-    ctype: id;
-    name: string;
-  }
 
   type t =
     | Tvoid (** [void] type *)
@@ -41,18 +36,28 @@ module CType : sig
     | Tulonglong (** [unsigned long long] type *)
     | Tfloat (** [float] type *)
     | Tdouble (** [double] type *)
-    | Tarray of id * int (** [Array] type *)
-    | Tpointer of id (** [Pointer] type *)
-    | Trecord of { name: string; fields: record_field list; location: Location.t }
-    | Talias of id (** Just alias of other types. *)
+    | Tarray of t * int (** [Array] type *)
+    | Tpointer of t (** [Pointer] type *)
+    | Tdefined of id (** User defined type like such as struct *)
 end
+
+type field = {
+  field_type: CType.t;
+  field_name: string;
+  bit_width_expr: expression option;
+}
+
+and record = {
+  record_name: string;
+  record_fields: field list;
+}
 
 (**
   like name_group, except the declared variables are allowed to have initializers
   e.g.
     {[int x = 1, y = 2;]}
  *)
-type init_name_group = CType.t * init_name list
+and init_name_group = CType.t * init_name list
 
 (**
   A name of symbol.
@@ -91,6 +96,8 @@ and definition =
      [body] is the function's body and function prototype has empty body.
    *)
   | DECDEF of init_name_group * variable_scope * Location.t (** global variable(s) *)
+  | TYPEDEF of CType.id * string * Location.t (** A definition of type *)
+  | RECORDDEF of CType.id * record * Location.t (** A definition of struct *)
 
 and block = statement list
 
@@ -129,6 +136,8 @@ and statement =
    *)
   | VARDECL of init_name_group * variable_scope * Location.t
   (** variable declaration *)
+  | RECORDDEC of CType.id * record * Location.t
+  (** struct definition in statements *)
 
 and binary_operator =
   | ADD (** [e1 + e2] *)
@@ -159,6 +168,7 @@ and unary_operator =
   | POSDECR (** [e--] *)
 
 and expression =
+  | CONST_EXPR of expression * Location.t (** constant expression *)
   | UNARY of unary_operator * expression * Location.t  (** unary operation *)
   | BINARY of binary_operator * expression * expression * Location.t (** binary operation *)
   | CONDITIONAL of expression * expression * expression * Location.t (** conditional operator *)

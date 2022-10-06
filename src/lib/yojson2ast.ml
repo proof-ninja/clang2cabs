@@ -2,6 +2,18 @@ open Util
 
 exception Invalid_Yojson of string * Yojson.Safe.t
 
+type ctype =
+  | Just of Ast.CType.t
+  | Array of int * int
+  | Pointer of int
+  | Alias of int
+
+let show_ctype = function
+  | Just tpe -> "Just " ^ Ast.show_ctype tpe
+  | Array (ptr, size) -> "Array[" ^ string_of_int size ^ "]->" ^ string_of_int ptr
+  | Pointer ptr -> "Pointer->" ^ string_of_int ptr
+  | Alias i -> "Alias->" ^ string_of_int i
+
 module PointerMap = Map.Make(Int)
 
 let find_type typemap i = PointerMap.find_opt i typemap
@@ -72,67 +84,6 @@ let extract_desugared_type yojson =
   | Some (`Int ptr) -> Some ptr
   | _ -> None
 
-let make_typedef_typemap typemap definitions =
-  let parse_fields fields_yojson = List.fold_left (fun fields -> function
-    | `Variant (
-      "FieldDecl", Some (`Tuple (
-        `Assoc _metadata ::
-        `Assoc namedata ::
-        `Assoc typedata ::
-        _
-        ))
-      ) ->
-        let ptr = extract_type_ptr typedata in
-        let name = extract_name namedata in
-        begin match ptr, name with
-        | (Some ctype), (Some name) ->
-          Ast.CType.{ ctype; name } :: fields
-        | _ ->
-          fields
-        end
-    | _ ->
-      fields
-    )
-    []
-    fields_yojson
-  in
-  List.fold_left (fun map -> function
-  | `Variant (
-    "RecordDecl", Some (`Tuple (
-      `Assoc metadata ::
-      `Assoc namedata ::
-      `Int _type_ptr ::
-      `List fields ::
-      _ :: (* empty? *)
-      _ :: (* ex. <"TTK_Struct"> *)
-      `Assoc _definition_data ::
-      _
-      ))
-    ) ->
-    let ptr = extract_pointer metadata in
-    let location = extract_location metadata in
-    let qual_names = extract_qual_names namedata in
-    let name =
-      let rec go = function
-        | name :: [] -> Some name
-        | _ :: tail -> go tail
-        | [] -> None
-      in
-      go qual_names
-    in
-    let fields = parse_fields fields in
-    begin match ptr, name with
-    | (Some ptr), (Some name) ->
-      PointerMap.add ptr (Ast.CType.Trecord { name; fields; location }) map
-    | _ ->
-      map
-    end
-  | _ ->
-    map
-  )
-  typemap
-  definitions
-
 let make_typemap typemap typedata = List.fold_left (fun map -> function
   | `Variant (
     "BuiltinType", Some (`Tuple (
@@ -167,7 +118,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     | "Double" -> Ast.CType.Tdouble
     | _ -> raise (Invalid_Yojson ("Invalid buildin type.", yojson))
     in
-    PointerMap.add i tpe map
+    PointerMap.add i (Just tpe) map
   | `Variant (
     "BuiltinType", Some (`Tuple (
       `Assoc [("pointer", `Int i)] ::
@@ -175,7 +126,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
       _
     ))
   ) ->
-    PointerMap.add i Ast.CType.Tvoid map
+    PointerMap.add i (Just Ast.CType.Tvoid) map
   | `Variant (
     "PointerType", Some (`Tuple (
       `Assoc pointer_data ::
@@ -191,7 +142,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     in
     begin match info with
     | Some ((i, p)) ->
-      PointerMap.add i (Ast.CType.Tpointer p) map
+      PointerMap.add i (Pointer p) map
     | _ -> map
     end
   | `Variant (
@@ -205,7 +156,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
       _
     ))
   ) ->
-    PointerMap.add i (Ast.CType.Tarray (p, size)) map
+    PointerMap.add i (Array (p, size)) map
   | `Variant (
     "RecordType", Some (`Tuple (
       `Assoc pointer_data ::
@@ -214,7 +165,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     ))
   ) ->
     begin match extract_pointer pointer_data with
-    | Some i -> PointerMap.add i (Ast.CType.Talias ptr) map
+    | Some i -> PointerMap.add i (Just (Ast.CType.Tdefined ptr)) map
     | _ -> map
     end
   | `Variant (
@@ -226,7 +177,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     let ptr = extract_pointer pointer_data in
     let desugared = extract_desugared_type pointer_data in
     begin match ptr, desugared with
-    | (Some i), (Some ptr) -> PointerMap.add i (Ast.CType.Talias ptr) map
+    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
     | _ -> map
     end
   | `Variant (
@@ -239,7 +190,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     let ptr = extract_pointer pointer_data in
     let desugared = extract_desugared_type pointer_data in
     begin match ptr, desugared with
-    | (Some i), (Some ptr) -> PointerMap.add i (Ast.CType.Talias ptr) map
+    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
     | _ -> map
     end
   | `Variant (
@@ -252,7 +203,7 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     let ptr = extract_pointer pointer_data in
     let desugared = extract_desugared_type pointer_data in
     begin match ptr, desugared with
-    | (Some i), (Some ptr) -> PointerMap.add i (Ast.CType.Talias ptr) map
+    | (Some i), (Some ptr) -> PointerMap.add i (Alias ptr) map
     | _ -> map
     end
   | _ ->
@@ -260,6 +211,43 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
   )
   typemap
   typedata
+
+let show_ctype_map typemap =
+  typemap |> PointerMap.iter (fun idx tpe ->
+    Printf.printf "%d => %s\n" idx (show_ctype tpe)
+  )
+
+let reduce_ctype typemap =
+  let rec reduce typemap key =
+    let open Option.Let in
+    let* tpe = PointerMap.find_opt key typemap in
+    match tpe with
+    | Just tpe ->
+      Some (typemap, tpe)
+    | Array (ptr, size) ->
+      let* typemap, tpe = reduce typemap ptr in
+      let tpe = Ast.CType.Tarray (tpe, size) in
+      let typemap = PointerMap.add key (Just tpe) typemap in
+      Some (typemap, tpe)
+    | Pointer ptr ->
+      let* typemap, tpe = reduce typemap ptr in
+      let tpe = Ast.CType.Tpointer tpe in
+      let typemap = PointerMap.add key (Just tpe) typemap in
+      Some (typemap, tpe)
+    | Alias ptr ->
+      let* typemap, tpe = reduce typemap ptr in
+      let typemap = PointerMap.add key (Just tpe) typemap in
+      Some (typemap, tpe)
+  in
+  let _, result = PointerMap.fold (fun key _ (cache, acc) ->
+    match reduce cache key with
+    | Some (cache, tpe) ->
+      let acc = PointerMap.add key tpe acc in
+      cache, acc
+    | None ->
+      cache, acc
+  ) typemap (typemap, PointerMap.empty) in
+  result
 
 let show_typemap typemap =
   typemap |> PointerMap.iter (fun idx tpe ->
@@ -341,21 +329,22 @@ let parse_parameters typemap : Yojson.Safe.t -> Ast.single_name = function
     "ParmVarDecl", Some (`Tuple (
       `Assoc source_info ::
       `Assoc name_info ::
-      `Assoc [("type_ptr", `Int type_ptr)] ::
+      `Assoc typedata ::
       _
     ))
   ) as yojson ->
     let name =
-      begin match List.assoc_opt "name" name_info with
+      match List.assoc_opt "name" name_info with
       | Some (`String name) -> name
       | _ -> raise (Invalid_Yojson ("Paramater name not found.", yojson))
-      end
     in
     let tpe =
-      begin match find_type typemap type_ptr with
+      match
+        extract_type_ptr typedata
+        |> Option.flat_map (find_type typemap)
+      with
       | Some tpe -> tpe
       | None -> raise (Invalid_Yojson ("Paramater type not found.", yojson))
-      end
     in
     tpe, name, extract_location source_info
   | yojson ->
@@ -374,6 +363,17 @@ let extract_variable_scope map =
   }
 
 let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
+  | `Variant (
+    "ConstantExpr", Some (`Tuple (
+      `Assoc source_info ::
+      `List [expr] ::
+      _qual_type ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    let expr = parse_expression typemap expr in
+    Ast.CONST_EXPR (expr, location)
   | `Variant (
     "UnaryOperator", Some (`Tuple (
       `Assoc source_info ::
@@ -424,8 +424,8 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     | "LE" -> Ast.BINARY (Ast.LE, left, right, location)
     | "GT" -> Ast.BINARY (Ast.GT, left, right, location)
     | "GE" -> Ast.BINARY (Ast.GE, left, right, location)
-    | "LAnd" -> Ast.BINARY (Ast.AND, left, right, location)
-    | "LOr" -> Ast.BINARY (Ast.OR, left, right, location)
+    | "And" | "LAnd" -> Ast.BINARY (Ast.AND, left, right, location)
+    | "Or" | "LOr" -> Ast.BINARY (Ast.OR, left, right, location)
     | "Assign" -> Ast.BINARY (Ast.ASSIGN, left, right, location)
     | _ -> raise (Invalid_Yojson ("Invalid binary operation.", yojson))
     end
@@ -489,7 +489,7 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
   ) ->
     Ast.PAREN (parse_expression typemap expr, extract_location source_info)
   | `Variant (
-    "ImplicitCastExpr", Some (`Tuple (
+    ("ImplicitCastExpr" | "CStyleCastExpr"), Some (`Tuple (
       _source_info ::
       `List [expr] ::
       _
@@ -534,6 +534,18 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     in
     let location = extract_location source_info in
     Ast.CONSTANT (Ast.CONST_INT value, location)
+  | `Variant (
+    "CharacterLiteral", Some (`Tuple (
+      `Assoc source_info ::
+      _children ::
+      _qual_type ::
+      `Int value ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    (* Currently characters are represented as const int. *)
+    Ast.CONSTANT (Ast.CONST_INT (string_of_int value), location)
   | `Variant (
     "ArraySubscriptExpr", Some (`Tuple (
       `Assoc source_info ::
@@ -588,6 +600,72 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
   | yojson ->
     raise (Invalid_Yojson ("Invalid expression data.", yojson))
 
+and parse_record typemap yojson =
+  let parse_fields fields_yojson = List.fold_left (fun fields -> function
+    | `Variant (
+      "FieldDecl", Some (`Tuple (
+        `Assoc _metadata ::
+        `Assoc namedata ::
+        `Assoc typedata ::
+        `Assoc bit_width_expr_data ::
+        _
+        ))
+      ) ->
+        let ctype = typedata
+          |> extract_type_ptr
+          |> Option.flat_map (fun ptr -> PointerMap.find_opt ptr typemap)
+        in
+        let name = extract_name namedata in
+        begin match ctype, name with
+        | (Some field_type), (Some field_name) ->
+          let bit_width_expr = bit_width_expr_data
+            |> List.assoc_opt "bit_width_expr" 
+            |> Option.map (parse_expression typemap)
+          in
+          Ast.{ field_type; field_name; bit_width_expr } :: fields
+        | _ ->
+          fields
+        end
+    | _ ->
+      fields
+    )
+    []
+    fields_yojson
+  in
+  match yojson with
+  | `Variant (
+    "RecordDecl", Some (`Tuple (
+      `Assoc metadata ::
+      `Assoc namedata ::
+      `Int _type_ptr ::
+      `List fields ::
+      _ :: (* empty? *)
+      _ :: (* ex. <"TTK_Struct"> *)
+      `Assoc _definition_data ::
+      _
+      ))
+    ) ->
+      let ptr = extract_pointer metadata in
+      let location = extract_location metadata in
+      let qual_names = extract_qual_names namedata in
+      let name =
+        let rec loop = function
+          | name :: [] -> Some name
+          | name :: tail -> Option.map (fun name' -> name' ^ "." ^ name) @@ loop tail
+          | [] -> None
+        in
+        loop qual_names
+      in
+      let record_fields = parse_fields fields in
+      begin match ptr, name with
+      | (Some ptr), (Some record_name) ->
+        let record = Ast.{ record_name; record_fields } in
+        ptr, record, location
+      | _ ->
+        raise (Invalid_Yojson ("Invalid record definition.", yojson))
+      end
+  | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
+
 and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
   | `Variant (
     "DeclStmt", Some (`Tuple (
@@ -637,6 +715,9 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
         location
       )
     end
+  | `Variant ("RecordDecl", _) as yojson ->
+    let id, record, location = parse_record typemap yojson in 
+    Ast.RECORDDEC (id, record, location)
   | `Variant (
     "IfStmt", Some (`Tuple (
       `Assoc source_info ::
@@ -800,6 +881,9 @@ let ast_of_yojson typemap function_typeinfo definitions =
         | None ->
           Ast.FUNDEF (single_name, params, [], location) :: definitions
         end
+    | `Variant ("RecordDecl", _) as yojson ->
+      let id, record, location = parse_record typemap yojson in
+      Ast.RECORDDEF (id, record, location) :: definitions
     | _ ->
       definitions
   in
@@ -823,8 +907,11 @@ let ast_of_yojson (fname:string) : Yojson.Safe.t -> Ast.file = function
           | _ -> raise (Invalid_Yojson ("Type data not found.", yojson))
           end
         in
-        let typemap = make_typedef_typemap PointerMap.empty decls in
-        let typemap = make_typemap typemap typedata in
+        let typemap = make_typemap PointerMap.empty typedata in
+        (* For debbug *)
+        Printf.printf "Show raw typemap\n";
+        show_ctype_map typemap;
+        let typemap = reduce_ctype typemap in
         (* For debbug *)
         Printf.printf "Show typemap\n";
         show_typemap typemap;

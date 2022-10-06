@@ -7,6 +7,8 @@ The definition of "small C", the language to be parsed, is as follows:
 #include
 #define
 
+<struct-specifier> ::= struct { [type <identifier>]+ }
+
 P ::= x=e; | if (b) P else P | while (b) P | for (e; e; e) P | return e; | return;
         | { P ... P } | e++; | ++e; | e--; | --e;
 e ::= int-constants (..., -1, 0, 1, 2, ...) | variables | a[e]
