@@ -19,6 +19,7 @@ let conv_location : Ast.Location.t -> Cabs.cabsloc = function
 
 let conv_constant : Ast.constant -> Cabs.constant = function
   | Ast.CONST_INT i -> Cabs.CONST_INT i
+  | Ast.CONST_FLOAT _ -> raise (Cannot_convert "Cabs does not support CONST_FLOAT constant")
 
 let conv_binary_operator : Ast.binary_operator -> Cabs.binary_operator = function
   | Ast.ADD -> Cabs.ADD
@@ -117,6 +118,8 @@ let rec conv_statement : Ast.statement -> Cabs.statement = function
     ))
   | Ast.RECORDDEC (_id, _record, _location) ->
     raise (Cannot_convert "Cabs does not support the definition in statements")
+  | Ast.UNIONDEC (_id, _union, _location) ->
+    raise (Cannot_convert "Cabs does not support the definition in statements")
 
 and conv_block block : Cabs.block = {
   blabels= [];
@@ -165,6 +168,8 @@ let conv_definition : Ast.definition -> Cabs.definition = function
   | Ast.TYPEDEF _ ->
     raise (Unimplemented_error "Cabs cannot accept this definition.")
   | Ast.RECORDDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
+  | Ast.UNIONDEF _ ->
     raise (Unimplemented_error "Cabs cannot accept this definition.")
 
 let conv_file (filename, definitions) : Cabs.file = filename, List.map conv_definition definitions

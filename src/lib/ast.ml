@@ -53,6 +53,11 @@ and record = {
   record_fields: field list;
 }
 
+and union = {
+  union_name: string;
+  union_fields: field list;
+}
+
 and init_name_group = CType.t * init_name list
 
 and name = string
@@ -72,6 +77,7 @@ and definition =
   | DECDEF of init_name_group * variable_scope * Location.t
   | TYPEDEF of CType.id * string * Location.t
   | RECORDDEF of CType.id * record * Location.t
+  | UNIONDEF of CType.id * union * Location.t
 
 and block = statement list
 
@@ -85,6 +91,7 @@ and statement =
   | RETURN of expression option * Location.t
   | VARDECL of init_name_group * variable_scope * Location.t
   | RECORDDEC of CType.id * record * Location.t
+  | UNIONDEC of CType.id * union * Location.t
 
 and binary_operator =
   | ADD | SUB | MUL | DIV | MOD
@@ -111,6 +118,7 @@ and expression =
 
 and constant =
   | CONST_INT of string (* the textual representation *)
+  | CONST_FLOAT of string (** ditto *)
 
 and init_expression =
   | NO_INIT
@@ -125,15 +133,14 @@ let rec show_file indent = function (filename, definition_list) ->
   indent ^ "File(name: " ^ filename ^ "\n" ^
   defs ^ "\n" ^
   ")"
-and show_record_definition id { record_name; record_fields } _location =
-  let show_field { field_type; field_name; bit_width_expr } =
-    let field_type = show_ctype field_type in
-    let bit_width_expr = bit_width_expr
-      |> Option.map (fun expr -> " (bit_width: " ^ show_expression expr ^ ")")
-      |> Option.value ~default:""
-    in
-    "  " ^ field_name ^ ": " ^ field_type ^ bit_width_expr
+and show_field { field_type; field_name; bit_width_expr } =
+  let field_type = show_ctype field_type in
+  let bit_width_expr = bit_width_expr
+    |> Option.map (fun expr -> " (bit_width: " ^ show_expression expr ^ ")")
+    |> Option.value ~default:""
   in
+  "  " ^ field_name ^ ": " ^ field_type ^ bit_width_expr
+and show_record_definition id { record_name; record_fields } _location =
   let fields =
     record_fields
     |> List.map show_field
@@ -142,6 +149,15 @@ and show_record_definition id { record_name; record_fields } _location =
   "struct " ^ record_name ^ " {\n" ^
   fields ^ "\n" ^
   "}(User defined as " ^ string_of_int id ^ ")\n"
+and show_union_definition id { union_name; union_fields } _location =
+let fields =
+  union_fields
+  |> List.map show_field
+  |> String.concat "\n"
+in
+"union " ^ union_name ^ " {\n" ^
+fields ^ "\n" ^
+"}(User defined as " ^ string_of_int id ^ ")\n"
 and show_variable_scope {is_global; is_static; is_static_local} =
   let info = [] in
   let info = if is_static_local then "static_local" :: info else info in
@@ -176,6 +192,8 @@ and show_definition indent = function
     "type " ^ name ^ "(" ^ string_of_int id ^ ")\n"
   | RECORDDEF (id, record, location) ->
     show_record_definition id record location
+  | UNIONDEF (id, union, location) ->
+    show_union_definition id union location
 and show_init_name_group indent (ctype, init_name_list) =
   let names =
     init_name_list
@@ -256,6 +274,8 @@ and show_statement indent = function
     indent ^ ")"
   | RECORDDEC (id, record, location) ->
     show_record_definition id record location
+  | UNIONDEC (id, union, location) ->
+    show_union_definition id union location
 and show_expression = function
   | CONST_EXPR (expr, _location) ->
     show_expression expr
@@ -312,6 +332,7 @@ and show_binary_operator = function
   | ASSIGN -> "="
 and show_constant = function
   | CONST_INT i_as_str -> i_as_str
+  | CONST_FLOAT f_as_str -> f_as_str
 
 type file = string * definition list
 

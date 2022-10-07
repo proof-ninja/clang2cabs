@@ -52,6 +52,11 @@ and record = {
   record_fields: field list;
 }
 
+and union = {
+  union_name: string;
+  union_fields: field list;
+}
+
 (**
   like name_group, except the declared variables are allowed to have initializers
   e.g.
@@ -98,6 +103,7 @@ and definition =
   | DECDEF of init_name_group * variable_scope * Location.t (** global variable(s) *)
   | TYPEDEF of CType.id * string * Location.t (** A definition of type *)
   | RECORDDEF of CType.id * record * Location.t (** A definition of struct *)
+  | UNIONDEF of CType.id * union * Location.t (** A definition of union *)
 
 and block = statement list
 
@@ -138,6 +144,8 @@ and statement =
   (** variable declaration *)
   | RECORDDEC of CType.id * record * Location.t
   (** struct definition in statements *)
+  | UNIONDEC of CType.id * union * Location.t
+  (** union definition in statements *)
 
 and binary_operator =
   | ADD (** [e1 + e2] *)
@@ -182,6 +190,7 @@ and expression =
 
 and constant =
   | CONST_INT of string (** the textual representation *)
+  | CONST_FLOAT of string (** ditto *)
 
 and init_expression =
   | NO_INIT

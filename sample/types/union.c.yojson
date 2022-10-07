@@ -1,0 +1,3583 @@
+<"TranslationUnitDecl" : (
+  {
+    "pointer" : 1,
+    "source_range" : (
+      {
+      },
+      {
+      }
+    )
+  },
+  [
+    <"TypedefDecl" : (
+      {
+        "pointer" : 2,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__int128_t",
+        "qual_name" : [
+          "__int128_t"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 3,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__uint128_t",
+        "qual_name" : [
+          "__uint128_t"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 4,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__NSConstantString",
+        "qual_name" : [
+          "__NSConstantString"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 5,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__builtin_ms_va_list",
+        "qual_name" : [
+          "__builtin_ms_va_list"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 6,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__builtin_va_list",
+        "qual_name" : [
+          "__builtin_va_list"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"RecordDecl" : (
+      {
+        "pointer" : 7,
+        "parent_pointer" : 1,
+        "source_range" : (
+          {
+            "file" : "sample/types/union.c",
+            "line" : 2,
+            "column" : 1
+          },
+          {
+            "line" : 5,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "U1",
+        "qual_name" : [
+          "U1"
+        ]
+      },
+      8,
+      [
+        <"FieldDecl" : (
+          {
+            "pointer" : 9,
+            "parent_pointer" : 7,
+            "source_range" : (
+              {
+                "line" : 3,
+                "column" : 5
+              },
+              {
+                "column" : 9
+              }
+            ),
+            "is_this_declaration_referenced" : true,
+            "access" : <"Public">
+          },
+          {
+            "name" : "x",
+            "qual_name" : [
+              "x",
+              "U1"
+            ]
+          },
+          {
+            "type_ptr" : 10
+          },
+          {
+          }
+        )>,
+        <"FieldDecl" : (
+          {
+            "pointer" : 11,
+            "parent_pointer" : 7,
+            "source_range" : (
+              {
+                "line" : 4,
+                "column" : 5
+              },
+              {
+                "column" : 10
+              }
+            ),
+            "is_this_declaration_referenced" : true,
+            "access" : <"Public">
+          },
+          {
+            "name" : "y",
+            "qual_name" : [
+              "y",
+              "U1"
+            ]
+          },
+          {
+            "type_ptr" : 12
+          },
+          {
+          }
+        )>
+      ],
+      {
+      },
+      <"TTK_Union">,
+      {
+        "definition_ptr" : 7,
+        "is_complete_definition" : true
+      }
+    )>,
+    <"RecordDecl" : (
+      {
+        "pointer" : 13,
+        "parent_pointer" : 1,
+        "source_range" : (
+          {
+            "line" : 7,
+            "column" : 9
+          },
+          {
+            "line" : 10,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "",
+        "qual_name" : [
+          "U2"
+        ]
+      },
+      14,
+      [
+        <"FieldDecl" : (
+          {
+            "pointer" : 15,
+            "parent_pointer" : 13,
+            "source_range" : (
+              {
+                "line" : 8,
+                "column" : 5
+              },
+              {
+                "column" : 9
+              }
+            ),
+            "is_this_declaration_referenced" : true,
+            "access" : <"Public">
+          },
+          {
+            "name" : "x",
+            "qual_name" : [
+              "x",
+              "U2"
+            ]
+          },
+          {
+            "type_ptr" : 10
+          },
+          {
+          }
+        )>,
+        <"FieldDecl" : (
+          {
+            "pointer" : 16,
+            "parent_pointer" : 13,
+            "source_range" : (
+              {
+                "line" : 9,
+                "column" : 5
+              },
+              {
+                "column" : 10
+              }
+            ),
+            "is_this_declaration_referenced" : true,
+            "access" : <"Public">
+          },
+          {
+            "name" : "y",
+            "qual_name" : [
+              "y",
+              "U2"
+            ]
+          },
+          {
+            "type_ptr" : 12
+          },
+          {
+          }
+        )>
+      ],
+      {
+      },
+      <"TTK_Union">,
+      {
+        "definition_ptr" : 13,
+        "is_complete_definition" : true
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 17,
+        "source_range" : (
+          {
+            "line" : 7,
+            "column" : 1
+          },
+          {
+            "line" : 10,
+            "column" : 3
+          }
+        ),
+        "is_this_declaration_referenced" : true
+      },
+      {
+        "name" : "U2",
+        "qual_name" : [
+          "U2"
+        ]
+      },
+      18,
+      {
+      }
+    )>,
+    <"RecordDecl" : (
+      {
+        "pointer" : 19,
+        "parent_pointer" : 1,
+        "source_range" : (
+          {
+            "line" : 12,
+            "column" : 1
+          },
+          {
+            "column" : 7
+          }
+        )
+      },
+      {
+        "name" : "U3",
+        "qual_name" : [
+          "U3"
+        ]
+      },
+      20,
+      [
+      ],
+      {
+      },
+      <"TTK_Union">,
+      {
+        "definition_ptr" : 0
+      }
+    )>,
+    <"RecordDecl" : (
+      {
+        "pointer" : 21,
+        "parent_pointer" : 1,
+        "source_range" : (
+          {
+            "line" : 14,
+            "column" : 1
+          },
+          {
+            "line" : 17,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "U4",
+        "qual_name" : [
+          "U4"
+        ]
+      },
+      22,
+      [
+        <"FieldDecl" : (
+          {
+            "pointer" : 23,
+            "parent_pointer" : 21,
+            "source_range" : (
+              {
+                "line" : 15,
+                "column" : 5
+              },
+              {
+                "column" : 22
+              }
+            ),
+            "is_this_declaration_referenced" : true,
+            "access" : <"Public">
+          },
+          {
+            "name" : "x",
+            "qual_name" : [
+              "x",
+              "U4"
+            ]
+          },
+          {
+            "type_ptr" : 24
+          },
+          {
+            "bit_width_expr" : <"ConstantExpr" : (
+              {
+                "pointer" : 25,
+                "source_range" : (
+                  {
+                    "column" : 22
+                  },
+                  {
+                    "column" : 22
+                  }
+                )
+              },
+              [
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 26,
+                    "source_range" : (
+                      {
+                        "column" : 22
+                      },
+                      {
+                        "column" : 22
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "8"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              }
+            )>
+          }
+        )>,
+        <"FieldDecl" : (
+          {
+            "pointer" : 27,
+            "parent_pointer" : 21,
+            "source_range" : (
+              {
+                "line" : 16,
+                "column" : 5
+              },
+              {
+                "column" : 22
+              }
+            ),
+            "is_this_declaration_referenced" : true,
+            "access" : <"Public">
+          },
+          {
+            "name" : "y",
+            "qual_name" : [
+              "y",
+              "U4"
+            ]
+          },
+          {
+            "type_ptr" : 24
+          },
+          {
+            "bit_width_expr" : <"ConstantExpr" : (
+              {
+                "pointer" : 28,
+                "source_range" : (
+                  {
+                    "column" : 22
+                  },
+                  {
+                    "column" : 22
+                  }
+                )
+              },
+              [
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 29,
+                    "source_range" : (
+                      {
+                        "column" : 22
+                      },
+                      {
+                        "column" : 22
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "12"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              }
+            )>
+          }
+        )>
+      ],
+      {
+      },
+      <"TTK_Union">,
+      {
+        "definition_ptr" : 21,
+        "is_complete_definition" : true
+      }
+    )>,
+    <"FunctionDecl" : (
+      {
+        "pointer" : 30,
+        "source_range" : (
+          {
+            "line" : 19,
+            "column" : 1
+          },
+          {
+            "line" : 49,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "main",
+        "qual_name" : [
+          "main"
+        ]
+      },
+      {
+        "type_ptr" : 31
+      },
+      {
+        "decl_ptr_with_body" : 30,
+        "body" : <"CompoundStmt" : (
+          {
+            "pointer" : 32,
+            "source_range" : (
+              {
+                "line" : 20,
+                "column" : 1
+              },
+              {
+                "line" : 49,
+                "column" : 1
+              }
+            )
+          },
+          [
+            <"DeclStmt" : (
+              {
+                "pointer" : 33,
+                "source_range" : (
+                  {
+                    "line" : 21,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 22
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 34,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 14
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u11",
+                    "qual_name" : [
+                      "u11"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 35
+                  },
+                  {
+                  }
+                )>,
+                <"VarDecl" : (
+                  {
+                    "pointer" : 36,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 19
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u12",
+                    "qual_name" : [
+                      "u12"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 35
+                  },
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 37,
+                "source_range" : (
+                  {
+                    "line" : 22,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 13
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 38,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 39,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 35
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 34,
+                          "name" : {
+                            "name" : "u11",
+                            "qual_name" : [
+                              "u11"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 35
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "x",
+                      "qual_name" : [
+                        "x",
+                        "U1"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 9,
+                      "name" : {
+                        "name" : "x",
+                        "qual_name" : [
+                          "x",
+                          "U1"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 10
+                      }
+                    }
+                  }
+                )>,
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 40,
+                    "source_range" : (
+                      {
+                        "column" : 13
+                      },
+                      {
+                        "column" : 13
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "42"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 41,
+                "source_range" : (
+                  {
+                    "line" : 23,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 13
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 42,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 43,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 35
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 36,
+                          "name" : {
+                            "name" : "u12",
+                            "qual_name" : [
+                              "u12"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 35
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "y",
+                      "qual_name" : [
+                        "y",
+                        "U1"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 11,
+                      "name" : {
+                        "name" : "y",
+                        "qual_name" : [
+                          "y",
+                          "U1"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 12
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 44,
+                    "source_range" : (
+                      {
+                        "column" : 13
+                      },
+                      {
+                        "column" : 13
+                      }
+                    )
+                  },
+                  [
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 45,
+                        "source_range" : (
+                          {
+                            "column" : 13
+                          },
+                          {
+                            "column" : 13
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "99"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 12
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 46,
+                "source_range" : (
+                  {
+                    "line" : 24,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 25
+                  }
+                )
+              },
+              [
+                <"InitListExpr" : (
+                  {
+                    "pointer" : 47,
+                    "source_range" : (
+                      {
+                        "column" : 20
+                      },
+                      {
+                        "column" : 24
+                      }
+                    )
+                  },
+                  [
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 48,
+                        "source_range" : (
+                          {
+                            "column" : 22
+                          },
+                          {
+                            "column" : 22
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "1"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 35
+                    }
+                  }
+                )>
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 49,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 24
+                      }
+                    )
+                  },
+                  {
+                    "name" : "u13",
+                    "qual_name" : [
+                      "u13"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 35
+                  },
+                  {
+                    "init_expr" : <"InitListExpr" : (
+                      {
+                        "pointer" : 47,
+                        "source_range" : (
+                          {
+                            "column" : 20
+                          },
+                          {
+                            "column" : 24
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 48,
+                            "source_range" : (
+                              {
+                                "column" : 22
+                              },
+                              {
+                                "column" : 22
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 10
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "1"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 35
+                        }
+                      }
+                    )>
+                  }
+                )>
+              ]
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 50,
+                "source_range" : (
+                  {
+                    "line" : 26,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 16
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 51,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 8
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u21",
+                    "qual_name" : [
+                      "u21"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 18
+                  },
+                  {
+                  }
+                )>,
+                <"VarDecl" : (
+                  {
+                    "pointer" : 52,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 13
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u22",
+                    "qual_name" : [
+                      "u22"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 18
+                  },
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 53,
+                "source_range" : (
+                  {
+                    "line" : 27,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 13
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 54,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 55,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 18
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 51,
+                          "name" : {
+                            "name" : "u21",
+                            "qual_name" : [
+                              "u21"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 18
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "x",
+                      "qual_name" : [
+                        "x",
+                        "U2"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 15,
+                      "name" : {
+                        "name" : "x",
+                        "qual_name" : [
+                          "x",
+                          "U2"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 10
+                      }
+                    }
+                  }
+                )>,
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 56,
+                    "source_range" : (
+                      {
+                        "column" : 13
+                      },
+                      {
+                        "column" : 13
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "42"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 57,
+                "source_range" : (
+                  {
+                    "line" : 28,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 13
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 58,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 59,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 18
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 52,
+                          "name" : {
+                            "name" : "u22",
+                            "qual_name" : [
+                              "u22"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 18
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "y",
+                      "qual_name" : [
+                        "y",
+                        "U2"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 16,
+                      "name" : {
+                        "name" : "y",
+                        "qual_name" : [
+                          "y",
+                          "U2"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 12
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 60,
+                    "source_range" : (
+                      {
+                        "column" : 13
+                      },
+                      {
+                        "column" : 13
+                      }
+                    )
+                  },
+                  [
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 61,
+                        "source_range" : (
+                          {
+                            "column" : 13
+                          },
+                          {
+                            "column" : 13
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "99"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 12
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 62,
+                "source_range" : (
+                  {
+                    "line" : 29,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 24
+                  }
+                )
+              },
+              [
+                <"InitListExpr" : (
+                  {
+                    "pointer" : 63,
+                    "source_range" : (
+                      {
+                        "column" : 14
+                      },
+                      {
+                        "column" : 23
+                      }
+                    )
+                  },
+                  [
+                    <"ImplicitCastExpr" : (
+                      {
+                        "pointer" : 64,
+                        "source_range" : (
+                          {
+                            "column" : 21
+                          },
+                          {
+                            "column" : 21
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 65,
+                            "source_range" : (
+                              {
+                                "column" : 21
+                              },
+                              {
+                                "column" : 21
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 10
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "1"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 12
+                        }
+                      },
+                      {
+                        "cast_kind" : <"IntegralCast">,
+                        "base_path" : [
+                        ]
+                      },
+                      false
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 18
+                    }
+                  }
+                )>
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 66,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 23
+                      }
+                    )
+                  },
+                  {
+                    "name" : "u23",
+                    "qual_name" : [
+                      "u23"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 18
+                  },
+                  {
+                    "init_expr" : <"InitListExpr" : (
+                      {
+                        "pointer" : 63,
+                        "source_range" : (
+                          {
+                            "column" : 14
+                          },
+                          {
+                            "column" : 23
+                          }
+                        )
+                      },
+                      [
+                        <"ImplicitCastExpr" : (
+                          {
+                            "pointer" : 64,
+                            "source_range" : (
+                              {
+                                "column" : 21
+                              },
+                              {
+                                "column" : 21
+                              }
+                            )
+                          },
+                          [
+                            <"IntegerLiteral" : (
+                              {
+                                "pointer" : 65,
+                                "source_range" : (
+                                  {
+                                    "column" : 21
+                                  },
+                                  {
+                                    "column" : 21
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 10
+                                }
+                              },
+                              {
+                                "is_signed" : true,
+                                "bitwidth" : 32,
+                                "value" : "1"
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 12
+                            }
+                          },
+                          {
+                            "cast_kind" : <"IntegralCast">,
+                            "base_path" : [
+                            ]
+                          },
+                          false
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 18
+                        }
+                      }
+                    )>
+                  }
+                )>
+              ]
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 67,
+                "source_range" : (
+                  {
+                    "line" : 31,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 16
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 68,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 14
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u4",
+                    "qual_name" : [
+                      "u4"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 69
+                  },
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 70,
+                "source_range" : (
+                  {
+                    "line" : 32,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 12
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 71,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 8
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 72,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 69
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 68,
+                          "name" : {
+                            "name" : "u4",
+                            "qual_name" : [
+                              "u4"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 69
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 24
+                    },
+                    "value_kind" : <"LValue">,
+                    "object_kind" : <"BitField">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "x",
+                      "qual_name" : [
+                        "x",
+                        "U4"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 23,
+                      "name" : {
+                        "name" : "x",
+                        "qual_name" : [
+                          "x",
+                          "U4"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 24
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 73,
+                    "source_range" : (
+                      {
+                        "column" : 12
+                      },
+                      {
+                        "column" : 12
+                      }
+                    )
+                  },
+                  [
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 74,
+                        "source_range" : (
+                          {
+                            "column" : 12
+                          },
+                          {
+                            "column" : 12
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "0"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 24
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 24
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 75,
+                "source_range" : (
+                  {
+                    "line" : 33,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 12
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 76,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 8
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 77,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 69
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 68,
+                          "name" : {
+                            "name" : "u4",
+                            "qual_name" : [
+                              "u4"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 69
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 24
+                    },
+                    "value_kind" : <"LValue">,
+                    "object_kind" : <"BitField">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "y",
+                      "qual_name" : [
+                        "y",
+                        "U4"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 27,
+                      "name" : {
+                        "name" : "y",
+                        "qual_name" : [
+                          "y",
+                          "U4"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 24
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 78,
+                    "source_range" : (
+                      {
+                        "column" : 12
+                      },
+                      {
+                        "column" : 12
+                      }
+                    )
+                  },
+                  [
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 79,
+                        "source_range" : (
+                          {
+                            "column" : 12
+                          },
+                          {
+                            "column" : 12
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "1"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 24
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 24
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 80,
+                "source_range" : (
+                  {
+                    "line" : 35,
+                    "column" : 5
+                  },
+                  {
+                    "line" : 38,
+                    "column" : 6
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"RecordDecl" : (
+                  {
+                    "pointer" : 81,
+                    "parent_pointer" : 30,
+                    "source_range" : (
+                      {
+                        "line" : 35,
+                        "column" : 5
+                      },
+                      {
+                        "line" : 38,
+                        "column" : 5
+                      }
+                    )
+                  },
+                  {
+                    "name" : "U5",
+                    "qual_name" : [
+                      "U5",
+                      "main"
+                    ]
+                  },
+                  82,
+                  [
+                    <"FieldDecl" : (
+                      {
+                        "pointer" : 83,
+                        "parent_pointer" : 81,
+                        "source_range" : (
+                          {
+                            "line" : 36,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 13
+                          }
+                        ),
+                        "is_this_declaration_referenced" : true,
+                        "access" : <"Public">
+                      },
+                      {
+                        "name" : "x",
+                        "qual_name" : [
+                          "x",
+                          "U5",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 10
+                      },
+                      {
+                      }
+                    )>,
+                    <"FieldDecl" : (
+                      {
+                        "pointer" : 84,
+                        "parent_pointer" : 81,
+                        "source_range" : (
+                          {
+                            "line" : 37,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 15
+                          }
+                        ),
+                        "is_this_declaration_referenced" : true,
+                        "access" : <"Public">
+                      },
+                      {
+                        "name" : "y",
+                        "qual_name" : [
+                          "y",
+                          "U5",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 85
+                      },
+                      {
+                      }
+                    )>
+                  ],
+                  {
+                  },
+                  <"TTK_Union">,
+                  {
+                    "definition_ptr" : 81,
+                    "is_complete_definition" : true
+                  }
+                )>
+              ]
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 86,
+                "source_range" : (
+                  {
+                    "line" : 39,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 35
+                  }
+                )
+              },
+              [
+                <"InitListExpr" : (
+                  {
+                    "pointer" : 87,
+                    "source_range" : (
+                      {
+                        "column" : 30
+                      },
+                      {
+                        "column" : 34
+                      }
+                    )
+                  },
+                  [
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 88,
+                        "source_range" : (
+                          {
+                            "column" : 32
+                          },
+                          {
+                            "column" : 32
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "1"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 89
+                    }
+                  }
+                )>
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 90,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 14
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u51",
+                    "qual_name" : [
+                      "u51"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 89
+                  },
+                  {
+                  }
+                )>,
+                <"VarDecl" : (
+                  {
+                    "pointer" : 91,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 19
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u52",
+                    "qual_name" : [
+                      "u52"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 89
+                  },
+                  {
+                  }
+                )>,
+                <"VarDecl" : (
+                  {
+                    "pointer" : 92,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 34
+                      }
+                    )
+                  },
+                  {
+                    "name" : "u53",
+                    "qual_name" : [
+                      "u53"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 89
+                  },
+                  {
+                    "init_expr" : <"InitListExpr" : (
+                      {
+                        "pointer" : 87,
+                        "source_range" : (
+                          {
+                            "column" : 30
+                          },
+                          {
+                            "column" : 34
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 88,
+                            "source_range" : (
+                              {
+                                "column" : 32
+                              },
+                              {
+                                "column" : 32
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 10
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "1"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 89
+                        }
+                      }
+                    )>
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 93,
+                "source_range" : (
+                  {
+                    "line" : 40,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 13
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 94,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 95,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 89
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 90,
+                          "name" : {
+                            "name" : "u51",
+                            "qual_name" : [
+                              "u51"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 89
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "x",
+                      "qual_name" : [
+                        "x",
+                        "U5",
+                        "main"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 83,
+                      "name" : {
+                        "name" : "x",
+                        "qual_name" : [
+                          "x",
+                          "U5",
+                          "main"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 10
+                      }
+                    }
+                  }
+                )>,
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 96,
+                    "source_range" : (
+                      {
+                        "column" : 13
+                      },
+                      {
+                        "column" : 13
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "42"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 97,
+                "source_range" : (
+                  {
+                    "line" : 41,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 13
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 98,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 99,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 89
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 91,
+                          "name" : {
+                            "name" : "u52",
+                            "qual_name" : [
+                              "u52"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 89
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 85
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "y",
+                      "qual_name" : [
+                        "y",
+                        "U5",
+                        "main"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 84,
+                      "name" : {
+                        "name" : "y",
+                        "qual_name" : [
+                          "y",
+                          "U5",
+                          "main"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 85
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 100,
+                    "source_range" : (
+                      {
+                        "column" : 13
+                      },
+                      {
+                        "column" : 13
+                      }
+                    )
+                  },
+                  [
+                    <"FloatingLiteral" : (
+                      {
+                        "pointer" : 101,
+                        "source_range" : (
+                          {
+                            "column" : 13
+                          },
+                          {
+                            "column" : 13
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 102
+                        }
+                      },
+                      "3.1400000000000001"
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 85
+                    }
+                  },
+                  {
+                    "cast_kind" : <"FloatingCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 85
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 103,
+                "source_range" : (
+                  {
+                    "line" : 43,
+                    "column" : 5
+                  },
+                  {
+                    "line" : 46,
+                    "column" : 9
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"RecordDecl" : (
+                  {
+                    "pointer" : 104,
+                    "parent_pointer" : 30,
+                    "source_range" : (
+                      {
+                        "line" : 43,
+                        "column" : 5
+                      },
+                      {
+                        "line" : 46,
+                        "column" : 5
+                      }
+                    )
+                  },
+                  {
+                    "name" : "",
+                    "qual_name" : [
+                      "anonymous_union_sample/types/union.c:43:5",
+                      "main"
+                    ]
+                  },
+                  105,
+                  [
+                    <"FieldDecl" : (
+                      {
+                        "pointer" : 106,
+                        "parent_pointer" : 104,
+                        "source_range" : (
+                          {
+                            "line" : 44,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 13
+                          }
+                        ),
+                        "is_this_declaration_referenced" : true,
+                        "access" : <"Public">
+                      },
+                      {
+                        "name" : "n",
+                        "qual_name" : [
+                          "n",
+                          "anonymous_union_sample/types/union.c:43:5",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 10
+                      },
+                      {
+                      }
+                    )>,
+                    <"FieldDecl" : (
+                      {
+                        "pointer" : 107,
+                        "parent_pointer" : 104,
+                        "source_range" : (
+                          {
+                            "line" : 45,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 15
+                          }
+                        ),
+                        "is_this_declaration_referenced" : true,
+                        "access" : <"Public">
+                      },
+                      {
+                        "name" : "r",
+                        "qual_name" : [
+                          "r",
+                          "anonymous_union_sample/types/union.c:43:5",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 85
+                      },
+                      {
+                      }
+                    )>
+                  ],
+                  {
+                  },
+                  <"TTK_Union">,
+                  {
+                    "definition_ptr" : 104,
+                    "is_complete_definition" : true
+                  }
+                )>,
+                <"VarDecl" : (
+                  {
+                    "pointer" : 108,
+                    "source_range" : (
+                      {
+                        "line" : 43,
+                        "column" : 5
+                      },
+                      {
+                        "line" : 46,
+                        "column" : 7
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "u6",
+                    "qual_name" : [
+                      "u6"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 109
+                  },
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 110,
+                "source_range" : (
+                  {
+                    "line" : 47,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 12
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 111,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 8
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 112,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 109
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 108,
+                          "name" : {
+                            "name" : "u6",
+                            "qual_name" : [
+                              "u6"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 109
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "n",
+                      "qual_name" : [
+                        "n",
+                        "anonymous_union_sample/types/union.c:43:5",
+                        "main"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 106,
+                      "name" : {
+                        "name" : "n",
+                        "qual_name" : [
+                          "n",
+                          "anonymous_union_sample/types/union.c:43:5",
+                          "main"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 10
+                      }
+                    }
+                  }
+                )>,
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 113,
+                    "source_range" : (
+                      {
+                        "column" : 12
+                      },
+                      {
+                        "column" : 12
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "7"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 114,
+                "source_range" : (
+                  {
+                    "line" : 48,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 12
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 115,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 8
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 116,
+                        "source_range" : (
+                          {
+                            "column" : 5
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 109
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 108,
+                          "name" : {
+                            "name" : "u6",
+                            "qual_name" : [
+                              "u6"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 109
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 85
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "r",
+                      "qual_name" : [
+                        "r",
+                        "anonymous_union_sample/types/union.c:43:5",
+                        "main"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 107,
+                      "name" : {
+                        "name" : "r",
+                        "qual_name" : [
+                          "r",
+                          "anonymous_union_sample/types/union.c:43:5",
+                          "main"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 85
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 117,
+                    "source_range" : (
+                      {
+                        "column" : 12
+                      },
+                      {
+                        "column" : 12
+                      }
+                    )
+                  },
+                  [
+                    <"FloatingLiteral" : (
+                      {
+                        "pointer" : 118,
+                        "source_range" : (
+                          {
+                            "column" : 12
+                          },
+                          {
+                            "column" : 12
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 102
+                        }
+                      },
+                      "1.4099999999999999"
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 85
+                    }
+                  },
+                  {
+                    "cast_kind" : <"FloatingCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 85
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>
+          ]
+        )>
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 119,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "instancetype",
+        "qual_name" : [
+          "instancetype"
+        ]
+      },
+      120,
+      {
+      }
+    )>
+  ],
+  {
+  },
+  {
+    "input_path" : "sample/types/union.c",
+    "input_kind" : <"IK_C">,
+    "integer_type_widths" : {
+      "char_type" : 8,
+      "short_type" : 16,
+      "int_type" : 32,
+      "long_type" : 64,
+      "longlong_type" : 64
+    },
+    "types" : [
+      <"BuiltinType" : (
+        {
+          "pointer" : 121
+        },
+        <"Void">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 122
+        },
+        <"Bool">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 123
+        },
+        <"Char_S">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 124
+        },
+        <"SChar">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 125
+        },
+        <"Short">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 10
+        },
+        <"Int">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 12
+        },
+        <"Long">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 126
+        },
+        <"LongLong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 127
+        },
+        <"UChar">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 128
+        },
+        <"UShort">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 24
+        },
+        <"UInt">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 129
+        },
+        <"ULong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 130
+        },
+        <"ULongLong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 85
+        },
+        <"Float">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 102
+        },
+        <"Double">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 131
+        },
+        <"LongDouble">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 132
+        },
+        <"Float128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 133
+        },
+        <"Float16">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 134
+        },
+        <"ShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 135
+        },
+        <"Accum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 136
+        },
+        <"LongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 137
+        },
+        <"UShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 138
+        },
+        <"UAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 139
+        },
+        <"ULongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 140
+        },
+        <"ShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 141
+        },
+        <"Fract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 142
+        },
+        <"LongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 143
+        },
+        <"UShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 144
+        },
+        <"UFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 145
+        },
+        <"ULongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 146
+        },
+        <"SatShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 147
+        },
+        <"SatAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 148
+        },
+        <"SatLongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 149
+        },
+        <"SatUShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 150
+        },
+        <"SatUAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 151
+        },
+        <"SatULongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 152
+        },
+        <"SatShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 153
+        },
+        <"SatFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 154
+        },
+        <"SatLongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 155
+        },
+        <"SatUShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 156
+        },
+        <"SatUFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 157
+        },
+        <"SatULongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 158
+        },
+        <"Int128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 159
+        },
+        <"UInt128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 160
+        },
+        <"WChar_S">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 161
+        },
+        <"Char8">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 162
+        },
+        <"Dependent">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 163
+        },
+        <"Overload">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 164
+        },
+        <"BoundMember">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 165
+        },
+        <"PseudoObject">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 166
+        },
+        <"UnknownAny">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 167
+        },
+        <"ARCUnbridgedCast">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 168
+        },
+        <"BuiltinFn">
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 169
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 170
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 171
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 172
+        }
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 173
+        },
+        <"ObjCId">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 174
+        },
+        <"ObjCClass">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 175
+        },
+        <"ObjCSel">
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 176
+        },
+        {
+          "type_ptr" : 121
+        }
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 177
+        },
+        <"NullPtr">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 178
+        },
+        <"Half">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 179
+        },
+        <"BFloat16">
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 180
+        },
+        181
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 182
+        },
+        {
+          "type_ptr" : 10,
+          "is_const" : true
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 183
+        },
+        {
+          "type_ptr" : 123,
+          "is_const" : true
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 184
+        },
+        {
+          "type_ptr" : 123
+        }
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 185
+        },
+        186
+      )>,
+      <"ConstantArrayType" : (
+        {
+          "pointer" : 187
+        },
+        {
+          "element_type" : {
+            "type_ptr" : 185
+          },
+          "stride" : 24
+        },
+        1
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 8
+        },
+        7
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 14
+        },
+        13
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 188,
+          "desugared_type" : 14
+        }
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 20
+        },
+        19
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 22
+        },
+        21
+      )>,
+      <"FunctionProtoType" : (
+        {
+          "pointer" : 31
+        },
+        {
+          "return_type" : {
+            "type_ptr" : 10
+          }
+        },
+        {
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 189
+        },
+        {
+          "type_ptr" : 184
+        }
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 35,
+          "desugared_type" : 8
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 18,
+          "desugared_type" : 14
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 188
+          },
+          "decl_ptr" : 17
+        }
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 69,
+          "desugared_type" : 22
+        }
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 82
+        },
+        81
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 89,
+          "desugared_type" : 82
+        }
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 105
+        },
+        104
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 109,
+          "desugared_type" : 105
+        }
+      )>,
+      <"ObjCObjectType" : (
+        {
+          "pointer" : 190
+        },
+        {
+          "base_type" : 173
+        }
+      )>,
+      <"ObjCObjectPointerType" : (
+        {
+          "pointer" : 191
+        },
+        {
+          "type_ptr" : 190
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 192,
+          "desugared_type" : 191
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 191
+          },
+          "decl_ptr" : 193
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 120,
+          "desugared_type" : 191
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 192
+          },
+          "decl_ptr" : 119
+        }
+      )>,
+      <"NoneType" : (
+        {
+          "pointer" : 0
+        }
+      )>
+    ]
+  }
+)>

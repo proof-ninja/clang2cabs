@@ -535,6 +535,17 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     let location = extract_location source_info in
     Ast.CONSTANT (Ast.CONST_INT value, location)
   | `Variant (
+    "FloatingLiteral", Some (`Tuple (
+      `Assoc source_info ::
+      _children ::
+      _qual_type ::
+      `String value ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    Ast.CONSTANT (Ast.CONST_FLOAT value, location)
+  | `Variant (
     "CharacterLiteral", Some (`Tuple (
       `Assoc source_info ::
       _children ::
@@ -600,7 +611,7 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
   | yojson ->
     raise (Invalid_Yojson ("Invalid expression data.", yojson))
 
-and parse_record typemap yojson =
+and parse_record_or_union typemap yojson =
   let parse_fields fields_yojson = List.fold_left (fun fields -> function
     | `Variant (
       "FieldDecl", Some (`Tuple (
@@ -640,7 +651,7 @@ and parse_record typemap yojson =
       `Int _type_ptr ::
       `List fields ::
       _ :: (* empty? *)
-      _ :: (* ex. <"TTK_Struct"> *)
+      struct_or_union :: (* <"TTK_Struct"> or <"TTK_Union"> *)
       `Assoc _definition_data ::
       _
       ))
@@ -656,11 +667,19 @@ and parse_record typemap yojson =
         in
         loop qual_names
       in
-      let record_fields = parse_fields fields in
+      let fields = parse_fields fields in
       begin match ptr, name with
-      | (Some ptr), (Some record_name) ->
-        let record = Ast.{ record_name; record_fields } in
-        ptr, record, location
+      | (Some ptr), (Some name) ->
+        begin match struct_or_union with
+        | `Variant ("TTK_Struct", _) ->
+          let record = Ast.{ record_name= name; record_fields= fields } in
+          `TTK_Struct (ptr, record, location)
+        | `Variant ("TTK_Union", _) ->
+          let union = Ast.{ union_name= name; union_fields= fields } in
+          `TTK_Union (ptr, union, location)
+        | _ ->
+          raise (Invalid_Yojson ("Invalid record definition.", yojson))
+        end
       | _ ->
         raise (Invalid_Yojson ("Invalid record definition.", yojson))
       end
@@ -716,8 +735,10 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
       )
     end
   | `Variant ("RecordDecl", _) as yojson ->
-    let id, record, location = parse_record typemap yojson in 
-    Ast.RECORDDEC (id, record, location)
+    begin match parse_record_or_union typemap yojson with
+    | `TTK_Struct (id, record, location) -> Ast.RECORDDEC (id, record, location)
+    | `TTK_Union (id, union, location) -> Ast.UNIONDEC (id, union, location)
+    end
   | `Variant (
     "IfStmt", Some (`Tuple (
       `Assoc source_info ::
@@ -882,8 +903,10 @@ let ast_of_yojson typemap function_typeinfo definitions =
           Ast.FUNDEF (single_name, params, [], location) :: definitions
         end
     | `Variant ("RecordDecl", _) as yojson ->
-      let id, record, location = parse_record typemap yojson in
-      Ast.RECORDDEF (id, record, location) :: definitions
+      begin match parse_record_or_union typemap yojson with
+      | `TTK_Struct (id, record, location) -> Ast.RECORDDEF (id, record, location) :: definitions
+      | `TTK_Union (id, union, location) -> Ast.UNIONDEF (id, union, location) :: definitions
+      end
     | _ ->
       definitions
   in
