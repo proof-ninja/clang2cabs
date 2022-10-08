@@ -203,8 +203,10 @@ and expression =
   | INIT_LIST of expression list * Location.t (** initializer list [struct foo = { 1, { 2, 3 } }] *)
 
 and constant =
-  | CONST_INT of string (** the textual representation *)
+  | CONST_CHAR of string (** the textual representation *)
+  | CONST_INT of string (** ditto *)
   | CONST_FLOAT of string (** ditto *)
+  | CONST_STRING of string (** ditto *)
 
 and init_expression =
   | NO_INIT

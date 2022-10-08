@@ -566,8 +566,18 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     ))
   ) ->
     let location = extract_location source_info in
-    (* Currently characters are represented as const int. *)
-    Ast.CONSTANT (Ast.CONST_INT (string_of_int value), location)
+    Ast.CONSTANT (Ast.CONST_CHAR (string_of_int value), location)
+  | `Variant (
+    "StringLiteral", Some (`Tuple (
+      `Assoc source_info ::
+      _children ::
+      _qual_type ::
+      `List [`String value] ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    Ast.CONSTANT (Ast.CONST_STRING value, location)
   | `Variant (
     "ArraySubscriptExpr", Some (`Tuple (
       `Assoc source_info ::

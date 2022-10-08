@@ -19,7 +19,7 @@ let conv_location : Ast.Location.t -> Cabs.cabsloc = function
 
 let conv_constant : Ast.constant -> Cabs.constant = function
   | Ast.CONST_INT i -> Cabs.CONST_INT i
-  | Ast.CONST_FLOAT _ -> raise (Cannot_convert "Cabs does not support CONST_FLOAT constant")
+  | _ -> raise (Cannot_convert "Cabs does not support except Int.")
 
 let conv_binary_operator : Ast.binary_operator -> Cabs.binary_operator = function
   | Ast.ADD -> Cabs.ADD

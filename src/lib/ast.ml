@@ -130,8 +130,10 @@ and expression =
   | INIT_LIST of expression list * Location.t
 
 and constant =
-  | CONST_INT of string (* the textual representation *)
-  | CONST_FLOAT of string (** ditto *)
+  | CONST_CHAR of string
+  | CONST_INT of string
+  | CONST_FLOAT of string
+  | CONST_STRING of string
 
 and init_expression =
   | NO_INIT
@@ -363,8 +365,10 @@ and show_binary_operator = function
   | GE -> ">="
   | ASSIGN -> "="
 and show_constant = function
+  | CONST_CHAR i_as_str -> i_as_str
   | CONST_INT i_as_str -> i_as_str
   | CONST_FLOAT f_as_str -> f_as_str
+  | CONST_STRING str -> str
 
 type file = string * definition list
 
