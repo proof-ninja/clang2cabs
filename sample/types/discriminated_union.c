@@ -18,13 +18,28 @@ typedef struct {
   } value;
 } Value;
 
+void set_num(Value *value, int num) {
+  value->tag = INT;
+  value->value.num = num;
+}
+
+void set_three(Value *value, Three *three) {
+  value->tag = THREE;
+  value->value.three = three;
+}
+
+void set_str(Value *value, char *str) {
+  value->tag = STRING;
+  value->value.str = str;
+}
+
 int main(void) {
   Value x = { INT, { 0 } };
 
-  x.tag = THREE;
-  Three t = { 1, 2, 3 };
-  x.value.three = &t;
+  set_num(&x, 42);
 
-  x.tag = STRING;
-  x.value.str = "hogehoge";
+  Three t = { 1, 2, 3 };
+  set_three(&x, &t);
+
+  set_str(&x, "hogehoge");
 }
