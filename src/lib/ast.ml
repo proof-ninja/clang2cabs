@@ -58,6 +58,17 @@ and union = {
   union_fields: field list;
 }
 
+and enumerator = {
+  enumerator_type: CType.t;
+  enumerator_name: string;
+  init_expr: expression option;
+}
+
+and enum = {
+  enum_name: string;
+  enumerators: enumerator list;
+}
+
 and init_name_group = CType.t * init_name list
 
 and name = string
@@ -78,6 +89,7 @@ and definition =
   | TYPEDEF of CType.id * string * Location.t
   | RECORDDEF of CType.id * record * Location.t
   | UNIONDEF of CType.id * union * Location.t
+  | ENUMDEF of CType.id * enum * Location.t
 
 and block = statement list
 
@@ -92,6 +104,7 @@ and statement =
   | VARDECL of init_name_group * variable_scope * Location.t
   | RECORDDEC of CType.id * record * Location.t
   | UNIONDEC of CType.id * union * Location.t
+  | ENUMDEC of CType.id * enum * Location.t
 
 and binary_operator =
   | ADD | SUB | MUL | DIV | MOD
@@ -150,14 +163,29 @@ and show_record_definition id { record_name; record_fields } _location =
   fields ^ "\n" ^
   "}(User defined as " ^ string_of_int id ^ ")\n"
 and show_union_definition id { union_name; union_fields } _location =
-let fields =
-  union_fields
-  |> List.map show_field
-  |> String.concat "\n"
-in
-"union " ^ union_name ^ " {\n" ^
-fields ^ "\n" ^
-"}(User defined as " ^ string_of_int id ^ ")\n"
+  let fields =
+    union_fields
+    |> List.map show_field
+    |> String.concat "\n"
+  in
+  "union " ^ union_name ^ " {\n" ^
+  fields ^ "\n" ^
+  "}(User defined as " ^ string_of_int id ^ ")\n"
+and show_enum_definition id { enum_name; enumerators } _location =
+  let show_enumerators { enumerator_type; enumerator_name; init_expr } =
+    let name = enumerator_name ^ ": " ^ show_ctype enumerator_type in
+    match init_expr with
+    | Some expr -> name ^ " = " ^ show_expression expr
+    | None -> name
+  in
+  let enumerators =
+    enumerators
+    |> List.map show_enumerators
+    |> String.concat "\n"
+  in
+  "enum " ^ enum_name ^ " {\n" ^
+  enumerators ^ "\n" ^
+  "}(User defined as " ^ string_of_int id ^ ")\n"
 and show_variable_scope {is_global; is_static; is_static_local} =
   let info = [] in
   let info = if is_static_local then "static_local" :: info else info in
@@ -194,6 +222,8 @@ and show_definition indent = function
     show_record_definition id record location
   | UNIONDEF (id, union, location) ->
     show_union_definition id union location
+  | ENUMDEF (id, enum, location) ->
+    show_enum_definition id enum location
 and show_init_name_group indent (ctype, init_name_list) =
   let names =
     init_name_list
@@ -276,6 +306,8 @@ and show_statement indent = function
     show_record_definition id record location
   | UNIONDEC (id, union, location) ->
     show_union_definition id union location
+  | ENUMDEC (id, enum, location) ->
+    show_enum_definition id enum location
 and show_expression = function
   | CONST_EXPR (expr, _location) ->
     show_expression expr

@@ -169,6 +169,17 @@ let make_typemap typemap typedata = List.fold_left (fun map -> function
     | _ -> map
     end
   | `Variant (
+    "EnumType", Some (`Tuple (
+      `Assoc pointer_data ::
+      `Int ptr ::
+      _
+    ))
+  ) ->
+    begin match extract_pointer pointer_data with
+    | Some i -> PointerMap.add i (Just (Ast.CType.Tdefined ptr)) map
+    | _ -> map
+    end
+  | `Variant (
     "ElaboratedType", Some (`Tuple (
       `Assoc pointer_data ::
       _
@@ -685,6 +696,71 @@ and parse_record_or_union typemap yojson =
       end
   | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
 
+and parse_enum typemap yojson =
+  let parse_enumerators enumerators_yojson = List.fold_left (fun enumerators -> function
+    | `Variant (
+      "EnumConstantDecl", Some (`Tuple(
+        `Assoc _metadata ::
+        `Assoc namedata ::
+        `Assoc typedata ::
+        `Assoc init_expr ::
+        _
+      ))
+    ) ->
+      let ctype = typedata
+        |> extract_type_ptr
+        |> Option.flat_map (fun ptr -> PointerMap.find_opt ptr typemap)
+      in
+      let name = extract_name namedata in
+      begin match ctype, name with
+      | (Some enumerator_type), (Some enumerator_name) ->
+        let init_expr = init_expr
+          |> List.assoc_opt "init_expr" 
+          |> Option.map (parse_expression typemap)
+        in
+        Ast.{ enumerator_type; enumerator_name; init_expr } :: enumerators
+      | _ ->
+        enumerators
+      end
+    | _ ->
+      enumerators
+    )
+    []
+    enumerators_yojson
+  in
+  match yojson with
+  | `Variant (
+    "EnumDecl", Some (`Tuple (
+      `Assoc metadata ::
+      `Assoc namedata ::
+      _ ::
+      `List enumerators ::
+      _ :: (* empty? *)
+      _ :: (* TTK_Enum *)
+      _ :: (* empty? *)
+      _
+    ))
+  ) ->
+    let ptr = extract_pointer metadata in
+    let location = extract_location metadata in
+    let qual_names = extract_qual_names namedata in
+    let name =
+      let rec loop = function
+        | name :: [] -> Some name
+        | name :: tail -> Option.map (fun name' -> name' ^ "." ^ name) @@ loop tail
+        | [] -> None
+      in
+      loop qual_names
+    in
+    let enumerators = parse_enumerators enumerators in
+    begin match ptr, name with
+    | (Some ptr), (Some enum_name) ->
+      let enum = Ast.{ enum_name; enumerators } in
+      ptr, enum, location      
+    | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
+    end
+  | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
+
 and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
   | `Variant (
     "DeclStmt", Some (`Tuple (
@@ -739,6 +815,9 @@ and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
     | `TTK_Struct (id, record, location) -> Ast.RECORDDEC (id, record, location)
     | `TTK_Union (id, union, location) -> Ast.UNIONDEC (id, union, location)
     end
+  | `Variant ("EnumDecl", _) as yojson ->
+    let id, enum, location = parse_enum typemap yojson in
+    Ast.ENUMDEC (id, enum, location)
   | `Variant (
     "IfStmt", Some (`Tuple (
       `Assoc source_info ::
@@ -907,6 +986,9 @@ let ast_of_yojson typemap function_typeinfo definitions =
       | `TTK_Struct (id, record, location) -> Ast.RECORDDEF (id, record, location) :: definitions
       | `TTK_Union (id, union, location) -> Ast.UNIONDEF (id, union, location) :: definitions
       end
+    | `Variant ("EnumDecl", _) as yojson ->
+      let id, enum, location = parse_enum typemap yojson in
+      Ast.ENUMDEF (id, enum, location) :: definitions
     | _ ->
       definitions
   in

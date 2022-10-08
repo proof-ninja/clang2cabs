@@ -57,6 +57,17 @@ and union = {
   union_fields: field list;
 }
 
+and enumerator = {
+  enumerator_type: CType.t;
+  enumerator_name: string;
+  init_expr: expression option;
+}
+
+and enum = {
+  enum_name: string;
+  enumerators: enumerator list;
+}
+
 (**
   like name_group, except the declared variables are allowed to have initializers
   e.g.
@@ -104,6 +115,7 @@ and definition =
   | TYPEDEF of CType.id * string * Location.t (** A definition of type *)
   | RECORDDEF of CType.id * record * Location.t (** A definition of struct *)
   | UNIONDEF of CType.id * union * Location.t (** A definition of union *)
+  | ENUMDEF of CType.id * enum * Location.t (** A definition of enum *)
 
 and block = statement list
 
@@ -146,6 +158,8 @@ and statement =
   (** struct definition in statements *)
   | UNIONDEC of CType.id * union * Location.t
   (** union definition in statements *)
+  | ENUMDEC of CType.id * enum * Location.t
+  (** enum definition in statements *)
 
 and binary_operator =
   | ADD (** [e1 + e2] *)

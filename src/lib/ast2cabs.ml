@@ -120,6 +120,8 @@ let rec conv_statement : Ast.statement -> Cabs.statement = function
     raise (Cannot_convert "Cabs does not support the definition in statements")
   | Ast.UNIONDEC (_id, _union, _location) ->
     raise (Cannot_convert "Cabs does not support the definition in statements")
+  | Ast.ENUMDEC (_id, _enum, _location) ->
+    raise (Cannot_convert "Cabs does not support the definition in statements")
 
 and conv_block block : Cabs.block = {
   blabels= [];
@@ -170,6 +172,8 @@ let conv_definition : Ast.definition -> Cabs.definition = function
   | Ast.RECORDDEF _ ->
     raise (Unimplemented_error "Cabs cannot accept this definition.")
   | Ast.UNIONDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
+  | Ast.ENUMDEF _ ->
     raise (Unimplemented_error "Cabs cannot accept this definition.")
 
 let conv_file (filename, definitions) : Cabs.file = filename, List.map conv_definition definitions
