@@ -47,14 +47,20 @@ type field = {
   bit_width_expr: expression option;
 }
 
+and field_definition =
+  | FieldDecl of field
+  | FieldRecordDecl of CType.id * record * Location.t
+  | FieldUnionDecl of CType.id * union * Location.t
+  | FieldEnumDecl of CType.id * enum * Location.t
+
 and record = {
   record_name: string;
-  record_fields: field list;
+  record_fields: field_definition list;
 }
 
 and union = {
   union_name: string;
-  union_fields: field list;
+  union_fields: field_definition list;
 }
 
 and enumerator = {
@@ -201,6 +207,7 @@ and expression =
   | INDEX of expression * expression * Location.t (** array index expression [a[i]] *)
   | MEMBER of expression * string * Location.t (** record's field expression [a.x] *)
   | INIT_LIST of expression list * Location.t (** initializer list [struct foo = { 1, { 2, 3 } }] *)
+  | IMPLICIT_VALUE_INIT of expression list * Location.t (** implicit initializer *)
 
 and constant =
   | CONST_CHAR of string (** the textual representation *)

@@ -85,6 +85,8 @@ let rec conv_expression : Ast.expression -> Cabs.expression = function
     raise (Cannot_convert "Cabs does not support MEMBER expression")
   | Ast.INIT_LIST _ ->
     raise (Cannot_convert "Cabs does not support INIT_LIST expression")
+  | Ast.IMPLICIT_VALUE_INIT _ ->
+    raise (Cannot_convert "Cabs does not support IMPLICIT_VALUE_INIT expression")
 
 let rec conv_statement : Ast.statement -> Cabs.statement = function
   | Ast.NOP -> Cabs.NOP dummy_loc

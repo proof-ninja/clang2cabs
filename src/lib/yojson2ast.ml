@@ -629,6 +629,16 @@ let rec parse_expression typemap : Yojson.Safe.t -> Ast.expression = function
     let location = extract_location source_info in
     let exprs = List.map (parse_expression typemap) exprs in
     Ast.INIT_LIST (exprs, location)
+  | `Variant (
+    "ImplicitValueInitExpr", Some (`Tuple (
+      `Assoc source_info ::
+      `List [] ::
+      `Assoc _type_info ::
+      _
+    ))
+  ) ->
+    let location = extract_location source_info in
+    Ast.IMPLICIT_VALUE_INIT ([], location)
   | yojson ->
     raise (Invalid_Yojson ("Invalid expression data.", yojson))
 
@@ -654,12 +664,22 @@ and parse_record_or_union typemap yojson =
             |> List.assoc_opt "bit_width_expr" 
             |> Option.map (parse_expression typemap)
           in
-          Ast.{ field_type; field_name; bit_width_expr } :: fields
+          Ast.(FieldDecl { field_type; field_name; bit_width_expr }) :: fields
         | _ ->
           fields
         end
-    | _ ->
-      fields
+    (* While this field(s) are defined at other place, this indirect field decl is skipped. *)
+    | `Variant ("IndirectFieldDecl", _) -> fields
+    | `Variant ("RecordDecl", _) as yojson ->
+      begin match parse_record_or_union typemap yojson with
+      | `TTK_Struct (id, record, location) -> Ast.FieldRecordDecl (id, record, location) :: fields
+      | `TTK_Union (id, union, location) -> Ast.FieldUnionDecl (id, union, location) :: fields
+      end
+    | `Variant ("EnumDecl", _) as yojson ->
+      let id, enum, location = parse_enum typemap yojson in
+      Ast.FieldEnumDecl (id, enum, location) :: fields
+    | yojson ->
+      raise (Invalid_Yojson ("Invalid field decl in struct or union.", yojson)) 
     )
     []
     fields_yojson
@@ -698,11 +718,11 @@ and parse_record_or_union typemap yojson =
         | `Variant ("TTK_Union", _) ->
           let union = Ast.{ union_name= name; union_fields= fields } in
           `TTK_Union (ptr, union, location)
-        | _ ->
+        | yojson ->
           raise (Invalid_Yojson ("Invalid record definition.", yojson))
         end
       | _ ->
-        raise (Invalid_Yojson ("Invalid record definition.", yojson))
+        raise (Invalid_Yojson ("Invalid record definition. ptr and name must be defined.", yojson))
       end
   | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
 
@@ -767,9 +787,9 @@ and parse_enum typemap yojson =
     | (Some ptr), (Some enum_name) ->
       let enum = Ast.{ enum_name; enumerators } in
       ptr, enum, location      
-    | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
+    | _ -> raise (Invalid_Yojson ("Invalid enum definition. ptr and name must be defined.", yojson))
     end
-  | _ -> raise (Invalid_Yojson ("Invalid record definition.", yojson))
+  | yojson -> raise (Invalid_Yojson ("Invalid enum definition.", yojson))
 
 and parse_statement typemap : Yojson.Safe.t -> Ast.statement = function
   | `Variant (
