@@ -1,0 +1,3748 @@
+<"TranslationUnitDecl" : (
+  {
+    "pointer" : 1,
+    "source_range" : (
+      {
+      },
+      {
+      }
+    )
+  },
+  [
+    <"TypedefDecl" : (
+      {
+        "pointer" : 2,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__int128_t",
+        "qual_name" : [
+          "__int128_t"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 3,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__uint128_t",
+        "qual_name" : [
+          "__uint128_t"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 4,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__NSConstantString",
+        "qual_name" : [
+          "__NSConstantString"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 5,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__builtin_ms_va_list",
+        "qual_name" : [
+          "__builtin_ms_va_list"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 6,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__builtin_va_list",
+        "qual_name" : [
+          "__builtin_va_list"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"RecordDecl" : (
+      {
+        "pointer" : 7,
+        "parent_pointer" : 1,
+        "source_range" : (
+          {
+            "file" : "sample/types/discriminated_union2.c",
+            "line" : 1,
+            "column" : 9
+          },
+          {
+            "line" : 15,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "",
+        "qual_name" : [
+          "X"
+        ]
+      },
+      8,
+      [
+        <"EnumDecl" : (
+          {
+            "pointer" : 9,
+            "source_range" : (
+              {
+                "line" : 2,
+                "column" : 3
+              },
+              {
+                "line" : 6,
+                "column" : 3
+              }
+            )
+          },
+          {
+            "name" : "",
+            "qual_name" : [
+              "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+              "X"
+            ]
+          },
+          10,
+          [
+            <"EnumConstantDecl" : (
+              {
+                "pointer" : 11,
+                "source_range" : (
+                  {
+                    "line" : 3,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 5
+                  }
+                ),
+                "is_this_declaration_referenced" : true
+              },
+              {
+                "name" : "INT",
+                "qual_name" : [
+                  "INT",
+                  "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 12
+              },
+              {
+              }
+            )>,
+            <"EnumConstantDecl" : (
+              {
+                "pointer" : 13,
+                "source_range" : (
+                  {
+                    "line" : 4,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 5
+                  }
+                ),
+                "is_this_declaration_referenced" : true
+              },
+              {
+                "name" : "THREE",
+                "qual_name" : [
+                  "THREE",
+                  "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 12
+              },
+              {
+              }
+            )>,
+            <"EnumConstantDecl" : (
+              {
+                "pointer" : 14,
+                "source_range" : (
+                  {
+                    "line" : 5,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 5
+                  }
+                ),
+                "is_this_declaration_referenced" : true
+              },
+              {
+                "name" : "STRING",
+                "qual_name" : [
+                  "STRING",
+                  "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 12
+              },
+              {
+              }
+            )>
+          ],
+          {
+          },
+          <"TTK_Enum">,
+          {
+          }
+        )>,
+        <"FieldDecl" : (
+          {
+            "pointer" : 15,
+            "parent_pointer" : 7,
+            "source_range" : (
+              {
+                "line" : 2,
+                "column" : 3
+              },
+              {
+                "line" : 6,
+                "column" : 5
+              }
+            ),
+            "is_this_declaration_referenced" : true,
+            "access" : <"Public">
+          },
+          {
+            "name" : "tag",
+            "qual_name" : [
+              "tag",
+              "X"
+            ]
+          },
+          {
+            "type_ptr" : 16
+          },
+          {
+          }
+        )>,
+        <"RecordDecl" : (
+          {
+            "pointer" : 17,
+            "parent_pointer" : 7,
+            "source_range" : (
+              {
+                "line" : 8,
+                "column" : 3
+              },
+              {
+                "line" : 14,
+                "column" : 3
+              }
+            )
+          },
+          {
+            "name" : "",
+            "qual_name" : [
+              "anonymous_union_sample/types/discriminated_union2.c:8:3",
+              "X"
+            ]
+          },
+          18,
+          [
+            <"FieldDecl" : (
+              {
+                "pointer" : 19,
+                "parent_pointer" : 17,
+                "source_range" : (
+                  {
+                    "line" : 9,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 9
+                  }
+                ),
+                "access" : <"Public">
+              },
+              {
+                "name" : "i",
+                "qual_name" : [
+                  "i",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 12
+              },
+              {
+              }
+            )>,
+            <"RecordDecl" : (
+              {
+                "pointer" : 20,
+                "parent_pointer" : 17,
+                "source_range" : (
+                  {
+                    "line" : 10,
+                    "column" : 5
+                  },
+                  {
+                    "line" : 12,
+                    "column" : 5
+                  }
+                )
+              },
+              {
+                "name" : "",
+                "qual_name" : [
+                  "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              21,
+              [
+                <"FieldDecl" : (
+                  {
+                    "pointer" : 22,
+                    "parent_pointer" : 20,
+                    "source_range" : (
+                      {
+                        "line" : 11,
+                        "column" : 7
+                      },
+                      {
+                        "column" : 15
+                      }
+                    ),
+                    "is_this_declaration_referenced" : true,
+                    "access" : <"Public">
+                  },
+                  {
+                    "name" : "a",
+                    "qual_name" : [
+                      "a",
+                      "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 12
+                  },
+                  {
+                    "bit_width_expr" : <"ConstantExpr" : (
+                      {
+                        "pointer" : 23,
+                        "source_range" : (
+                          {
+                            "column" : 15
+                          },
+                          {
+                            "column" : 15
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 24,
+                            "source_range" : (
+                              {
+                                "column" : 15
+                              },
+                              {
+                                "column" : 15
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 12
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "12"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 12
+                        }
+                      }
+                    )>
+                  }
+                )>,
+                <"FieldDecl" : (
+                  {
+                    "pointer" : 25,
+                    "parent_pointer" : 20,
+                    "source_range" : (
+                      {
+                        "column" : 7
+                      },
+                      {
+                        "column" : 23
+                      }
+                    ),
+                    "is_this_declaration_referenced" : true,
+                    "access" : <"Public">
+                  },
+                  {
+                    "name" : "b",
+                    "qual_name" : [
+                      "b",
+                      "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 12
+                  },
+                  {
+                    "bit_width_expr" : <"ConstantExpr" : (
+                      {
+                        "pointer" : 26,
+                        "source_range" : (
+                          {
+                            "column" : 23
+                          },
+                          {
+                            "column" : 23
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 27,
+                            "source_range" : (
+                              {
+                                "column" : 23
+                              },
+                              {
+                                "column" : 23
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 12
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "12"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 12
+                        }
+                      }
+                    )>
+                  }
+                )>,
+                <"FieldDecl" : (
+                  {
+                    "pointer" : 28,
+                    "parent_pointer" : 20,
+                    "source_range" : (
+                      {
+                        "column" : 7
+                      },
+                      {
+                        "column" : 31
+                      }
+                    ),
+                    "is_this_declaration_referenced" : true,
+                    "access" : <"Public">
+                  },
+                  {
+                    "name" : "c",
+                    "qual_name" : [
+                      "c",
+                      "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 12
+                  },
+                  {
+                    "bit_width_expr" : <"ConstantExpr" : (
+                      {
+                        "pointer" : 29,
+                        "source_range" : (
+                          {
+                            "column" : 31
+                          },
+                          {
+                            "column" : 31
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 30,
+                            "source_range" : (
+                              {
+                                "column" : 31
+                              },
+                              {
+                                "column" : 31
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 12
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "12"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 12
+                        }
+                      }
+                    )>
+                  }
+                )>
+              ],
+              {
+              },
+              <"TTK_Struct">,
+              {
+                "definition_ptr" : 20,
+                "is_complete_definition" : true
+              }
+            )>,
+            <"FieldDecl" : (
+              {
+                "pointer" : 31,
+                "parent_pointer" : 17,
+                "source_range" : (
+                  {
+                    "line" : 10,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 5
+                  }
+                ),
+                "is_implicit" : true,
+                "is_this_declaration_referenced" : true
+              },
+              {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 21
+              },
+              {
+              }
+            )>,
+            <"IndirectFieldDecl" : (
+              {
+                "pointer" : 32,
+                "source_range" : (
+                  {
+                    "line" : 11,
+                    "column" : 11
+                  },
+                  {
+                    "column" : 11
+                  }
+                ),
+                "is_implicit" : true
+              },
+              {
+                "name" : "a",
+                "qual_name" : [
+                  "a",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 12
+              },
+              [
+                {
+                  "kind" : <"Field">,
+                  "decl_pointer" : 31,
+                  "name" : {
+                    "name" : "__anon_field_1",
+                    "qual_name" : [
+                      "",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  "qual_type" : {
+                    "type_ptr" : 21
+                  }
+                },
+                {
+                  "kind" : <"Field">,
+                  "decl_pointer" : 22,
+                  "name" : {
+                    "name" : "a",
+                    "qual_name" : [
+                      "a",
+                      "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  "qual_type" : {
+                    "type_ptr" : 12
+                  }
+                }
+              ]
+            )>,
+            <"IndirectFieldDecl" : (
+              {
+                "pointer" : 33,
+                "source_range" : (
+                  {
+                    "column" : 19
+                  },
+                  {
+                    "column" : 19
+                  }
+                ),
+                "is_implicit" : true
+              },
+              {
+                "name" : "b",
+                "qual_name" : [
+                  "b",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 12
+              },
+              [
+                {
+                  "kind" : <"Field">,
+                  "decl_pointer" : 31,
+                  "name" : {
+                    "name" : "__anon_field_1",
+                    "qual_name" : [
+                      "",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  "qual_type" : {
+                    "type_ptr" : 21
+                  }
+                },
+                {
+                  "kind" : <"Field">,
+                  "decl_pointer" : 25,
+                  "name" : {
+                    "name" : "b",
+                    "qual_name" : [
+                      "b",
+                      "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  "qual_type" : {
+                    "type_ptr" : 12
+                  }
+                }
+              ]
+            )>,
+            <"IndirectFieldDecl" : (
+              {
+                "pointer" : 34,
+                "source_range" : (
+                  {
+                    "column" : 27
+                  },
+                  {
+                    "column" : 27
+                  }
+                ),
+                "is_implicit" : true
+              },
+              {
+                "name" : "c",
+                "qual_name" : [
+                  "c",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 12
+              },
+              [
+                {
+                  "kind" : <"Field">,
+                  "decl_pointer" : 31,
+                  "name" : {
+                    "name" : "__anon_field_1",
+                    "qual_name" : [
+                      "",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  "qual_type" : {
+                    "type_ptr" : 21
+                  }
+                },
+                {
+                  "kind" : <"Field">,
+                  "decl_pointer" : 28,
+                  "name" : {
+                    "name" : "c",
+                    "qual_name" : [
+                      "c",
+                      "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                      "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                      "X"
+                    ]
+                  },
+                  "qual_type" : {
+                    "type_ptr" : 12
+                  }
+                }
+              ]
+            )>,
+            <"FieldDecl" : (
+              {
+                "pointer" : 35,
+                "parent_pointer" : 17,
+                "source_range" : (
+                  {
+                    "line" : 13,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 11
+                  }
+                ),
+                "is_this_declaration_referenced" : true,
+                "access" : <"Public">
+              },
+              {
+                "name" : "str",
+                "qual_name" : [
+                  "str",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              {
+                "type_ptr" : 36
+              },
+              {
+              }
+            )>
+          ],
+          {
+          },
+          <"TTK_Union">,
+          {
+            "definition_ptr" : 17,
+            "is_complete_definition" : true
+          }
+        )>,
+        <"FieldDecl" : (
+          {
+            "pointer" : 37,
+            "parent_pointer" : 7,
+            "source_range" : (
+              {
+                "line" : 8,
+                "column" : 3
+              },
+              {
+                "column" : 3
+              }
+            ),
+            "is_implicit" : true,
+            "is_this_declaration_referenced" : true
+          },
+          {
+            "name" : "__anon_field_1",
+            "qual_name" : [
+              "",
+              "X"
+            ]
+          },
+          {
+            "type_ptr" : 18
+          },
+          {
+          }
+        )>,
+        <"IndirectFieldDecl" : (
+          {
+            "pointer" : 38,
+            "source_range" : (
+              {
+                "line" : 9,
+                "column" : 9
+              },
+              {
+                "column" : 9
+              }
+            ),
+            "is_implicit" : true
+          },
+          {
+            "name" : "i",
+            "qual_name" : [
+              "i",
+              "X"
+            ]
+          },
+          {
+            "type_ptr" : 12
+          },
+          [
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 37,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 18
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 19,
+              "name" : {
+                "name" : "i",
+                "qual_name" : [
+                  "i",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 12
+              }
+            }
+          ]
+        )>,
+        <"IndirectFieldDecl" : (
+          {
+            "pointer" : 39,
+            "source_range" : (
+              {
+                "line" : 11,
+                "column" : 11
+              },
+              {
+                "column" : 11
+              }
+            ),
+            "is_implicit" : true
+          },
+          {
+            "name" : "a",
+            "qual_name" : [
+              "a",
+              "X"
+            ]
+          },
+          {
+            "type_ptr" : 12
+          },
+          [
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 37,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 18
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 31,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 21
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 22,
+              "name" : {
+                "name" : "a",
+                "qual_name" : [
+                  "a",
+                  "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 12
+              }
+            }
+          ]
+        )>,
+        <"IndirectFieldDecl" : (
+          {
+            "pointer" : 40,
+            "source_range" : (
+              {
+                "column" : 19
+              },
+              {
+                "column" : 19
+              }
+            ),
+            "is_implicit" : true
+          },
+          {
+            "name" : "b",
+            "qual_name" : [
+              "b",
+              "X"
+            ]
+          },
+          {
+            "type_ptr" : 12
+          },
+          [
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 37,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 18
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 31,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 21
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 25,
+              "name" : {
+                "name" : "b",
+                "qual_name" : [
+                  "b",
+                  "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 12
+              }
+            }
+          ]
+        )>,
+        <"IndirectFieldDecl" : (
+          {
+            "pointer" : 41,
+            "source_range" : (
+              {
+                "column" : 27
+              },
+              {
+                "column" : 27
+              }
+            ),
+            "is_implicit" : true
+          },
+          {
+            "name" : "c",
+            "qual_name" : [
+              "c",
+              "X"
+            ]
+          },
+          {
+            "type_ptr" : 12
+          },
+          [
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 37,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 18
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 31,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 21
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 28,
+              "name" : {
+                "name" : "c",
+                "qual_name" : [
+                  "c",
+                  "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 12
+              }
+            }
+          ]
+        )>,
+        <"IndirectFieldDecl" : (
+          {
+            "pointer" : 42,
+            "source_range" : (
+              {
+                "line" : 13,
+                "column" : 11
+              },
+              {
+                "column" : 11
+              }
+            ),
+            "is_implicit" : true
+          },
+          {
+            "name" : "str",
+            "qual_name" : [
+              "str",
+              "X"
+            ]
+          },
+          {
+            "type_ptr" : 36
+          },
+          [
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 37,
+              "name" : {
+                "name" : "__anon_field_1",
+                "qual_name" : [
+                  "",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 18
+              }
+            },
+            {
+              "kind" : <"Field">,
+              "decl_pointer" : 35,
+              "name" : {
+                "name" : "str",
+                "qual_name" : [
+                  "str",
+                  "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                  "X"
+                ]
+              },
+              "qual_type" : {
+                "type_ptr" : 36
+              }
+            }
+          ]
+        )>
+      ],
+      {
+      },
+      <"TTK_Struct">,
+      {
+        "definition_ptr" : 7,
+        "is_complete_definition" : true
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 43,
+        "source_range" : (
+          {
+            "line" : 1,
+            "column" : 1
+          },
+          {
+            "line" : 15,
+            "column" : 3
+          }
+        ),
+        "is_this_declaration_referenced" : true
+      },
+      {
+        "name" : "X",
+        "qual_name" : [
+          "X"
+        ]
+      },
+      44,
+      {
+      }
+    )>,
+    <"FunctionDecl" : (
+      {
+        "pointer" : 45,
+        "source_range" : (
+          {
+            "line" : 17,
+            "column" : 1
+          },
+          {
+            "line" : 29,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "main",
+        "qual_name" : [
+          "main"
+        ]
+      },
+      {
+        "type_ptr" : 46
+      },
+      {
+        "decl_ptr_with_body" : 45,
+        "body" : <"CompoundStmt" : (
+          {
+            "pointer" : 47,
+            "source_range" : (
+              {
+                "line" : 17,
+                "column" : 16
+              },
+              {
+                "line" : 29,
+                "column" : 1
+              }
+            )
+          },
+          [
+            <"DeclStmt" : (
+              {
+                "pointer" : 48,
+                "source_range" : (
+                  {
+                    "line" : 18,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 19
+                  }
+                )
+              },
+              [
+                <"InitListExpr" : (
+                  {
+                    "pointer" : 49,
+                    "source_range" : (
+                      {
+                        "column" : 9
+                      },
+                      {
+                        "column" : 18
+                      }
+                    )
+                  },
+                  [
+                    <"ImplicitCastExpr" : (
+                      {
+                        "pointer" : 50,
+                        "source_range" : (
+                          {
+                            "column" : 11
+                          },
+                          {
+                            "column" : 11
+                          }
+                        )
+                      },
+                      [
+                        <"DeclRefExpr" : (
+                          {
+                            "pointer" : 51,
+                            "source_range" : (
+                              {
+                                "column" : 11
+                              },
+                              {
+                                "column" : 11
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 12
+                            }
+                          },
+                          {
+                            "decl_ref" : {
+                              "kind" : <"EnumConstant">,
+                              "decl_pointer" : 11,
+                              "name" : {
+                                "name" : "INT",
+                                "qual_name" : [
+                                  "INT",
+                                  "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                                  "X"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 12
+                              }
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 16
+                        }
+                      },
+                      {
+                        "cast_kind" : <"IntegralCast">,
+                        "base_path" : [
+                        ]
+                      },
+                      false
+                    )>,
+                    <"InitListExpr" : (
+                      {
+                        "pointer" : 52,
+                        "source_range" : (
+                          {
+                            "column" : 16
+                          },
+                          {
+                            "column" : 16
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 53,
+                            "source_range" : (
+                              {
+                                "column" : 16
+                              },
+                              {
+                                "column" : 16
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 12
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "0"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 18
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 44
+                    }
+                  }
+                )>
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 54,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 18
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "x",
+                    "qual_name" : [
+                      "x"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 44
+                  },
+                  {
+                    "init_expr" : <"InitListExpr" : (
+                      {
+                        "pointer" : 49,
+                        "source_range" : (
+                          {
+                            "column" : 9
+                          },
+                          {
+                            "column" : 18
+                          }
+                        )
+                      },
+                      [
+                        <"ImplicitCastExpr" : (
+                          {
+                            "pointer" : 50,
+                            "source_range" : (
+                              {
+                                "column" : 11
+                              },
+                              {
+                                "column" : 11
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 51,
+                                "source_range" : (
+                                  {
+                                    "column" : 11
+                                  },
+                                  {
+                                    "column" : 11
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 12
+                                }
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"EnumConstant">,
+                                  "decl_pointer" : 11,
+                                  "name" : {
+                                    "name" : "INT",
+                                    "qual_name" : [
+                                      "INT",
+                                      "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                                      "X"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 12
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 16
+                            }
+                          },
+                          {
+                            "cast_kind" : <"IntegralCast">,
+                            "base_path" : [
+                            ]
+                          },
+                          false
+                        )>,
+                        <"InitListExpr" : (
+                          {
+                            "pointer" : 52,
+                            "source_range" : (
+                              {
+                                "column" : 16
+                              },
+                              {
+                                "column" : 16
+                              }
+                            )
+                          },
+                          [
+                            <"IntegerLiteral" : (
+                              {
+                                "pointer" : 53,
+                                "source_range" : (
+                                  {
+                                    "column" : 16
+                                  },
+                                  {
+                                    "column" : 16
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 12
+                                }
+                              },
+                              {
+                                "is_signed" : true,
+                                "bitwidth" : 32,
+                                "value" : "0"
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 18
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 44
+                        }
+                      }
+                    )>
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 55,
+                "source_range" : (
+                  {
+                    "line" : 20,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 11
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 56,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 57,
+                        "source_range" : (
+                          {
+                            "column" : 3
+                          },
+                          {
+                            "column" : 3
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 44
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 54,
+                          "name" : {
+                            "name" : "x",
+                            "qual_name" : [
+                              "x"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 44
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 16
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "tag",
+                      "qual_name" : [
+                        "tag",
+                        "X"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 15,
+                      "name" : {
+                        "name" : "tag",
+                        "qual_name" : [
+                          "tag",
+                          "X"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 16
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 58,
+                    "source_range" : (
+                      {
+                        "column" : 11
+                      },
+                      {
+                        "column" : 11
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 59,
+                        "source_range" : (
+                          {
+                            "column" : 11
+                          },
+                          {
+                            "column" : 11
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 12
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 13,
+                          "name" : {
+                            "name" : "THREE",
+                            "qual_name" : [
+                              "THREE",
+                              "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                              "X"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 12
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 16
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 16
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 60,
+                "source_range" : (
+                  {
+                    "line" : 21,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 9
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 61,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                    <"MemberExpr" : (
+                      {
+                        "pointer" : 62,
+                        "source_range" : (
+                          {
+                            "column" : 3
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                        <"MemberExpr" : (
+                          {
+                            "pointer" : 63,
+                            "source_range" : (
+                              {
+                                "column" : 3
+                              },
+                              {
+                                "column" : 5
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 64,
+                                "source_range" : (
+                                  {
+                                    "column" : 3
+                                  },
+                                  {
+                                    "column" : 3
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 44
+                                },
+                                "value_kind" : <"LValue">
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"Var">,
+                                  "decl_pointer" : 54,
+                                  "name" : {
+                                    "name" : "x",
+                                    "qual_name" : [
+                                      "x"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 44
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 18
+                            },
+                            "value_kind" : <"LValue">
+                          },
+                          {
+                            "performs_virtual_dispatch" : true,
+                            "name" : {
+                              "name" : "__anon_field_1",
+                              "qual_name" : [
+                                "",
+                                "X"
+                              ]
+                            },
+                            "decl_ref" : {
+                              "kind" : <"Field">,
+                              "decl_pointer" : 37,
+                              "name" : {
+                                "name" : "__anon_field_1",
+                                "qual_name" : [
+                                  "",
+                                  "X"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 18
+                              }
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 21
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "performs_virtual_dispatch" : true,
+                        "name" : {
+                          "name" : "__anon_field_1",
+                          "qual_name" : [
+                            "",
+                            "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                            "X"
+                          ]
+                        },
+                        "decl_ref" : {
+                          "kind" : <"Field">,
+                          "decl_pointer" : 31,
+                          "name" : {
+                            "name" : "__anon_field_1",
+                            "qual_name" : [
+                              "",
+                              "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                              "X"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 21
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    },
+                    "value_kind" : <"LValue">,
+                    "object_kind" : <"BitField">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "a",
+                      "qual_name" : [
+                        "a",
+                        "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                        "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                        "X"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 22,
+                      "name" : {
+                        "name" : "a",
+                        "qual_name" : [
+                          "a",
+                          "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                          "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                          "X"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 12
+                      }
+                    }
+                  }
+                )>,
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 65,
+                    "source_range" : (
+                      {
+                        "column" : 9
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "1"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 12
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 66,
+                "source_range" : (
+                  {
+                    "line" : 22,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 9
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 67,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                    <"MemberExpr" : (
+                      {
+                        "pointer" : 68,
+                        "source_range" : (
+                          {
+                            "column" : 3
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                        <"MemberExpr" : (
+                          {
+                            "pointer" : 69,
+                            "source_range" : (
+                              {
+                                "column" : 3
+                              },
+                              {
+                                "column" : 5
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 70,
+                                "source_range" : (
+                                  {
+                                    "column" : 3
+                                  },
+                                  {
+                                    "column" : 3
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 44
+                                },
+                                "value_kind" : <"LValue">
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"Var">,
+                                  "decl_pointer" : 54,
+                                  "name" : {
+                                    "name" : "x",
+                                    "qual_name" : [
+                                      "x"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 44
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 18
+                            },
+                            "value_kind" : <"LValue">
+                          },
+                          {
+                            "performs_virtual_dispatch" : true,
+                            "name" : {
+                              "name" : "__anon_field_1",
+                              "qual_name" : [
+                                "",
+                                "X"
+                              ]
+                            },
+                            "decl_ref" : {
+                              "kind" : <"Field">,
+                              "decl_pointer" : 37,
+                              "name" : {
+                                "name" : "__anon_field_1",
+                                "qual_name" : [
+                                  "",
+                                  "X"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 18
+                              }
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 21
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "performs_virtual_dispatch" : true,
+                        "name" : {
+                          "name" : "__anon_field_1",
+                          "qual_name" : [
+                            "",
+                            "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                            "X"
+                          ]
+                        },
+                        "decl_ref" : {
+                          "kind" : <"Field">,
+                          "decl_pointer" : 31,
+                          "name" : {
+                            "name" : "__anon_field_1",
+                            "qual_name" : [
+                              "",
+                              "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                              "X"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 21
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    },
+                    "value_kind" : <"LValue">,
+                    "object_kind" : <"BitField">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "b",
+                      "qual_name" : [
+                        "b",
+                        "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                        "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                        "X"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 25,
+                      "name" : {
+                        "name" : "b",
+                        "qual_name" : [
+                          "b",
+                          "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                          "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                          "X"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 12
+                      }
+                    }
+                  }
+                )>,
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 71,
+                    "source_range" : (
+                      {
+                        "column" : 9
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "2"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 12
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 72,
+                "source_range" : (
+                  {
+                    "line" : 23,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 9
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 73,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                    <"MemberExpr" : (
+                      {
+                        "pointer" : 74,
+                        "source_range" : (
+                          {
+                            "column" : 3
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                        <"MemberExpr" : (
+                          {
+                            "pointer" : 75,
+                            "source_range" : (
+                              {
+                                "column" : 3
+                              },
+                              {
+                                "column" : 5
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 76,
+                                "source_range" : (
+                                  {
+                                    "column" : 3
+                                  },
+                                  {
+                                    "column" : 3
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 44
+                                },
+                                "value_kind" : <"LValue">
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"Var">,
+                                  "decl_pointer" : 54,
+                                  "name" : {
+                                    "name" : "x",
+                                    "qual_name" : [
+                                      "x"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 44
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 18
+                            },
+                            "value_kind" : <"LValue">
+                          },
+                          {
+                            "performs_virtual_dispatch" : true,
+                            "name" : {
+                              "name" : "__anon_field_1",
+                              "qual_name" : [
+                                "",
+                                "X"
+                              ]
+                            },
+                            "decl_ref" : {
+                              "kind" : <"Field">,
+                              "decl_pointer" : 37,
+                              "name" : {
+                                "name" : "__anon_field_1",
+                                "qual_name" : [
+                                  "",
+                                  "X"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 18
+                              }
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 21
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "performs_virtual_dispatch" : true,
+                        "name" : {
+                          "name" : "__anon_field_1",
+                          "qual_name" : [
+                            "",
+                            "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                            "X"
+                          ]
+                        },
+                        "decl_ref" : {
+                          "kind" : <"Field">,
+                          "decl_pointer" : 31,
+                          "name" : {
+                            "name" : "__anon_field_1",
+                            "qual_name" : [
+                              "",
+                              "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                              "X"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 21
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    },
+                    "value_kind" : <"LValue">,
+                    "object_kind" : <"BitField">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "c",
+                      "qual_name" : [
+                        "c",
+                        "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                        "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                        "X"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 28,
+                      "name" : {
+                        "name" : "c",
+                        "qual_name" : [
+                          "c",
+                          "anonymous_struct_sample/types/discriminated_union2.c:10:5",
+                          "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                          "X"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 12
+                      }
+                    }
+                  }
+                )>,
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 77,
+                    "source_range" : (
+                      {
+                        "column" : 9
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 12
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "3"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 12
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 78,
+                "source_range" : (
+                  {
+                    "line" : 25,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 11
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 79,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 80,
+                        "source_range" : (
+                          {
+                            "column" : 3
+                          },
+                          {
+                            "column" : 3
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 44
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"Var">,
+                          "decl_pointer" : 54,
+                          "name" : {
+                            "name" : "x",
+                            "qual_name" : [
+                              "x"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 44
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 16
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "tag",
+                      "qual_name" : [
+                        "tag",
+                        "X"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 15,
+                      "name" : {
+                        "name" : "tag",
+                        "qual_name" : [
+                          "tag",
+                          "X"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 16
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 81,
+                    "source_range" : (
+                      {
+                        "column" : 11
+                      },
+                      {
+                        "column" : 11
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 82,
+                        "source_range" : (
+                          {
+                            "column" : 11
+                          },
+                          {
+                            "column" : 11
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 12
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 14,
+                          "name" : {
+                            "name" : "STRING",
+                            "qual_name" : [
+                              "STRING",
+                              "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                              "X"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 12
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 16
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 16
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 83,
+                "source_range" : (
+                  {
+                    "line" : 26,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 11
+                  }
+                )
+              },
+              [
+                <"MemberExpr" : (
+                  {
+                    "pointer" : 84,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                    <"MemberExpr" : (
+                      {
+                        "pointer" : 85,
+                        "source_range" : (
+                          {
+                            "column" : 3
+                          },
+                          {
+                            "column" : 5
+                          }
+                        )
+                      },
+                      [
+                        <"DeclRefExpr" : (
+                          {
+                            "pointer" : 86,
+                            "source_range" : (
+                              {
+                                "column" : 3
+                              },
+                              {
+                                "column" : 3
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 44
+                            },
+                            "value_kind" : <"LValue">
+                          },
+                          {
+                            "decl_ref" : {
+                              "kind" : <"Var">,
+                              "decl_pointer" : 54,
+                              "name" : {
+                                "name" : "x",
+                                "qual_name" : [
+                                  "x"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 44
+                              }
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 18
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      {
+                        "performs_virtual_dispatch" : true,
+                        "name" : {
+                          "name" : "__anon_field_1",
+                          "qual_name" : [
+                            "",
+                            "X"
+                          ]
+                        },
+                        "decl_ref" : {
+                          "kind" : <"Field">,
+                          "decl_pointer" : 37,
+                          "name" : {
+                            "name" : "__anon_field_1",
+                            "qual_name" : [
+                              "",
+                              "X"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 18
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 36
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "performs_virtual_dispatch" : true,
+                    "name" : {
+                      "name" : "str",
+                      "qual_name" : [
+                        "str",
+                        "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                        "X"
+                      ]
+                    },
+                    "decl_ref" : {
+                      "kind" : <"Field">,
+                      "decl_pointer" : 35,
+                      "name" : {
+                        "name" : "str",
+                        "qual_name" : [
+                          "str",
+                          "anonymous_union_sample/types/discriminated_union2.c:8:3",
+                          "X"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 36
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 87,
+                    "source_range" : (
+                      {
+                        "column" : 11
+                      },
+                      {
+                        "column" : 11
+                      }
+                    )
+                  },
+                  [
+                    <"StringLiteral" : (
+                      {
+                        "pointer" : 88,
+                        "source_range" : (
+                          {
+                            "column" : 11
+                          },
+                          {
+                            "column" : 11
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 89
+                        },
+                        "value_kind" : <"LValue">
+                      },
+                      [
+                        "hogehoge"
+                      ]
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 36
+                    }
+                  },
+                  {
+                    "cast_kind" : <"ArrayToPointerDecay">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 36
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 90,
+                "source_range" : (
+                  {
+                    "line" : 28,
+                    "column" : 3
+                  },
+                  {
+                    "column" : 45
+                  }
+                )
+              },
+              [
+                <"InitListExpr" : (
+                  {
+                    "pointer" : 91,
+                    "source_range" : (
+                      {
+                        "column" : 9
+                      },
+                      {
+                        "column" : 44
+                      }
+                    )
+                  },
+                  [
+                    <"ImplicitCastExpr" : (
+                      {
+                        "pointer" : 92,
+                        "source_range" : (
+                          {
+                            "column" : 18
+                          },
+                          {
+                            "column" : 18
+                          }
+                        )
+                      },
+                      [
+                        <"DeclRefExpr" : (
+                          {
+                            "pointer" : 93,
+                            "source_range" : (
+                              {
+                                "column" : 18
+                              },
+                              {
+                                "column" : 18
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 12
+                            }
+                          },
+                          {
+                            "decl_ref" : {
+                              "kind" : <"EnumConstant">,
+                              "decl_pointer" : 14,
+                              "name" : {
+                                "name" : "STRING",
+                                "qual_name" : [
+                                  "STRING",
+                                  "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                                  "X"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 12
+                              }
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 16
+                        }
+                      },
+                      {
+                        "cast_kind" : <"IntegralCast">,
+                        "base_path" : [
+                        ]
+                      },
+                      false
+                    )>,
+                    <"InitListExpr" : (
+                      {
+                        "pointer" : 94,
+                        "source_range" : (
+                          {
+                            "column" : 26
+                          },
+                          {
+                            "column" : 33
+                          }
+                        )
+                      },
+                      [
+                        <"ImplicitCastExpr" : (
+                          {
+                            "pointer" : 95,
+                            "source_range" : (
+                              {
+                                "column" : 33
+                              },
+                              {
+                                "column" : 33
+                              }
+                            )
+                          },
+                          [
+                            <"StringLiteral" : (
+                              {
+                                "pointer" : 96,
+                                "source_range" : (
+                                  {
+                                    "column" : 33
+                                  },
+                                  {
+                                    "column" : 33
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 89
+                                },
+                                "value_kind" : <"LValue">
+                              },
+                              [
+                                "fugafuga"
+                              ]
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 36
+                            }
+                          },
+                          {
+                            "cast_kind" : <"ArrayToPointerDecay">,
+                            "base_path" : [
+                            ]
+                          },
+                          false
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 18
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 44
+                    }
+                  }
+                )>
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 97,
+                    "source_range" : (
+                      {
+                        "column" : 3
+                      },
+                      {
+                        "column" : 44
+                      }
+                    )
+                  },
+                  {
+                    "name" : "y",
+                    "qual_name" : [
+                      "y"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 44
+                  },
+                  {
+                    "init_expr" : <"InitListExpr" : (
+                      {
+                        "pointer" : 91,
+                        "source_range" : (
+                          {
+                            "column" : 9
+                          },
+                          {
+                            "column" : 44
+                          }
+                        )
+                      },
+                      [
+                        <"ImplicitCastExpr" : (
+                          {
+                            "pointer" : 92,
+                            "source_range" : (
+                              {
+                                "column" : 18
+                              },
+                              {
+                                "column" : 18
+                              }
+                            )
+                          },
+                          [
+                            <"DeclRefExpr" : (
+                              {
+                                "pointer" : 93,
+                                "source_range" : (
+                                  {
+                                    "column" : 18
+                                  },
+                                  {
+                                    "column" : 18
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 12
+                                }
+                              },
+                              {
+                                "decl_ref" : {
+                                  "kind" : <"EnumConstant">,
+                                  "decl_pointer" : 14,
+                                  "name" : {
+                                    "name" : "STRING",
+                                    "qual_name" : [
+                                      "STRING",
+                                      "anonymous_enum_sample/types/discriminated_union2.c:2:3",
+                                      "X"
+                                    ]
+                                  },
+                                  "qual_type" : {
+                                    "type_ptr" : 12
+                                  }
+                                }
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 16
+                            }
+                          },
+                          {
+                            "cast_kind" : <"IntegralCast">,
+                            "base_path" : [
+                            ]
+                          },
+                          false
+                        )>,
+                        <"InitListExpr" : (
+                          {
+                            "pointer" : 94,
+                            "source_range" : (
+                              {
+                                "column" : 26
+                              },
+                              {
+                                "column" : 33
+                              }
+                            )
+                          },
+                          [
+                            <"ImplicitCastExpr" : (
+                              {
+                                "pointer" : 95,
+                                "source_range" : (
+                                  {
+                                    "column" : 33
+                                  },
+                                  {
+                                    "column" : 33
+                                  }
+                                )
+                              },
+                              [
+                                <"StringLiteral" : (
+                                  {
+                                    "pointer" : 96,
+                                    "source_range" : (
+                                      {
+                                        "column" : 33
+                                      },
+                                      {
+                                        "column" : 33
+                                      }
+                                    )
+                                  },
+                                  [
+                                  ],
+                                  {
+                                    "qual_type" : {
+                                      "type_ptr" : 89
+                                    },
+                                    "value_kind" : <"LValue">
+                                  },
+                                  [
+                                    "fugafuga"
+                                  ]
+                                )>
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 36
+                                }
+                              },
+                              {
+                                "cast_kind" : <"ArrayToPointerDecay">,
+                                "base_path" : [
+                                ]
+                              },
+                              false
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 18
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 44
+                        }
+                      }
+                    )>
+                  }
+                )>
+              ]
+            )>
+          ]
+        )>
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 98,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "instancetype",
+        "qual_name" : [
+          "instancetype"
+        ]
+      },
+      99,
+      {
+      }
+    )>
+  ],
+  {
+  },
+  {
+    "input_path" : "sample/types/discriminated_union2.c",
+    "input_kind" : <"IK_C">,
+    "integer_type_widths" : {
+      "char_type" : 8,
+      "short_type" : 16,
+      "int_type" : 32,
+      "long_type" : 64,
+      "longlong_type" : 64
+    },
+    "types" : [
+      <"BuiltinType" : (
+        {
+          "pointer" : 100
+        },
+        <"Void">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 101
+        },
+        <"Bool">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 102
+        },
+        <"Char_S">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 103
+        },
+        <"SChar">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 104
+        },
+        <"Short">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 12
+        },
+        <"Int">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 105
+        },
+        <"Long">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 106
+        },
+        <"LongLong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 107
+        },
+        <"UChar">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 108
+        },
+        <"UShort">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 109
+        },
+        <"UInt">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 110
+        },
+        <"ULong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 111
+        },
+        <"ULongLong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 112
+        },
+        <"Float">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 113
+        },
+        <"Double">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 114
+        },
+        <"LongDouble">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 115
+        },
+        <"Float128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 116
+        },
+        <"Float16">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 117
+        },
+        <"ShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 118
+        },
+        <"Accum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 119
+        },
+        <"LongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 120
+        },
+        <"UShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 121
+        },
+        <"UAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 122
+        },
+        <"ULongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 123
+        },
+        <"ShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 124
+        },
+        <"Fract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 125
+        },
+        <"LongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 126
+        },
+        <"UShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 127
+        },
+        <"UFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 128
+        },
+        <"ULongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 129
+        },
+        <"SatShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 130
+        },
+        <"SatAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 131
+        },
+        <"SatLongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 132
+        },
+        <"SatUShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 133
+        },
+        <"SatUAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 134
+        },
+        <"SatULongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 135
+        },
+        <"SatShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 136
+        },
+        <"SatFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 137
+        },
+        <"SatLongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 138
+        },
+        <"SatUShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 139
+        },
+        <"SatUFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 140
+        },
+        <"SatULongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 141
+        },
+        <"Int128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 142
+        },
+        <"UInt128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 143
+        },
+        <"WChar_S">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 144
+        },
+        <"Char8">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 145
+        },
+        <"Dependent">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 146
+        },
+        <"Overload">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 147
+        },
+        <"BoundMember">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 148
+        },
+        <"PseudoObject">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 149
+        },
+        <"UnknownAny">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 150
+        },
+        <"ARCUnbridgedCast">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 151
+        },
+        <"BuiltinFn">
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 152
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 153
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 154
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 155
+        }
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 156
+        },
+        <"ObjCId">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 157
+        },
+        <"ObjCClass">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 158
+        },
+        <"ObjCSel">
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 159
+        },
+        {
+          "type_ptr" : 100
+        }
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 160
+        },
+        <"NullPtr">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 161
+        },
+        <"Half">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 162
+        },
+        <"BFloat16">
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 163
+        },
+        164
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 165
+        },
+        {
+          "type_ptr" : 12,
+          "is_const" : true
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 166
+        },
+        {
+          "type_ptr" : 102,
+          "is_const" : true
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 36
+        },
+        {
+          "type_ptr" : 102
+        }
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 167
+        },
+        168
+      )>,
+      <"ConstantArrayType" : (
+        {
+          "pointer" : 169
+        },
+        {
+          "element_type" : {
+            "type_ptr" : 167
+          },
+          "stride" : 24
+        },
+        1
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 8
+        },
+        7
+      )>,
+      <"EnumType" : (
+        {
+          "pointer" : 10
+        },
+        9
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 16,
+          "desugared_type" : 10
+        }
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 18
+        },
+        17
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 21
+        },
+        20
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 170,
+          "desugared_type" : 21
+        }
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 171,
+          "desugared_type" : 18
+        }
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 172,
+          "desugared_type" : 8
+        }
+      )>,
+      <"FunctionProtoType" : (
+        {
+          "pointer" : 46
+        },
+        {
+          "return_type" : {
+            "type_ptr" : 12
+          }
+        },
+        {
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 173
+        },
+        {
+          "type_ptr" : 36
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 44,
+          "desugared_type" : 8
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 172
+          },
+          "decl_ptr" : 43
+        }
+      )>,
+      <"ConstantArrayType" : (
+        {
+          "pointer" : 89
+        },
+        {
+          "element_type" : {
+            "type_ptr" : 102
+          },
+          "stride" : 1
+        },
+        9
+      )>,
+      <"ObjCObjectType" : (
+        {
+          "pointer" : 174
+        },
+        {
+          "base_type" : 156
+        }
+      )>,
+      <"ObjCObjectPointerType" : (
+        {
+          "pointer" : 175
+        },
+        {
+          "type_ptr" : 174
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 176,
+          "desugared_type" : 175
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 175
+          },
+          "decl_ptr" : 177
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 99,
+          "desugared_type" : 175
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 176
+          },
+          "decl_ptr" : 98
+        }
+      )>,
+      <"NoneType" : (
+        {
+          "pointer" : 0
+        }
+      )>
+    ]
+  }
+)>

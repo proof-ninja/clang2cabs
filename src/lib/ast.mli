@@ -47,9 +47,31 @@ type field = {
   bit_width_expr: expression option;
 }
 
+and field_definition =
+  | FieldDecl of field
+  | FieldRecordDecl of CType.id * record * Location.t
+  | FieldUnionDecl of CType.id * union * Location.t
+  | FieldEnumDecl of CType.id * enum * Location.t
+
 and record = {
   record_name: string;
-  record_fields: field list;
+  record_fields: field_definition list;
+}
+
+and union = {
+  union_name: string;
+  union_fields: field_definition list;
+}
+
+and enumerator = {
+  enumerator_type: CType.t;
+  enumerator_name: string;
+  init_expr: expression option;
+}
+
+and enum = {
+  enum_name: string;
+  enumerators: enumerator list;
 }
 
 (**
@@ -98,6 +120,8 @@ and definition =
   | DECDEF of init_name_group * variable_scope * Location.t (** global variable(s) *)
   | TYPEDEF of CType.id * string * Location.t (** A definition of type *)
   | RECORDDEF of CType.id * record * Location.t (** A definition of struct *)
+  | UNIONDEF of CType.id * union * Location.t (** A definition of union *)
+  | ENUMDEF of CType.id * enum * Location.t (** A definition of enum *)
 
 and block = statement list
 
@@ -138,6 +162,10 @@ and statement =
   (** variable declaration *)
   | RECORDDEC of CType.id * record * Location.t
   (** struct definition in statements *)
+  | UNIONDEC of CType.id * union * Location.t
+  (** union definition in statements *)
+  | ENUMDEC of CType.id * enum * Location.t
+  (** enum definition in statements *)
 
 and binary_operator =
   | ADD (** [e1 + e2] *)
@@ -179,9 +207,13 @@ and expression =
   | INDEX of expression * expression * Location.t (** array index expression [a[i]] *)
   | MEMBER of expression * string * Location.t (** record's field expression [a.x] *)
   | INIT_LIST of expression list * Location.t (** initializer list [struct foo = { 1, { 2, 3 } }] *)
+  | IMPLICIT_VALUE_INIT of expression list * Location.t (** implicit initializer *)
 
 and constant =
-  | CONST_INT of string (** the textual representation *)
+  | CONST_CHAR of string (** the textual representation *)
+  | CONST_INT of string (** ditto *)
+  | CONST_FLOAT of string (** ditto *)
+  | CONST_STRING of string (** ditto *)
 
 and init_expression =
   | NO_INIT

@@ -48,9 +48,31 @@ type field = {
   bit_width_expr: expression option;
 }
 
+and field_definition =
+  | FieldDecl of field
+  | FieldRecordDecl of CType.id * record * Location.t
+  | FieldUnionDecl of CType.id * union * Location.t
+  | FieldEnumDecl of CType.id * enum * Location.t
+
 and record = {
   record_name: string;
-  record_fields: field list;
+  record_fields: field_definition list;
+}
+
+and union = {
+  union_name: string;
+  union_fields: field_definition list;
+}
+
+and enumerator = {
+  enumerator_type: CType.t;
+  enumerator_name: string;
+  init_expr: expression option;
+}
+
+and enum = {
+  enum_name: string;
+  enumerators: enumerator list;
 }
 
 and init_name_group = CType.t * init_name list
@@ -72,6 +94,8 @@ and definition =
   | DECDEF of init_name_group * variable_scope * Location.t
   | TYPEDEF of CType.id * string * Location.t
   | RECORDDEF of CType.id * record * Location.t
+  | UNIONDEF of CType.id * union * Location.t
+  | ENUMDEF of CType.id * enum * Location.t
 
 and block = statement list
 
@@ -85,6 +109,8 @@ and statement =
   | RETURN of expression option * Location.t
   | VARDECL of init_name_group * variable_scope * Location.t
   | RECORDDEC of CType.id * record * Location.t
+  | UNIONDEC of CType.id * union * Location.t
+  | ENUMDEC of CType.id * enum * Location.t
 
 and binary_operator =
   | ADD | SUB | MUL | DIV | MOD
@@ -108,9 +134,13 @@ and expression =
   | INDEX of expression * expression * Location.t
   | MEMBER of expression * string * Location.t
   | INIT_LIST of expression list * Location.t
+  | IMPLICIT_VALUE_INIT of expression list * Location.t
 
 and constant =
-  | CONST_INT of string (* the textual representation *)
+  | CONST_CHAR of string
+  | CONST_INT of string
+  | CONST_FLOAT of string
+  | CONST_STRING of string
 
 and init_expression =
   | NO_INIT
@@ -125,29 +155,64 @@ let rec show_file indent = function (filename, definition_list) ->
   indent ^ "File(name: " ^ filename ^ "\n" ^
   defs ^ "\n" ^
   ")"
-and show_record_definition id { record_name; record_fields } _location =
-  let show_field { field_type; field_name; bit_width_expr } =
-    let field_type = show_ctype field_type in
-    let bit_width_expr = bit_width_expr
-      |> Option.map (fun expr -> " (bit_width: " ^ show_expression expr ^ ")")
-      |> Option.value ~default:""
-    in
-    "  " ^ field_name ^ ": " ^ field_type ^ bit_width_expr
+
+and show_field_definition = function
+  | FieldDecl field -> show_field field
+  | FieldRecordDecl (id, record, location) -> show_record_definition id record location
+  | FieldUnionDecl (id, union, location) -> show_union_definition id union location
+  | FieldEnumDecl (id, enum, location) -> show_enum_definition id enum location
+
+and show_field { field_type; field_name; bit_width_expr } =
+  let field_type = show_ctype field_type in
+  let bit_width_expr = bit_width_expr
+    |> Option.map (fun expr -> " (bit_width: " ^ show_expression expr ^ ")")
+    |> Option.value ~default:""
   in
+  "  " ^ field_name ^ ": " ^ field_type ^ bit_width_expr
+
+and show_record_definition id { record_name; record_fields } _location =
   let fields =
     record_fields
-    |> List.map show_field
+    |> List.map show_field_definition
     |> String.concat "\n"
   in
   "struct " ^ record_name ^ " {\n" ^
   fields ^ "\n" ^
   "}(User defined as " ^ string_of_int id ^ ")\n"
+
+and show_union_definition id { union_name; union_fields } _location =
+  let fields =
+    union_fields
+    |> List.map show_field_definition
+    |> String.concat "\n"
+  in
+  "union " ^ union_name ^ " {\n" ^
+  fields ^ "\n" ^
+  "}(User defined as " ^ string_of_int id ^ ")\n"
+
+and show_enum_definition id { enum_name; enumerators } _location =
+  let show_enumerators { enumerator_type; enumerator_name; init_expr } =
+    let name = enumerator_name ^ ": " ^ show_ctype enumerator_type in
+    match init_expr with
+    | Some expr -> name ^ " = " ^ show_expression expr
+    | None -> name
+  in
+  let enumerators =
+    enumerators
+    |> List.map show_enumerators
+    |> String.concat "\n"
+  in
+  "enum " ^ enum_name ^ " {\n" ^
+  enumerators ^ "\n" ^
+  "}(User defined as " ^ string_of_int id ^ ")\n"
+
 and show_variable_scope {is_global; is_static; is_static_local} =
   let info = [] in
   let info = if is_static_local then "static_local" :: info else info in
   let info = if is_static then "static" :: info else info in
   let info = if is_global then "global" :: info else info in
   String.concat " " info
+
 and show_definition indent = function
   | FUNDEF ((return_type, func_name, _location1), single_name_list, block, _location2) ->
     let args =
@@ -176,6 +241,11 @@ and show_definition indent = function
     "type " ^ name ^ "(" ^ string_of_int id ^ ")\n"
   | RECORDDEF (id, record, location) ->
     show_record_definition id record location
+  | UNIONDEF (id, union, location) ->
+    show_union_definition id union location
+  | ENUMDEF (id, enum, location) ->
+    show_enum_definition id enum location
+
 and show_init_name_group indent (ctype, init_name_list) =
   let names =
     init_name_list
@@ -185,12 +255,14 @@ and show_init_name_group indent (ctype, init_name_list) =
   indent ^ "names: \n" ^
   names ^ "\n" ^
   indent ^ "types: " ^ show_ctype ctype
+
 and show_init_name (name, init_expr) =
   match init_expr with
   | NO_INIT ->
     name
   | SINGLE_INIT expr ->
     name ^ " = " ^ show_expression expr
+
 and show_ctype = function
   | Tvoid -> "void"
   | Tbool -> "bool"
@@ -210,10 +282,12 @@ and show_ctype = function
   | Tarray (tpe, len) -> "Type:" ^ show_ctype tpe ^ "[" ^ string_of_int len ^ "]"
   | Tpointer tpe -> "*" ^ "Type:" ^ show_ctype tpe
   | Tdefined p -> "(User Defined Type of ->" ^ string_of_int p ^ ")"
+
 and show_block indent block =
   block
   |> List.map (show_statement indent)
   |> String.concat "\n"
+
 and show_statement indent = function
   | NOP ->
     ""
@@ -256,6 +330,11 @@ and show_statement indent = function
     indent ^ ")"
   | RECORDDEC (id, record, location) ->
     show_record_definition id record location
+  | UNIONDEC (id, union, location) ->
+    show_union_definition id union location
+  | ENUMDEC (id, enum, location) ->
+    show_enum_definition id enum location
+
 and show_expression = function
   | CONST_EXPR (expr, _location) ->
     show_expression expr
@@ -280,10 +359,14 @@ and show_expression = function
   | INIT_LIST (exprs, _location) ->
     let exprs =
       exprs
+      |> List.filter (function IMPLICIT_VALUE_INIT _ -> false | _ -> true)
       |> List.map show_expression
       |> String.concat ", "
     in
     "{ " ^ exprs ^ " }"
+  | IMPLICIT_VALUE_INIT (_exprs, _location) ->
+    ""
+
 and show_unary_operator v = function
   | MINUS -> "-" ^ v
   | PLUS -> "+" ^ v
@@ -295,6 +378,7 @@ and show_unary_operator v = function
   | PREDECR -> "--" ^ v
   | POSINCR -> v ^ "++"
   | POSDECR -> v ^ "--"
+
 and show_binary_operator = function
   | ADD -> "+"
   | SUB -> "-"
@@ -310,8 +394,12 @@ and show_binary_operator = function
   | LE -> "<="
   | GE -> ">="
   | ASSIGN -> "="
+
 and show_constant = function
+  | CONST_CHAR i_as_str -> i_as_str
   | CONST_INT i_as_str -> i_as_str
+  | CONST_FLOAT f_as_str -> f_as_str
+  | CONST_STRING str -> str
 
 type file = string * definition list
 

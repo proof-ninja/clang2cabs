@@ -19,6 +19,7 @@ let conv_location : Ast.Location.t -> Cabs.cabsloc = function
 
 let conv_constant : Ast.constant -> Cabs.constant = function
   | Ast.CONST_INT i -> Cabs.CONST_INT i
+  | _ -> raise (Cannot_convert "Cabs does not support except Int.")
 
 let conv_binary_operator : Ast.binary_operator -> Cabs.binary_operator = function
   | Ast.ADD -> Cabs.ADD
@@ -84,6 +85,8 @@ let rec conv_expression : Ast.expression -> Cabs.expression = function
     raise (Cannot_convert "Cabs does not support MEMBER expression")
   | Ast.INIT_LIST _ ->
     raise (Cannot_convert "Cabs does not support INIT_LIST expression")
+  | Ast.IMPLICIT_VALUE_INIT _ ->
+    raise (Cannot_convert "Cabs does not support IMPLICIT_VALUE_INIT expression")
 
 let rec conv_statement : Ast.statement -> Cabs.statement = function
   | Ast.NOP -> Cabs.NOP dummy_loc
@@ -116,6 +119,10 @@ let rec conv_statement : Ast.statement -> Cabs.statement = function
       conv_location location
     ))
   | Ast.RECORDDEC (_id, _record, _location) ->
+    raise (Cannot_convert "Cabs does not support the definition in statements")
+  | Ast.UNIONDEC (_id, _union, _location) ->
+    raise (Cannot_convert "Cabs does not support the definition in statements")
+  | Ast.ENUMDEC (_id, _enum, _location) ->
     raise (Cannot_convert "Cabs does not support the definition in statements")
 
 and conv_block block : Cabs.block = {
@@ -165,6 +172,10 @@ let conv_definition : Ast.definition -> Cabs.definition = function
   | Ast.TYPEDEF _ ->
     raise (Unimplemented_error "Cabs cannot accept this definition.")
   | Ast.RECORDDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
+  | Ast.UNIONDEF _ ->
+    raise (Unimplemented_error "Cabs cannot accept this definition.")
+  | Ast.ENUMDEF _ ->
     raise (Unimplemented_error "Cabs cannot accept this definition.")
 
 let conv_file (filename, definitions) : Cabs.file = filename, List.map conv_definition definitions

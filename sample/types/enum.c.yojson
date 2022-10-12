@@ -1,0 +1,2447 @@
+<"TranslationUnitDecl" : (
+  {
+    "pointer" : 1,
+    "source_range" : (
+      {
+      },
+      {
+      }
+    )
+  },
+  [
+    <"TypedefDecl" : (
+      {
+        "pointer" : 2,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__int128_t",
+        "qual_name" : [
+          "__int128_t"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 3,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__uint128_t",
+        "qual_name" : [
+          "__uint128_t"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 4,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__NSConstantString",
+        "qual_name" : [
+          "__NSConstantString"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 5,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__builtin_ms_va_list",
+        "qual_name" : [
+          "__builtin_ms_va_list"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 6,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "__builtin_va_list",
+        "qual_name" : [
+          "__builtin_va_list"
+        ]
+      },
+      0,
+      {
+      }
+    )>,
+    <"EnumDecl" : (
+      {
+        "pointer" : 7,
+        "source_range" : (
+          {
+            "file" : "sample/types/enum.c",
+            "line" : 2,
+            "column" : 1
+          },
+          {
+            "line" : 6,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "E1",
+        "qual_name" : [
+          "E1"
+        ]
+      },
+      8,
+      [
+        <"EnumConstantDecl" : (
+          {
+            "pointer" : 9,
+            "source_range" : (
+              {
+                "line" : 3,
+                "column" : 5
+              },
+              {
+                "column" : 5
+              }
+            ),
+            "is_this_declaration_referenced" : true
+          },
+          {
+            "name" : "E11",
+            "qual_name" : [
+              "E11",
+              "E1"
+            ]
+          },
+          {
+            "type_ptr" : 10
+          },
+          {
+          }
+        )>,
+        <"EnumConstantDecl" : (
+          {
+            "pointer" : 11,
+            "source_range" : (
+              {
+                "line" : 4,
+                "column" : 5
+              },
+              {
+                "column" : 11
+              }
+            ),
+            "is_this_declaration_referenced" : true
+          },
+          {
+            "name" : "E12",
+            "qual_name" : [
+              "E12",
+              "E1"
+            ]
+          },
+          {
+            "type_ptr" : 10
+          },
+          {
+            "init_expr" : <"ConstantExpr" : (
+              {
+                "pointer" : 12,
+                "source_range" : (
+                  {
+                    "column" : 11
+                  },
+                  {
+                    "column" : 11
+                  }
+                )
+              },
+              [
+                <"IntegerLiteral" : (
+                  {
+                    "pointer" : 13,
+                    "source_range" : (
+                      {
+                        "column" : 11
+                      },
+                      {
+                        "column" : 11
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "is_signed" : true,
+                    "bitwidth" : 32,
+                    "value" : "4"
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              }
+            )>
+          }
+        )>,
+        <"EnumConstantDecl" : (
+          {
+            "pointer" : 14,
+            "source_range" : (
+              {
+                "line" : 5,
+                "column" : 5
+              },
+              {
+                "column" : 5
+              }
+            ),
+            "is_this_declaration_referenced" : true
+          },
+          {
+            "name" : "E13",
+            "qual_name" : [
+              "E13",
+              "E1"
+            ]
+          },
+          {
+            "type_ptr" : 10
+          },
+          {
+          }
+        )>
+      ],
+      {
+      },
+      <"TTK_Enum">,
+      {
+      }
+    )>,
+    <"EnumDecl" : (
+      {
+        "pointer" : 15,
+        "source_range" : (
+          {
+            "line" : 8,
+            "column" : 9
+          },
+          {
+            "line" : 11,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "",
+        "qual_name" : [
+          "E2"
+        ]
+      },
+      16,
+      [
+        <"EnumConstantDecl" : (
+          {
+            "pointer" : 17,
+            "source_range" : (
+              {
+                "line" : 9,
+                "column" : 5
+              },
+              {
+                "column" : 5
+              }
+            )
+          },
+          {
+            "name" : "E21",
+            "qual_name" : [
+              "E21",
+              "E2"
+            ]
+          },
+          {
+            "type_ptr" : 10
+          },
+          {
+          }
+        )>,
+        <"EnumConstantDecl" : (
+          {
+            "pointer" : 18,
+            "source_range" : (
+              {
+                "line" : 10,
+                "column" : 5
+              },
+              {
+                "column" : 5
+              }
+            ),
+            "is_this_declaration_referenced" : true
+          },
+          {
+            "name" : "E22",
+            "qual_name" : [
+              "E22",
+              "E2"
+            ]
+          },
+          {
+            "type_ptr" : 10
+          },
+          {
+          }
+        )>
+      ],
+      {
+      },
+      <"TTK_Enum">,
+      {
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 19,
+        "source_range" : (
+          {
+            "line" : 8,
+            "column" : 1
+          },
+          {
+            "line" : 11,
+            "column" : 3
+          }
+        ),
+        "is_this_declaration_referenced" : true
+      },
+      {
+        "name" : "E2",
+        "qual_name" : [
+          "E2"
+        ]
+      },
+      20,
+      {
+      }
+    )>,
+    <"EnumDecl" : (
+      {
+        "pointer" : 21,
+        "source_range" : (
+          {
+            "line" : 13,
+            "column" : 1
+          },
+          {
+            "column" : 6
+          }
+        )
+      },
+      {
+        "name" : "E3",
+        "qual_name" : [
+          "E3"
+        ]
+      },
+      22,
+      [
+      ],
+      {
+      },
+      <"TTK_Enum">,
+      {
+      }
+    )>,
+    <"FunctionDecl" : (
+      {
+        "pointer" : 23,
+        "source_range" : (
+          {
+            "line" : 15,
+            "column" : 1
+          },
+          {
+            "line" : 38,
+            "column" : 1
+          }
+        )
+      },
+      {
+        "name" : "main",
+        "qual_name" : [
+          "main"
+        ]
+      },
+      {
+        "type_ptr" : 24
+      },
+      {
+        "decl_ptr_with_body" : 23,
+        "body" : <"CompoundStmt" : (
+          {
+            "pointer" : 25,
+            "source_range" : (
+              {
+                "line" : 15,
+                "column" : 16
+              },
+              {
+                "line" : 38,
+                "column" : 1
+              }
+            )
+          },
+          [
+            <"DeclStmt" : (
+              {
+                "pointer" : 26,
+                "source_range" : (
+                  {
+                    "line" : 16,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 21
+                  }
+                )
+              },
+              [
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 27,
+                    "source_range" : (
+                      {
+                        "column" : 18
+                      },
+                      {
+                        "column" : 18
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 28,
+                        "source_range" : (
+                          {
+                            "column" : 18
+                          },
+                          {
+                            "column" : 18
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 9,
+                          "name" : {
+                            "name" : "E11",
+                            "qual_name" : [
+                              "E11",
+                              "E1"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 10
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 29
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 30,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 18
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "e1",
+                    "qual_name" : [
+                      "e1"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 29
+                  },
+                  {
+                    "is_init_ice" : true,
+                    "init_expr" : <"ImplicitCastExpr" : (
+                      {
+                        "pointer" : 27,
+                        "source_range" : (
+                          {
+                            "column" : 18
+                          },
+                          {
+                            "column" : 18
+                          }
+                        )
+                      },
+                      [
+                        <"DeclRefExpr" : (
+                          {
+                            "pointer" : 28,
+                            "source_range" : (
+                              {
+                                "column" : 18
+                              },
+                              {
+                                "column" : 18
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 10
+                            }
+                          },
+                          {
+                            "decl_ref" : {
+                              "kind" : <"EnumConstant">,
+                              "decl_pointer" : 9,
+                              "name" : {
+                                "name" : "E11",
+                                "qual_name" : [
+                                  "E11",
+                                  "E1"
+                                ]
+                              },
+                              "qual_type" : {
+                                "type_ptr" : 10
+                              }
+                            }
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 29
+                        }
+                      },
+                      {
+                        "cast_kind" : <"IntegralCast">,
+                        "base_path" : [
+                        ]
+                      },
+                      false
+                    )>
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 31,
+                "source_range" : (
+                  {
+                    "line" : 17,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 10
+                  }
+                )
+              },
+              [
+                <"DeclRefExpr" : (
+                  {
+                    "pointer" : 32,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 29
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "decl_ref" : {
+                      "kind" : <"Var">,
+                      "decl_pointer" : 30,
+                      "name" : {
+                        "name" : "e1",
+                        "qual_name" : [
+                          "e1"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 29
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 33,
+                    "source_range" : (
+                      {
+                        "column" : 10
+                      },
+                      {
+                        "column" : 10
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 34,
+                        "source_range" : (
+                          {
+                            "column" : 10
+                          },
+                          {
+                            "column" : 10
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 11,
+                          "name" : {
+                            "name" : "E12",
+                            "qual_name" : [
+                              "E12",
+                              "E1"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 10
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 29
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 29
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 35,
+                "source_range" : (
+                  {
+                    "line" : 19,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 10
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 36,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 9
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "x",
+                    "qual_name" : [
+                      "x"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 10
+                  },
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 37,
+                "source_range" : (
+                  {
+                    "line" : 20,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 9
+                  }
+                )
+              },
+              [
+                <"DeclRefExpr" : (
+                  {
+                    "pointer" : 38,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "decl_ref" : {
+                      "kind" : <"Var">,
+                      "decl_pointer" : 36,
+                      "name" : {
+                        "name" : "x",
+                        "qual_name" : [
+                          "x"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 10
+                      }
+                    }
+                  }
+                )>,
+                <"DeclRefExpr" : (
+                  {
+                    "pointer" : 39,
+                    "source_range" : (
+                      {
+                        "column" : 9
+                      },
+                      {
+                        "column" : 9
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 10
+                    }
+                  },
+                  {
+                    "decl_ref" : {
+                      "kind" : <"EnumConstant">,
+                      "decl_pointer" : 14,
+                      "name" : {
+                        "name" : "E13",
+                        "qual_name" : [
+                          "E13",
+                          "E1"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 10
+                      }
+                    }
+                  }
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 10
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 40,
+                "source_range" : (
+                  {
+                    "line" : 22,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 14
+                  }
+                )
+              },
+              [
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 41,
+                    "source_range" : (
+                      {
+                        "column" : 13
+                      },
+                      {
+                        "column" : 13
+                      }
+                    )
+                  },
+                  [
+                    <"IntegerLiteral" : (
+                      {
+                        "pointer" : 42,
+                        "source_range" : (
+                          {
+                            "column" : 13
+                          },
+                          {
+                            "column" : 13
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "is_signed" : true,
+                        "bitwidth" : 32,
+                        "value" : "0"
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 20
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 43,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 13
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "e2",
+                    "qual_name" : [
+                      "e2"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 20
+                  },
+                  {
+                    "is_init_ice" : true,
+                    "init_expr" : <"ImplicitCastExpr" : (
+                      {
+                        "pointer" : 41,
+                        "source_range" : (
+                          {
+                            "column" : 13
+                          },
+                          {
+                            "column" : 13
+                          }
+                        )
+                      },
+                      [
+                        <"IntegerLiteral" : (
+                          {
+                            "pointer" : 42,
+                            "source_range" : (
+                              {
+                                "column" : 13
+                              },
+                              {
+                                "column" : 13
+                              }
+                            )
+                          },
+                          [
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 10
+                            }
+                          },
+                          {
+                            "is_signed" : true,
+                            "bitwidth" : 32,
+                            "value" : "0"
+                          }
+                        )>
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 20
+                        }
+                      },
+                      {
+                        "cast_kind" : <"IntegralCast">,
+                        "base_path" : [
+                        ]
+                      },
+                      false
+                    )>
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 44,
+                "source_range" : (
+                  {
+                    "line" : 23,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 10
+                  }
+                )
+              },
+              [
+                <"DeclRefExpr" : (
+                  {
+                    "pointer" : 45,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 20
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "decl_ref" : {
+                      "kind" : <"Var">,
+                      "decl_pointer" : 43,
+                      "name" : {
+                        "name" : "e2",
+                        "qual_name" : [
+                          "e2"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 20
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 46,
+                    "source_range" : (
+                      {
+                        "column" : 10
+                      },
+                      {
+                        "column" : 10
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 47,
+                        "source_range" : (
+                          {
+                            "column" : 10
+                          },
+                          {
+                            "column" : 10
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 18,
+                          "name" : {
+                            "name" : "E22",
+                            "qual_name" : [
+                              "E22",
+                              "E2"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 10
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 20
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 20
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 48,
+                "source_range" : (
+                  {
+                    "line" : 25,
+                    "column" : 5
+                  },
+                  {
+                    "line" : 28,
+                    "column" : 6
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"EnumDecl" : (
+                  {
+                    "pointer" : 49,
+                    "source_range" : (
+                      {
+                        "line" : 25,
+                        "column" : 5
+                      },
+                      {
+                        "line" : 28,
+                        "column" : 5
+                      }
+                    )
+                  },
+                  {
+                    "name" : "E4",
+                    "qual_name" : [
+                      "E4",
+                      "main"
+                    ]
+                  },
+                  50,
+                  [
+                    <"EnumConstantDecl" : (
+                      {
+                        "pointer" : 51,
+                        "source_range" : (
+                          {
+                            "line" : 26,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 15
+                          }
+                        ),
+                        "is_this_declaration_referenced" : true
+                      },
+                      {
+                        "name" : "E41",
+                        "qual_name" : [
+                          "E41",
+                          "E4",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 10
+                      },
+                      {
+                        "init_expr" : <"ConstantExpr" : (
+                          {
+                            "pointer" : 52,
+                            "source_range" : (
+                              {
+                                "column" : 15
+                              },
+                              {
+                                "column" : 15
+                              }
+                            )
+                          },
+                          [
+                            <"IntegerLiteral" : (
+                              {
+                                "pointer" : 53,
+                                "source_range" : (
+                                  {
+                                    "column" : 15
+                                  },
+                                  {
+                                    "column" : 15
+                                  }
+                                )
+                              },
+                              [
+                              ],
+                              {
+                                "qual_type" : {
+                                  "type_ptr" : 10
+                                }
+                              },
+                              {
+                                "is_signed" : true,
+                                "bitwidth" : 32,
+                                "value" : "1"
+                              }
+                            )>
+                          ],
+                          {
+                            "qual_type" : {
+                              "type_ptr" : 10
+                            }
+                          }
+                        )>
+                      }
+                    )>,
+                    <"EnumConstantDecl" : (
+                      {
+                        "pointer" : 54,
+                        "source_range" : (
+                          {
+                            "line" : 27,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 9
+                          }
+                        )
+                      },
+                      {
+                        "name" : "E42",
+                        "qual_name" : [
+                          "E42",
+                          "E4",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 10
+                      },
+                      {
+                      }
+                    )>
+                  ],
+                  {
+                  },
+                  <"TTK_Enum">,
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 55,
+                "source_range" : (
+                  {
+                    "line" : 29,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 15
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"VarDecl" : (
+                  {
+                    "pointer" : 56,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 13
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "e4",
+                    "qual_name" : [
+                      "e4"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 57
+                  },
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 58,
+                "source_range" : (
+                  {
+                    "line" : 30,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 10
+                  }
+                )
+              },
+              [
+                <"DeclRefExpr" : (
+                  {
+                    "pointer" : 59,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 57
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "decl_ref" : {
+                      "kind" : <"Var">,
+                      "decl_pointer" : 56,
+                      "name" : {
+                        "name" : "e4",
+                        "qual_name" : [
+                          "e4"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 57
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 60,
+                    "source_range" : (
+                      {
+                        "column" : 10
+                      },
+                      {
+                        "column" : 10
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 61,
+                        "source_range" : (
+                          {
+                            "column" : 10
+                          },
+                          {
+                            "column" : 10
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 51,
+                          "name" : {
+                            "name" : "E41",
+                            "qual_name" : [
+                              "E41",
+                              "E4",
+                              "main"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 10
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 57
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 57
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"DeclStmt" : (
+              {
+                "pointer" : 62,
+                "source_range" : (
+                  {
+                    "line" : 32,
+                    "column" : 5
+                  },
+                  {
+                    "line" : 35,
+                    "column" : 10
+                  }
+                )
+              },
+              [
+              ],
+              [
+                <"EnumDecl" : (
+                  {
+                    "pointer" : 63,
+                    "source_range" : (
+                      {
+                        "line" : 32,
+                        "column" : 5
+                      },
+                      {
+                        "line" : 35,
+                        "column" : 5
+                      }
+                    )
+                  },
+                  {
+                    "name" : "",
+                    "qual_name" : [
+                      "anonymous_enum_sample/types/enum.c:32:5",
+                      "main"
+                    ]
+                  },
+                  64,
+                  [
+                    <"EnumConstantDecl" : (
+                      {
+                        "pointer" : 65,
+                        "source_range" : (
+                          {
+                            "line" : 33,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 9
+                          }
+                        ),
+                        "is_this_declaration_referenced" : true
+                      },
+                      {
+                        "name" : "YES",
+                        "qual_name" : [
+                          "YES",
+                          "anonymous_enum_sample/types/enum.c:32:5",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 10
+                      },
+                      {
+                      }
+                    )>,
+                    <"EnumConstantDecl" : (
+                      {
+                        "pointer" : 66,
+                        "source_range" : (
+                          {
+                            "line" : 34,
+                            "column" : 9
+                          },
+                          {
+                            "column" : 9
+                          }
+                        ),
+                        "is_this_declaration_referenced" : true
+                      },
+                      {
+                        "name" : "NO",
+                        "qual_name" : [
+                          "NO",
+                          "anonymous_enum_sample/types/enum.c:32:5",
+                          "main"
+                        ]
+                      },
+                      {
+                        "type_ptr" : 10
+                      },
+                      {
+                      }
+                    )>
+                  ],
+                  {
+                  },
+                  <"TTK_Enum">,
+                  {
+                  }
+                )>,
+                <"VarDecl" : (
+                  {
+                    "pointer" : 67,
+                    "source_range" : (
+                      {
+                        "line" : 32,
+                        "column" : 5
+                      },
+                      {
+                        "line" : 35,
+                        "column" : 7
+                      }
+                    ),
+                    "is_used" : true,
+                    "is_this_declaration_referenced" : true
+                  },
+                  {
+                    "name" : "res",
+                    "qual_name" : [
+                      "res"
+                    ]
+                  },
+                  {
+                    "type_ptr" : 68
+                  },
+                  {
+                  }
+                )>
+              ]
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 69,
+                "source_range" : (
+                  {
+                    "line" : 36,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 11
+                  }
+                )
+              },
+              [
+                <"DeclRefExpr" : (
+                  {
+                    "pointer" : 70,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 68
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "decl_ref" : {
+                      "kind" : <"Var">,
+                      "decl_pointer" : 67,
+                      "name" : {
+                        "name" : "res",
+                        "qual_name" : [
+                          "res"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 68
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 71,
+                    "source_range" : (
+                      {
+                        "column" : 11
+                      },
+                      {
+                        "column" : 11
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 72,
+                        "source_range" : (
+                          {
+                            "column" : 11
+                          },
+                          {
+                            "column" : 11
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 65,
+                          "name" : {
+                            "name" : "YES",
+                            "qual_name" : [
+                              "YES",
+                              "anonymous_enum_sample/types/enum.c:32:5",
+                              "main"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 10
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 68
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 68
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>,
+            <"BinaryOperator" : (
+              {
+                "pointer" : 73,
+                "source_range" : (
+                  {
+                    "line" : 37,
+                    "column" : 5
+                  },
+                  {
+                    "column" : 11
+                  }
+                )
+              },
+              [
+                <"DeclRefExpr" : (
+                  {
+                    "pointer" : 74,
+                    "source_range" : (
+                      {
+                        "column" : 5
+                      },
+                      {
+                        "column" : 5
+                      }
+                    )
+                  },
+                  [
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 68
+                    },
+                    "value_kind" : <"LValue">
+                  },
+                  {
+                    "decl_ref" : {
+                      "kind" : <"Var">,
+                      "decl_pointer" : 67,
+                      "name" : {
+                        "name" : "res",
+                        "qual_name" : [
+                          "res"
+                        ]
+                      },
+                      "qual_type" : {
+                        "type_ptr" : 68
+                      }
+                    }
+                  }
+                )>,
+                <"ImplicitCastExpr" : (
+                  {
+                    "pointer" : 75,
+                    "source_range" : (
+                      {
+                        "column" : 11
+                      },
+                      {
+                        "column" : 11
+                      }
+                    )
+                  },
+                  [
+                    <"DeclRefExpr" : (
+                      {
+                        "pointer" : 76,
+                        "source_range" : (
+                          {
+                            "column" : 11
+                          },
+                          {
+                            "column" : 11
+                          }
+                        )
+                      },
+                      [
+                      ],
+                      {
+                        "qual_type" : {
+                          "type_ptr" : 10
+                        }
+                      },
+                      {
+                        "decl_ref" : {
+                          "kind" : <"EnumConstant">,
+                          "decl_pointer" : 66,
+                          "name" : {
+                            "name" : "NO",
+                            "qual_name" : [
+                              "NO",
+                              "anonymous_enum_sample/types/enum.c:32:5",
+                              "main"
+                            ]
+                          },
+                          "qual_type" : {
+                            "type_ptr" : 10
+                          }
+                        }
+                      }
+                    )>
+                  ],
+                  {
+                    "qual_type" : {
+                      "type_ptr" : 68
+                    }
+                  },
+                  {
+                    "cast_kind" : <"IntegralCast">,
+                    "base_path" : [
+                    ]
+                  },
+                  false
+                )>
+              ],
+              {
+                "qual_type" : {
+                  "type_ptr" : 68
+                }
+              },
+              {
+                "kind" : <"Assign">
+              }
+            )>
+          ]
+        )>
+      }
+    )>,
+    <"TypedefDecl" : (
+      {
+        "pointer" : 77,
+        "source_range" : (
+          {
+          },
+          {
+          }
+        ),
+        "is_implicit" : true
+      },
+      {
+        "name" : "instancetype",
+        "qual_name" : [
+          "instancetype"
+        ]
+      },
+      78,
+      {
+      }
+    )>
+  ],
+  {
+  },
+  {
+    "input_path" : "sample/types/enum.c",
+    "input_kind" : <"IK_C">,
+    "integer_type_widths" : {
+      "char_type" : 8,
+      "short_type" : 16,
+      "int_type" : 32,
+      "long_type" : 64,
+      "longlong_type" : 64
+    },
+    "types" : [
+      <"BuiltinType" : (
+        {
+          "pointer" : 79
+        },
+        <"Void">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 80
+        },
+        <"Bool">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 81
+        },
+        <"Char_S">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 82
+        },
+        <"SChar">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 83
+        },
+        <"Short">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 10
+        },
+        <"Int">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 84
+        },
+        <"Long">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 85
+        },
+        <"LongLong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 86
+        },
+        <"UChar">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 87
+        },
+        <"UShort">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 88
+        },
+        <"UInt">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 89
+        },
+        <"ULong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 90
+        },
+        <"ULongLong">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 91
+        },
+        <"Float">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 92
+        },
+        <"Double">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 93
+        },
+        <"LongDouble">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 94
+        },
+        <"Float128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 95
+        },
+        <"Float16">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 96
+        },
+        <"ShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 97
+        },
+        <"Accum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 98
+        },
+        <"LongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 99
+        },
+        <"UShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 100
+        },
+        <"UAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 101
+        },
+        <"ULongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 102
+        },
+        <"ShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 103
+        },
+        <"Fract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 104
+        },
+        <"LongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 105
+        },
+        <"UShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 106
+        },
+        <"UFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 107
+        },
+        <"ULongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 108
+        },
+        <"SatShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 109
+        },
+        <"SatAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 110
+        },
+        <"SatLongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 111
+        },
+        <"SatUShortAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 112
+        },
+        <"SatUAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 113
+        },
+        <"SatULongAccum">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 114
+        },
+        <"SatShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 115
+        },
+        <"SatFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 116
+        },
+        <"SatLongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 117
+        },
+        <"SatUShortFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 118
+        },
+        <"SatUFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 119
+        },
+        <"SatULongFract">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 120
+        },
+        <"Int128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 121
+        },
+        <"UInt128">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 122
+        },
+        <"WChar_S">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 123
+        },
+        <"Char8">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 124
+        },
+        <"Dependent">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 125
+        },
+        <"Overload">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 126
+        },
+        <"BoundMember">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 127
+        },
+        <"PseudoObject">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 128
+        },
+        <"UnknownAny">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 129
+        },
+        <"ARCUnbridgedCast">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 130
+        },
+        <"BuiltinFn">
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 131
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 132
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 133
+        }
+      )>,
+      <"ComplexType" : (
+        {
+          "pointer" : 134
+        }
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 135
+        },
+        <"ObjCId">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 136
+        },
+        <"ObjCClass">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 137
+        },
+        <"ObjCSel">
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 138
+        },
+        {
+          "type_ptr" : 79
+        }
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 139
+        },
+        <"NullPtr">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 140
+        },
+        <"Half">
+      )>,
+      <"BuiltinType" : (
+        {
+          "pointer" : 141
+        },
+        <"BFloat16">
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 142
+        },
+        143
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 144
+        },
+        {
+          "type_ptr" : 10,
+          "is_const" : true
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 145
+        },
+        {
+          "type_ptr" : 81,
+          "is_const" : true
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 146
+        },
+        {
+          "type_ptr" : 81
+        }
+      )>,
+      <"RecordType" : (
+        {
+          "pointer" : 147
+        },
+        148
+      )>,
+      <"ConstantArrayType" : (
+        {
+          "pointer" : 149
+        },
+        {
+          "element_type" : {
+            "type_ptr" : 147
+          },
+          "stride" : 24
+        },
+        1
+      )>,
+      <"EnumType" : (
+        {
+          "pointer" : 8
+        },
+        7
+      )>,
+      <"EnumType" : (
+        {
+          "pointer" : 16
+        },
+        15
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 150,
+          "desugared_type" : 16
+        }
+      )>,
+      <"EnumType" : (
+        {
+          "pointer" : 22
+        },
+        21
+      )>,
+      <"FunctionProtoType" : (
+        {
+          "pointer" : 24
+        },
+        {
+          "return_type" : {
+            "type_ptr" : 10
+          }
+        },
+        {
+        }
+      )>,
+      <"PointerType" : (
+        {
+          "pointer" : 151
+        },
+        {
+          "type_ptr" : 146
+        }
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 29,
+          "desugared_type" : 8
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 20,
+          "desugared_type" : 16
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 150
+          },
+          "decl_ptr" : 19
+        }
+      )>,
+      <"EnumType" : (
+        {
+          "pointer" : 50
+        },
+        49
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 57,
+          "desugared_type" : 50
+        }
+      )>,
+      <"EnumType" : (
+        {
+          "pointer" : 64
+        },
+        63
+      )>,
+      <"ElaboratedType" : (
+        {
+          "pointer" : 68,
+          "desugared_type" : 64
+        }
+      )>,
+      <"ObjCObjectType" : (
+        {
+          "pointer" : 152
+        },
+        {
+          "base_type" : 135
+        }
+      )>,
+      <"ObjCObjectPointerType" : (
+        {
+          "pointer" : 153
+        },
+        {
+          "type_ptr" : 152
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 154,
+          "desugared_type" : 153
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 153
+          },
+          "decl_ptr" : 155
+        }
+      )>,
+      <"TypedefType" : (
+        {
+          "pointer" : 78,
+          "desugared_type" : 153
+        },
+        {
+          "child_type" : {
+            "type_ptr" : 154
+          },
+          "decl_ptr" : 77
+        }
+      )>,
+      <"NoneType" : (
+        {
+          "pointer" : 0
+        }
+      )>
+    ]
+  }
+)>
